@@ -1,52 +1,130 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #70c5ce;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    min-height: 100vh;
+:root {
+  color-scheme: light;
+  font-family: "Courier New", Courier, monospace;
+  font-synthesis: none;
 }
 
-.game-container {
-    text-align: center;
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 22px 12px;
+  background:
+    radial-gradient(circle at 15% 20%, #ff66ab 0 5px, transparent 6px),
+    radial-gradient(circle at 83% 36%, #72e6f8 0 4px, transparent 5px),
+    radial-gradient(circle at 74% 83%, #ffe16c 0 5px, transparent 6px),
+    linear-gradient(150deg, #343078, #5d2e91 55%, #36236e);
+  background-size: 180px 180px, 220px 220px, 260px 260px, cover;
+  color: #fff;
+}
+
+.arcade { width: min(100%, 450px); text-align: center; }
+
+.game-heading { margin-bottom: 14px; }
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #92f8fb;
+  font-weight: 900;
 }
 
 h1 {
-    margin-bottom: 10px;
+  margin: 8px 0 3px;
+  font-size: clamp(30px, 7.5vw, 43px);
+  line-height: 1;
+  letter-spacing: -2px;
+  color: #ffe760;
+  text-shadow: 3px 3px 0 #f05c72, 6px 6px 0 #301a64;
+  animation: title-float 2.5s ease-in-out infinite;
+}
+h1 span { color: #7cf4df; }
+.game-heading p { margin: 10px 0 0; font-size: 11px; letter-spacing: 1px; font-weight: bold; }
+
+.game-frame {
+  padding: 10px;
+  border: 5px solid #1a1645;
+  background: #fa6baf;
+  box-shadow: 0 7px 0 #aa3c8a, 0 13px 0 #1a1645, 0 20px 30px #17114580;
+  border-radius: 13px;
 }
 
-canvas {
-    background-color: #70c5ce;
-
-    border: 4px solid black;
-
-    display: block;
-
-    margin: auto;
+.game-screen {
+  position: relative;
+  overflow: hidden;
+  border: 4px solid #212052;
+  background: #81def6;
+  line-height: 0;
+  touch-action: manipulation;
+  cursor: pointer;
 }
 
+canvas { width: 100%; height: auto; aspect-ratio: 2 / 3; display: block; image-rendering: pixelated; }
+
+.hud {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  line-height: 1.1;
+}
+.counter {
+  min-width: 76px;
+  padding: 6px 11px 7px;
+  border: 3px solid #292155;
+  background: #ffffffde;
+  color: #312651;
+  box-shadow: 3px 3px 0 #26205055;
+  text-align: center;
+}
+.counter span { display: block; font-size: 10px; font-weight: 900; letter-spacing: 1px; }
+.counter strong { display: block; margin-top: 2px; font-size: 26px; font-weight: 900; }
+.counter.best { background: #fff1a4; }
+.counter strong.pop { animation: score-pop 250ms ease-out; }
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, transparent 0 3px, #251b4b0b 4px 5px);
+  pointer-events: none;
+}
+.controls { padding: 25px 0 4px; }
 button {
-    margin-top: 15px;
-
-    padding: 10px 20px;
-
-    font-size: 16px;
-
-    cursor: pointer;
-
-    border: 2px solid black;
-    border-radius: 6px;
-
-    background-color: white;
+  font-family: inherit;
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: #2d2251;
+  background: #ffe46a;
+  border: 3px solid #1c1645;
+  box-shadow: 0 6px 0 #ec8e4a;
+  border-radius: 6px;
+  padding: 12px 26px;
+  cursor: pointer;
+  transition: transform 100ms, box-shadow 100ms, background-color 100ms;
 }
+button:hover { background: #fff39b; transform: translateY(-2px); box-shadow: 0 8px 0 #ec8e4a; }
+button:active { transform: translateY(5px); box-shadow: 0 1px 0 #ec8e4a; }
+button:focus-visible { outline: 3px dashed white; outline-offset: 6px; }
+.controls p { font-size: 11px; font-weight: bold; letter-spacing: .2px; margin: 19px 0 9px; }
+.controls small { color: #cfc4fa; font-size: 11px; }
+kbd { color: #fff597; font: inherit; }
 
-button:hover {
-    background-color: #eeeeee;
+@keyframes title-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 }
-
-p {
-    margin-top: 10px;
+@keyframes score-pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.4); color: #ff538f; }
+  100% { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  h1, .counter strong.pop { animation: none; }
+  button { transition: none; }
 }
