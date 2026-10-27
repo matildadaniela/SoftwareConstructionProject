@@ -1,0 +1,28 @@
+# Vibe Coding and SDD scope comparison
+
+Date: 2026-10-27. Evidence: root `game.js` and `index.html` inspected as the existing Vibe version; `spec.md` is the current SDD requirements baseline. This comparison describes source behavior, not executed browser results. No specification requirements or Vibe source have been changed.
+
+## Observed differences
+
+| Area | Existing Vibe behavior | Current SDD specification | Planning consequence |
+|---|---|---|---|
+| Current score | One point after pipe right edge passes bird x; pair has a passed flag | FR-06 strict whole-bird clearance, once per pair | Similar passing threshold; collision priority differs below |
+| High score | BEST HUD and game-over best; updates on each new best; saved in localStorage under `flappy-pixel-high-score`; loaded across reloads; retained on restart; storage exceptions fall back to playable in-memory behavior | A-01 explicitly excludes saved high scores; only current-round score is modeled | D-01: confirm intended scope; do not silently remove or add persistence |
+| Gameplay controls | Space and ArrowUp keydown (repeat ignored); canvas pointerdown handles mouse/touch/pen | FR-01 requires Space; NFR-06 explicitly excludes mobile/touch; spec does not require ArrowUp or mouse flap | D-02: decide control parity; pointer restart remains required regardless |
+| Start/restart | Gameplay input from game over resets and immediately starts/flaps; Restart button resets to ready | FR-04/FR-07 and confirmed clarification require Restart then Space; Space at game over is ignored | Explicit SDD behavior; preserve confirmed decision unless user revises spec |
+| Focus/visibility | No explicit pause/resume handlers; capped dt on return; visible unfocused play may continue | FR-11 confirmed pause on blur/hidden, fresh Space resumes with one flap, no time-away simulation | Required new SDD behavior |
+| Ceiling | Going above top ends round; exact y=0 alone does not | FR-10 nonfatal clamp; A-04/A-08 identify this as provisional | D-03: confirm provisional boundary choice versus Vibe parity |
+| Collision geometry | Five-pixel inset on bird for pipes, exclusive comparisons; pipe caps extend beyond collision width | FR-05 contact/overlap ends round; A-03 defers exact geometry to planning | Proposed SDD full visible bounds; independent tuning and playability checks required |
+| Collision/scoring order | Each pipe can score before its collision is checked; ground checked afterward | FR-05/FR-06 all collision takes priority over all points in that update | Required new SDD ordering |
+| Ready/ended animation | Ready bird bobs; background, ground and particles keep animating outside play | Ready bird stationary; game over stops motion; gravity only during play | New stationary ready view and frozen gameplay; no requirement for decorative parity |
+| Obstacles/determinism | Math.random openings, variable frame-scaled dt capped at two nominal frames | NFR-03 equal conditions/sequences/inputs must match across cadence; delayed frames must not tunnel | Small fixed-step simulation with controllable random sequence for tests; no code reuse |
+| Presentation | Pixel art, clouds, sun, mountains, trails/confetti, score pop, scanlines, title and decorative star eyebrow | FR-08 title/icon, play area, score, instructions, restart; responsive interface; no mandated Vibe artwork/effects | D-03: confirm whether any visual effects are expected features; fresh simple drawing proposed |
+| Verification | No automated suites or recorded browser checks present in inspected root files | NFR-01–06 automated core checks, four desktop browsers, 60-second FPS records, 100 cycles and mandatory 100 ms reset bound | Plan new tests/evidence independently; no claim Vibe was browser-tested here |
+
+## Decisions requiring clarification
+
+- **D-01 — High scores**: Should SDD remain current-round-only as A-01 states, or include Vibe's browser-persisted best score? If included, explicitly specify best-score display/update timing, persistence lifetime, restart retention, invalid/unavailable storage handling and whether existing Vibe data should carry over. The constitution requires persistence/fallback tests when specified. No migration or deletion is authorized.
+- **D-02 — Controls**: Should SDD require only Space gameplay, or also ArrowUp and canvas mouse/touch/pen input? Distinguish desktop mouse from mobile/touch: NFR-06 currently excludes the latter. If added, specify supported devices/browsers and start/resume/game-over semantics for each control, including repeat/duplicate-event handling. Preserve the confirmed restart-before-new-round rule unless explicitly amended.
+- **D-03 — Remaining provisional defaults and presentation**: Confirm nonfatal ceiling (a provisional default that differs from Vibe), desktop-only scope, and whether any Vibe visual effects/pixel-art appearance are required. The proposed simple presentation is independently drawn; no Vibe asset reuse is authorized. Pair-based scoring agrees with Vibe and needs no parity change. Exact geometry/tuning remains a planning choice under A-03, with independent playability verification.
+
+Status: **Open**. These questions do not revoke confirmed restart, focus/resume or performance decisions. They do supersede the old plan's claim that scope reconciliation was complete. Do not mark affected tasks implementation-ready or acceptance complete until decisions are recorded. If a decision changes intended behavior, amend the specification and acceptance scenarios first, then synchronize plan, model, contract, tasks and validation. This planning revision deliberately leaves `spec.md` unchanged.
