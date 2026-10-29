@@ -58,12 +58,12 @@ Each row links requirements to planned implementation and verification; no funct
 
 ## Pending task register
 
-Every later task remains pending. The descriptions below retain planned files and requirement references; no implementation functions or executed evidence yet exist for these tasks.
+T003–T004 are complete as recorded below; T005–T031 remain pending. The descriptions below retain planned files and requirement references; no implementation functions or executed evidence yet exist for these tasks.
 
 | Task | Planned work / requirement references | Evidence |
 |------|--------------------------------------|----------|
-| T003 | Add named constants and construction validation in `config.js`: 400×600 world, ground 526, step 1/120 s, bird (90,248,34,28), gravity 1512, flap -450, pipe width 64, gap 164, speed 156, spawn 210 ticks, gap range 75..287, max change 60 and seed 0x1A2B3C4D. Preserve data-model constraints verbatim: "Immutable named values; positive sizes/speed, gap larger than bird height, valid opening within ground; shared by simulation/rendering/tests" (FR-02, FR-03, NFR-04). | Pending |
-| T004 | Add constructor/configuration assertions in `tests/simulation.test.js`, then implement plain fresh-round creation in `simulation.js`, including independent collections and round-owned RNG. Preserve constraints: "phase is ready/playing/paused/game-over; tick and score nonnegative integers; owns one bird and zero or more pairs; only playing advances tick; ready has zero score/tick and empty pairs"; bird "x remains fixed; top-left origin; full unrotated rectangle defines contact; y >= 0; ceiling or ground contact causes loss". Define how fatal proposed positions resolve without leaving an invalid stored bird position (FR-02, FR-07, FR-10, NFR-03). | Pending |
+| T003 | Add named constants and construction validation in `config.js`: 400×600 world, ground 526, step 1/120 s, bird (90,248,34,28), gravity 1512, flap -450, pipe width 64, gap 164, speed 156, spawn 210 ticks, gap range 75..287, max change 60 and seed 0x1A2B3C4D. Preserve data-model constraints verbatim: "Immutable named values; positive sizes/speed, gap larger than bird height, valid opening within ground; shared by simulation/rendering/tests" (FR-02, FR-03, NFR-04). | Complete: `config.js` (`CONFIG`, `createConfig`); Phase 2 configuration tests below. |
+| T004 | Add constructor/configuration assertions in `tests/simulation.test.js`, then implement plain fresh-round creation in `simulation.js`, including independent collections and round-owned RNG. Preserve constraints: "phase is ready/playing/paused/game-over; tick and score nonnegative integers; owns one bird and zero or more pairs; only playing advances tick; ready has zero score/tick and empty pairs"; bird "x remains fixed; top-left origin; full unrotated rectangle defines contact; y >= 0; ceiling or ground contact causes loss". Define how fatal proposed positions resolve without leaving an invalid stored bird position (FR-02, FR-07, FR-10, NFR-03). | Complete: `simulation.js:createRound`, `tests/simulation.test.js`; Phase 2 construction tests below. |
 | T005 | [P] [US1] Add requirement-labelled tests in `tests/simulation.test.js` for start with one flap, gravity/apex/descent, frozen inactive states, seeded bounded/reachable openings, first and recurring spawn ticks, constant movement/spacing, retirement, exact contact/overlap/swept crossings of pipes/ceiling/ground, initial overlap and zero relative velocity, one terminal transition and legal pause/resume preservation (FR-01–FR-03, FR-05, FR-07, FR-10, FR-11). | Pending |
 | T006 | [P] [US1] Add contract/input/loop tests in `tests/browser.test.js` using small event-target and injected-clock/scheduler fakes: all starts and resumes yield one flap; per-key hold/repeat suppression; FIFO tick queue, including two distinct inputs before one tick with both consumed in FIFO order, no accumulated impulse and no delayed flap; pointer compatibility/button deduplication; gameplay defaults prevented while Tab/Enter work; focus-and-visibility guards; both restoration orders; pause clears backlog/input; 30-step callback cap retains visible backlog; one animation chain; disposal removes listeners (FR-01, FR-02, FR-07, FR-08, FR-11, NFR-03; contracts/browser-game.md). | Pending |
 | T007 | [US1] Implement start/flap, fixed-step movement and legal pause/resume transitions in `simulation.js`; consume all queued inputs for the tick in FIFO order before semi-implicit Euler movement, setting flap velocity for each without accumulating impulse or carrying inputs into later ticks, advance active ticks only during play, preserve world/RNG on pause, and ignore gameplay keys after game over (FR-01, FR-02, FR-07, FR-11). | Pending |
@@ -101,3 +101,48 @@ IV: Zero package dependencies or build tools.
 V: T001/T002 map to actual files/checks above; all remaining tasks and requirements have pending evidence references.
 
 No browser, HTTP serving, gameplay, performance, visible restart latency or 100-cycle checks were run. Future evidence must include actual function/test names, browser/device details, defects and rerun references, FPS/frame records, cycle outcomes and visible reset measurements. Phase 1 completion does not establish full feature acceptance.
+
+## Phase 2 — T003–T004 (2026-10-29)
+
+Scope: only foundational configuration and fresh ready-round construction. Root
+`config.js` and `simulation.js` were absent before this work and independently
+authored from the feature artifacts; no Vibe source or assets were used.
+
+T003: `config.js` exports immutable `CONFIG` and `createConfig(overrides)`.
+Construction rejects nonfinite/unknown values, nonpositive sizes/speed/time,
+invalid integer spawn ticks and nonzero uint32 seed, invalid opening/ground bounds,
+non-upward flap velocity and an initial bird touching or outside fatal boundaries.
+The existing `.gitignore` covers this dependency-free ES-module setup; no other
+ignore files or dependencies are needed.
+
+T004: `simulation.js:createRound(config)` validates configuration and returns a
+plain ready round with zero tick/score, stationary bird, independent empty pairs,
+next ID 1, configured spawn tick, clamped bird-centered previous gap and its own
+numeric seed. Creation does not consume random values. RNG advancement remains
+T008. The source preserves the model constraints and defines T009's fatal-position
+policy: test the full proposed swept path before committing; on boundary loss
+clamp stored y to [0, groundY - bird.height], keep x fixed and discard remaining
+step time. Contact remains fatal. Collision detection, state transitions and
+movement are deliberately deferred to their tasks; this policy is not runtime
+collision evidence.
+
+Executed on Node v22.15.0: `npm test` first failed with
+`ERR_MODULE_NOT_FOUND` for the not-yet-created simulation module after the
+constructor assertions were written. After implementation it passed: 6 reported
+passes, comprising 5 behavioral tests and the existing empty browser-test file;
+0 failures. `git diff --check` passed.
+
+Actual tests in `tests/simulation.test.js`:
+
+- `FR-02 FR-03 NFR-04: named configuration matches planned tuning and is immutable`
+- `FR-02 FR-03 FR-10: construction rejects invalid numeric, bird and opening bounds`
+- `FR-07 FR-02 NFR-03: fresh round has ready state, bird, schedule and owned RNG`
+- `NFR-03 FR-07: fresh rounds do not share bird, pairs or random state`
+- `FR-03 NFR-03: constructor uses configured seed and clamps bird-centered opening`
+
+Constitution I–V review for this scope: follows the specified Phase 2 constants
+and state; two focused native modules with named configuration; construction
+coverage passes; zero added dependencies; task/function/test references recorded
+above. Full requirements acceptance remains pending. No gameplay, browser,
+performance or restart measurements were performed. `.specify/extensions.yml`
+is absent at both pre- and post-execution checks, so no hooks were registered.

@@ -1,7 +1,7 @@
 # Tasks: Browser Flappy Bird
 
 **Input**: `specs/001-browser-flappy-bird/` — spec.md, plan.md, research.md, data-model.md, contracts/browser-game.md and quickstart.md; constitution v1.0.0.
-**Tests**: Automated testing and browser verification explicitly requested. Phase 1 setup (T001–T002) is complete; see [validation.md](validation.md) for setup evidence. All later tasks and behavioral/browser verification remain pending.
+**Tests**: Automated testing and browser verification explicitly requested. Phase 1 setup (T001–T002) is complete; see [validation.md](validation.md) for setup evidence. Phase 2 (T003–T004) is also complete with construction tests; later tasks and gameplay/browser verification remain pending.
 **Organization**: Four user-story increments, ordered P1, P2, P2, P3. Paths are relative to the repository root.
 
 ## Format and scope
@@ -23,8 +23,8 @@ Write each story's automated tests before its implementation, confirm relevant a
 
 **Purpose**: Shared configuration and testable state; complete before story implementation.
 
-- [ ] T003 Add named constants and construction validation in `config.js`: 400×600 world, ground 526, step 1/120 s, bird (90,248,34,28), gravity 1512, flap -450, pipe width 64, gap 164, speed 156, spawn 210 ticks, gap range 75..287, max change 60 and seed 0x1A2B3C4D. Preserve data-model constraints verbatim: "Immutable named values; positive sizes/speed, gap larger than bird height, valid opening within ground; shared by simulation/rendering/tests" (FR-02, FR-03, NFR-04).
-- [ ] T004 Add constructor/configuration assertions in `tests/simulation.test.js`, then implement plain fresh-round creation in `simulation.js`, including independent collections and round-owned RNG. Preserve constraints: "phase is ready/playing/paused/game-over; tick and score nonnegative integers; owns one bird and zero or more pairs; only playing advances tick; ready has zero score/tick and empty pairs"; bird "x remains fixed; top-left origin; full unrotated rectangle defines contact; y >= 0; ceiling or ground contact causes loss". Define how fatal proposed positions resolve without leaving an invalid stored bird position (FR-02, FR-07, FR-10, NFR-03).
+- [X] T003 Add named constants and construction validation in `config.js`: 400×600 world, ground 526, step 1/120 s, bird (90,248,34,28), gravity 1512, flap -450, pipe width 64, gap 164, speed 156, spawn 210 ticks, gap range 75..287, max change 60 and seed 0x1A2B3C4D. Preserve data-model constraints verbatim: "Immutable named values; positive sizes/speed, gap larger than bird height, valid opening within ground; shared by simulation/rendering/tests" (FR-02, FR-03, NFR-04).
+- [X] T004 Add constructor/configuration assertions in `tests/simulation.test.js`, then implement plain fresh-round creation in `simulation.js`, including independent collections and round-owned RNG. Preserve constraints: "phase is ready/playing/paused/game-over; tick and score nonnegative integers; owns one bird and zero or more pairs; only playing advances tick; ready has zero score/tick and empty pairs"; bird "x remains fixed; top-left origin; full unrotated rectangle defines contact; y >= 0; ceiling or ground contact causes loss". Define how fatal proposed positions resolve without leaving an invalid stored bird position (FR-02, FR-07, FR-10, NFR-03).
 
 **Checkpoint**: Configuration validation and fresh-state tests pass. No gameplay layers beyond the planned modules are needed.
 
