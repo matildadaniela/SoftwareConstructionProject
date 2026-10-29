@@ -418,6 +418,45 @@ recorded above. Existing .gitignore covers required JavaScript/universal
 patterns; no additional ignore files are applicable. Only T011 newly completed.
 `.specify/extensions.yml` absent at pre/post checks; no hooks to dispatch.
 
+## T013 — Production composition (2026-10-29)
+
+Requirements: FR-01–FR-03, FR-05, FR-07–FR-11. Only T013 completed.
+`game.js` now exports `mountGame(page, options)` and invokes it through
+`initializeBrowser` in a browser. It owns one fresh round, binds the existing
+input adapter once, steps production `stepRound` through `createLoop`, and
+draws production `renderer.render` with cosmetic clock time. `updateView`
+derives score, status, instructions, control labels and retry visibility directly
+from the round. Unchanged accessible status text is not rewritten every frame.
+Start/resume changes phase visibly immediately and queues one initiating flap
+for the next tick. Pause draws immediately, clears input/backlog, and restoration
+does not resume. Loss stops further simulation and retains the round/final score.
+The returned disposer removes input listeners and cancels the animation chain.
+
+Scope: state-specific Restart game and on-screen retry controls are displayed
+but disabled pending T021. Scoring implementation remains T017; browser smoke
+checks remain T014. No later task or browser acceptance is claimed.
+
+Verification: six new requirement-labelled composition tests in
+`tests/browser.test.js` initially failed because `mountGame` was absent (34
+existing browser tests passed). After implementation, `npm test` passed **90
+tests, 0 failed**, including all T005/T006 tests. Five parameterized tests
+`FR-01 FR-02 FR-07 FR-11: composed … start and resume render and apply one flap`
+cover Space, ArrowUp, mouse, touch and native-button click paths, HUD labels,
+preserved paused state, one flap, fresh resume clock, and disposal. The test
+`FR-03 FR-05 FR-07 FR-10 FR-11: composed hidden pause and loss freeze the rendered round`
+uses production simulation to reach a fatal boundary, checks hidden/restored
+pause, final score/status/retry visibility, ignored post-loss input and one
+animation chain. These use tiny event targets and an injected scheduler/draw
+recorder; actual browser input, rendering and native defaults await T014.
+`git diff --check` passed.
+
+Constitution I–V: specification-derived composition, focused existing module
+boundaries, tests written before implementation, zero added dependencies, and
+requirement/function/test links above. Existing JavaScript/universal ignore
+patterns are sufficient; no other ignore tooling applies. Checklist
+requirements.md passed 16/16 without modification. `.specify/extensions.yml`
+absent at pre/post checks; no hooks to dispatch.
+
 
 ## T012 — Read-only arcade renderer (2026-10-29)
 

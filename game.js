@@ -1,10 +1,11 @@
 import { CONFIG } from './config.js';
+import { createRound, startOrFlap, pauseRound, stepRound } from './simulation.js';
+import { render } from './renderer.js';
 
 const MAX_STEPS_PER_FRAME = 30;
 const GAMEPLAY_KEYS = new Set(['Space', 'ArrowUp']);
 
-// Browser composition (T013) can use this gate without making Node imports
-// depend on a document, window, renderer or application markup.
+// Keep Node imports safe and defer browser composition until markup is ready.
 export function initializeBrowser(initialize, page = globalThis.document) {
   if (!page) return () => {};
   if (page.readyState !== 'loading') {
@@ -155,3 +156,77 @@ export function createLoop({
     },
   };
 }
+
+export function mountGame(page, options = {}) {
+  const window = page.defaultView;
+  const element = id => page.getElementById(id);
+  const context = element('game-canvas').getContext('2d');
+  const button = element('game-button');
+  const retry = element('retry-button');
+  const score = element('score');
+  const status = element('status');
+  const instructions = element('instructions');
+  const round = createRound();
+  const clock = options.clock ?? (() => window.performance.now());
+  const draw = options.draw ?? render;
+  const views = {
+    ready: ['Ready to fly', 'Start game', 'Space / ↑ or click / tap the game to start and flap.'],
+    playing: ['Flying', 'Restart game', 'Space / ↑ or click / tap the game to flap.'],
+    paused: ['Flight paused', 'Resume game', 'Space / ↑ or click / tap the game to resume with a flap.'],
+    'game-over': ['Game over', 'Restart game', 'Flight ended. Tap to try again or use Restart game.'],
+  };
+  function updateView() {
+    const [message, label, instruction] = views[round.phase];
+    score.textContent = String(round.score);
+    const statusText = round.phase === 'game-over'
+      ? `${message}. Final score: ${round.score}` : message;
+    // Avoid repeatedly announcing unchanged status on decorative frames.
+    if (status.textContent !== statusText) status.textContent = statusText;
+    button.textContent = label;
+    instructions.textContent = instruction;
+    retry.hidden = round.phase !== 'game-over';
+    // Retry implementation belongs to T021; expose its state-specific layout
+    // without offering an activation that cannot yet reset the round.
+    button.disabled = round.phase === 'playing' || round.phase === 'game-over';
+    retry.disabled = true;
+    draw(context, round, CONFIG, clock());
+  }
+  const loop = createLoop({
+    clock,
+    requestFrame: options.requestFrame ?? (callback => window.requestAnimationFrame(callback)),
+    cancelFrame: options.cancelFrame ?? (id => window.cancelAnimationFrame(id)),
+    isPlaying: () => round.phase === 'playing',
+    step: inputs => stepRound(round, CONFIG, inputs),
+    render: updateView,
+  });
+  const disposeInput = bindInput({
+    keyboard: page, window, document: page,
+    gameArea: element('playfield'), button,
+  }, {
+    gameplay() {
+      if (round.phase === 'game-over') return;
+      if (round.phase !== 'playing') {
+        startOrFlap(round);
+        loop.resetTiming();
+      }
+      loop.enqueue({ type: 'flap' });
+      updateView();
+    },
+    pause() {
+      pauseRound(round);
+      updateView();
+    },
+    clear() {
+      loop.clearInput();
+      loop.resetTiming();
+    },
+  });
+  updateView();
+  loop.start();
+  return () => {
+    disposeInput();
+    loop.dispose();
+  };
+}
+
+initializeBrowser(page => mountGame(page));

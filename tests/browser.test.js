@@ -493,3 +493,80 @@ test('NFR-03: browser initialization is DOM-safe and waits for page readiness', 
   game.initializeBrowser(() => initialized++, page);
   assert.equal(initialized, 2);
 });
+
+function pageFixture() {
+  const page = target();
+  page.defaultView = target();
+  page.hidden = false;
+  page.hasFocus = () => true;
+  const elements = Object.fromEntries(['game-canvas', 'playfield', 'game-button',
+    'retry-button', 'score', 'status', 'instructions'].map(id => [id, target()]));
+  elements['game-canvas'].getContext = () => ({});
+  page.getElementById = id => elements[id];
+  const timing = scheduler();
+  const frames = [];
+  const dispose = api('mountGame')(page, {
+    ...timing,
+    draw(context, round) { frames.push(structuredClone(round)); },
+  });
+  return { page, elements, timing, frames, dispose };
+}
+
+for (const method of ['Space', 'ArrowUp', 'mouse', 'touch', 'button']) {
+  test(`FR-01 FR-02 FR-07 FR-11: composed ${method} start and resume render and apply one flap`, () => {
+    const f = pageFixture();
+    const activate = () => {
+      if (method === 'button') f.elements['game-button'].dispatch('click');
+      else if (method === 'mouse' || method === 'touch') gesture(f.elements.playfield, method);
+      else f.page.dispatch('keydown', { code: method });
+    };
+    assert.equal(f.frames.at(-1).phase, 'ready');
+    assert.equal(f.elements.score.textContent, '0');
+    assert.equal(f.elements['game-button'].textContent, 'Start game');
+    activate();
+    assert.equal(f.frames.at(-1).phase, 'playing');
+    f.timing.frame(0);
+    f.timing.frame(9);
+    assert.equal(f.frames.at(-1).activeTick, 1);
+    assert.ok(Math.abs(f.frames.at(-1).bird.velocityY + 437.4) < 1e-9);
+    f.page.defaultView.dispatch('blur');
+    const paused = f.frames.at(-1);
+    assert.equal(paused.phase, 'paused');
+    assert.equal(f.elements['game-button'].textContent, 'Resume game');
+    f.page.defaultView.dispatch('focus');
+    f.timing.frame(60000);
+    assert.deepEqual(f.frames.at(-1), paused);
+    activate();
+    f.timing.frame(120000);
+    f.timing.frame(120009);
+    assert.equal(f.frames.at(-1).activeTick, 2);
+    assert.ok(Math.abs(f.frames.at(-1).bird.velocityY + 437.4) < 1e-9);
+    f.dispose();
+    assert.equal(f.timing.pending(), 0);
+    assert.equal(f.page.listenerCount(), 0);
+  });
+}
+
+test('FR-03 FR-05 FR-07 FR-10 FR-11: composed hidden pause and loss freeze the rendered round', () => {
+  const f = pageFixture();
+  f.elements['game-button'].dispatch('click');
+  f.page.hidden = true;
+  f.page.dispatch('visibilitychange');
+  assert.equal(f.frames.at(-1).phase, 'paused');
+  f.page.hidden = false;
+  f.page.dispatch('visibilitychange');
+  assert.equal(f.frames.at(-1).phase, 'paused');
+  f.elements['game-button'].dispatch('click');
+  f.timing.frame(0);
+  for (let time = 100; time <= 4000; time += 100) f.timing.frame(time);
+  const ended = f.frames.at(-1);
+  assert.equal(ended.phase, 'game-over');
+  assert.equal(f.elements['retry-button'].hidden, false);
+  assert.match(f.elements.status.textContent, /Final score: 0/);
+  f.page.dispatch('keydown', { code: 'Space' });
+  gesture(f.elements.playfield);
+  f.timing.frame(60000);
+  assert.deepEqual(f.frames.at(-1), ended);
+  assert.equal(f.timing.pending(), 1);
+  f.dispose();
+});
