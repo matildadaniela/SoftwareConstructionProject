@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { CONFIG } from '../config.js';
 import * as simulation from '../simulation.js';
+import { render } from '../renderer.js';
 
 // T006 proposed seams for T010 (no production implementation in this task):
 // bindInput({ keyboard, window, document, gameArea, button },
@@ -502,7 +503,7 @@ test('NFR-03: browser initialization is DOM-safe and waits for page readiness', 
   assert.equal(initialized, 2);
 });
 
-function pageFixture() {
+function pageFixture(draw = () => {}) {
   const page = target();
   page.defaultView = target();
   page.hidden = false;
@@ -515,7 +516,7 @@ function pageFixture() {
   const frames = [];
   const dispose = api('mountGame')(page, {
     ...timing,
-    draw(context, round) { frames.push(structuredClone(round)); },
+    draw(context, round) { frames.push(structuredClone(round)); draw(context, round); },
   });
   return { page, elements, timing, frames, dispose };
 }
@@ -578,3 +579,43 @@ test('FR-03 FR-05 FR-07 FR-10 FR-11: composed hidden pause and loss freeze the r
   assert.equal(f.timing.pending(), 1);
   f.dispose();
 });
+
+for (const count of [0, 1, 10]) {
+  test(`FR-06 FR-07 FR-09 NFR-03: HUD and canvas show ${count} by next render and preserve final score`, () => {
+    let live;
+    const texts = [];
+    const context = {};
+    for (const name of ['save', 'restore', 'setTransform', 'beginPath', 'rect', 'clip', 'fillRect']) context[name] = () => {};
+    context.fillText = text => texts.push(text);
+    const f = pageFixture((unused, round) => {
+      live = round;
+      const before = structuredClone(round);
+      texts.length = 0;
+      render(context, round, CONFIG, 500);
+      assert.deepEqual(round, before, 'render preserves gameplay and obstacle RNG');
+    });
+    f.elements['game-button'].dispatch('click');
+    f.timing.frame(0);
+    f.timing.frame(9); // Consume initiating flap before placing known score fixtures.
+    live.bird.y = 248;
+    live.bird.velocityY = -CONFIG.gravity * CONFIG.stepSeconds;
+    live.pairs = Array.from({ length: count }, (_, id) => ({
+      id: id + 1, x: 25, width: 64, gapTop: 180, gapHeight: 164, scored: false,
+    }));
+    f.timing.frame(18);
+    assert.equal(f.frames.at(-1).score, count);
+    assert.equal(f.elements.score.textContent, String(count));
+    assert.ok(texts.includes(String(count)));
+    live.bird.y = 497;
+    live.bird.velocityY = 450;
+    f.timing.frame(27);
+    assert.equal(live.phase, 'game-over');
+    assert.equal(f.elements.status.textContent, `Game over. Final score: ${count}`);
+    assert.ok(texts.includes(`Final score: ${count}`));
+    const ended = structuredClone(live);
+    f.timing.frame(60000);
+    assert.deepEqual(live, ended);
+    assert.equal(f.elements.score.textContent, String(count));
+    f.dispose();
+  });
+}

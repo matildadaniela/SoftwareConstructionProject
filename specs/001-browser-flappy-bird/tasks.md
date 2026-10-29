@@ -1,7 +1,7 @@
 # Tasks: Browser Flappy Bird
 
 **Input**: `specs/001-browser-flappy-bird/` — spec.md, plan.md, research.md, data-model.md, contracts/browser-game.md and quickstart.md; constitution v1.0.0.
-**Tests**: Automated testing and browser verification explicitly requested. Phase 1 setup (T001–T002) is complete; see [validation.md](validation.md) for setup evidence. Phase 2 (T003–T004) is also complete with construction tests; Phase 3 (T005–T014) is complete with automated tests and Chrome headless smoke evidence; later phases and full browser/device acceptance remain pending.
+**Tests**: Automated testing and browser verification explicitly requested. Phase 1 setup (T001–T002) is complete; see [validation.md](validation.md) for setup evidence. Phase 2 (T003–T004) is also complete with construction tests; Phase 3 (T005–T014) is complete with automated tests and Chrome headless smoke evidence; Phase 4 (T015–T018) is complete with scoring tests and controlled Chrome browser evidence; later phases and full browser/device acceptance remain pending.
 **Organization**: Four user-story increments, ordered P1, P2, P2, P3. Paths are relative to the repository root.
 
 ## Format and scope
@@ -58,13 +58,13 @@ Write each story's automated tests before its implementation, confirm relevant a
 
 ### Automated tests
 
-- [ ] T015 [P] [US2] Extend `tests/simulation.test.js` for equality and either side of the pass boundary, upper/lower pair counting once, repeated steps, multiple pairs, retired hazards and collision with one pair while another could score; verify 0/1/10-pair outcomes and nonnegative integer score (FR-05, FR-06, SC-02).
-- [ ] T016 [P] [US2] Extend `tests/browser.test.js` with fake-render/HUD contract checks for score update by the next render, final score preservation and render operations leaving simulation/obstacle RNG unchanged (FR-06–FR-09, NFR-03).
+- [X] T015 [P] [US2] Extend `tests/simulation.test.js` for equality and either side of the pass boundary, upper/lower pair counting once, repeated steps, multiple pairs, retired hazards and collision with one pair while another could score; verify 0/1/10-pair outcomes and nonnegative integer score (FR-05, FR-06, SC-02).
+- [X] T016 [P] [US2] Extend `tests/browser.test.js` with fake-render/HUD contract checks for score update by the next render, final score preservation and render operations leaving simulation/obstacle RNG unchanged (FR-06–FR-09, NFR-03).
 
 ### Implementation and verification
 
-- [ ] T017 [US2] Implement scoring in `simulation.js` only after all hazards are checked: strict bird.left > pair.right, one point per unscored pair, no points anywhere in a fatal tick, and retirement after scoring. Keep score in memory only (FR-05, FR-06).
-- [ ] T018 [US2] Connect current/final score to `game.js` HUD and `renderer.js` without a second source of truth, pass T015/T016, and record browser observations for controlled 0/1/10 scores and collision precedence in `specs/001-browser-flappy-bird/validation.md` (FR-06, FR-07, FR-09, SC-02).
+- [X] T017 [US2] Implement scoring in `simulation.js` only after all hazards are checked: strict bird.left > pair.right, one point per unscored pair, no points anywhere in a fatal tick, and retirement after scoring. Keep score in memory only (FR-05, FR-06).
+- [X] T018 [US2] Connect current/final score to `game.js` HUD and `renderer.js` without a second source of truth, pass T015/T016, and record browser observations for controlled 0/1/10 scores and collision precedence in `specs/001-browser-flappy-bird/validation.md` (FR-06, FR-07, FR-09, SC-02).
 
 **Checkpoint**: Scoring is independently verified using known fixtures and visible output.
 

@@ -1,0 +1,11 @@
+2026-10-29 — Node v22.15.0 / headless Chrome 156.0.8078.48
+Command: node specs/001-browser-flappy-bird/evidence/phase4/scoring-smoke.mjs
+Viewport: 1100×1100, device scale 1
+Controlled legal generated-opening trajectories (random sample 0.5):
+0 pairs: terminal tick 69; HUD 0; Game over. Final score: 0
+1 pair: terminal tick 553; HUD 1; Game over. Final score: 1
+10 pairs: terminal tick 2455; HUD 10; Game over. Final score: 10
+Production mountGame view rendered each terminal fixture; repeated render preserved state.
+Collision precedence: existing score 2 preserved; another passing pair stayed unscored.
+Zero Runtime.exceptionThrown events. Screenshot scoring-final-10.png visually inspected.
+PASS

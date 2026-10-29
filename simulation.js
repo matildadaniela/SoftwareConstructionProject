@@ -27,7 +27,7 @@ function spawnPair(round, config, random) {
   const gapTop = minimum + random() * (maximum - minimum);
   // Unique within round; top rectangle spans y=0..gapTop, bottom spans
   // gapTop+gapHeight..groundY; inclusive edges. Scored may change false→true
-  // once (T017); remove after right edge <0.
+  // once; remove after right edge <0.
   round.pairs.push({
     id: round.nextPairId++,
     x: config.width,
@@ -110,6 +110,14 @@ export function stepRound(round, config = CONFIG, inputsForTick = [],
     round.phase = 'game-over';
     // Collision precedes scoring/retirement. Later backlog calls are inert.
     return true;
+  }
+  // Every hazard must be clear before any pair can award a point. Count pairs
+  // before retirement so even a fast offscreen crossing is counted once.
+  for (const pair of round.pairs) {
+    if (!pair.scored && round.bird.x > pair.x + pair.width) {
+      pair.scored = true;
+      round.score++;
+    }
   }
   round.pairs = round.pairs.filter(pair => pair.x + pair.width >= 0);
   return true;

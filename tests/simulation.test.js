@@ -406,3 +406,68 @@ test('FR-05: newly spawned lower pipe can sweep through bird before retirement',
   assert.equal(round.pairs.length, 1);
   near(round.pairs[0].x, 124);
 });
+
+for (const [label, offset, expected] of [['before', 0.001, 0], ['equal', 0, 0], ['after', -0.001, 1]]) {
+  test(`FR-06: strict pass boundary ${label} awards ${expected}`, () => {
+    const round = playing();
+    round.bird.velocityY = -CONFIG.gravity * CONFIG.stepSeconds;
+    round.pairs = [pair(90 - 64 + CONFIG.pipeSpeed * CONFIG.stepSeconds + offset)];
+    step(round);
+    assert.equal(round.phase, 'playing');
+    assert.equal(round.score, expected);
+    assert.equal(round.pairs[0].scored, Boolean(expected));
+  });
+}
+
+test('FR-06: upper and lower pipes count as one pair across repeated steps and retirement', () => {
+  const round = playing();
+  round.pairs = [pair(25)];
+  for (let tick = 0; tick < 80; tick++) cruise(round, () => 0.5);
+  assert.equal(round.score, 1);
+  assert.equal(round.pairs.length, 0);
+});
+
+test('FR-06: simultaneous passes score each unscored pair before retirement', () => {
+  const round = playing();
+  round.pairs = [pair(25, 180, 1), pair(-64, 180, 2), { ...pair(0, 180, 3), scored: true }];
+  step(round);
+  assert.equal(round.score, 2);
+  assert.deepEqual(round.pairs.map(p => [p.id, p.scored]), [[1, true], [3, true]]);
+  step(round);
+  assert.equal(round.score, 2);
+});
+
+for (const hazard of ['pipe', 'ceiling', 'ground']) {
+  test(`FR-05 FR-06: ${hazard} collision suppresses every potential point`, () => {
+    for (const reverse of [false, true]) {
+      const round = playing();
+      round.score = 3;
+      round.pairs = [pair(25, 180, 1), pair(-64, 180, 2)];
+      if (hazard === 'pipe') round.pairs.push(pair(124.5, 270, 3));
+      if (hazard === 'ceiling') { round.bird.y = 1; round.bird.velocityY = -450; }
+      if (hazard === 'ground') { round.bird.y = 497; round.bird.velocityY = 450; }
+      if (reverse) round.pairs.reverse();
+      step(round);
+      assert.equal(round.phase, 'game-over');
+      assert.equal(round.score, 3);
+      assert.ok(round.pairs.every(p => !p.scored));
+      const ended = structuredClone(round);
+      step(round);
+      assert.deepEqual(round, ended);
+    }
+  });
+}
+
+for (const count of [0, 1, 10]) {
+  test(`FR-06 SC-02: controlled legal trajectory clears exactly ${count} pairs`, () => {
+    const round = playing();
+    // A fixed legal opening stream keeps the traversal independent of random luck.
+    while (round.score < count && round.activeTick < 3000) {
+      cruise(round, () => 0.5);
+      assert.ok(Number.isInteger(round.score) && round.score >= 0);
+    }
+    assert.equal(round.score, count);
+    while (round.phase === 'playing') step(round);
+    assert.equal(round.score, count);
+  });
+}

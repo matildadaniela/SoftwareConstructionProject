@@ -568,3 +568,66 @@ Constitution I–V reviewed: scoped specification-derived fix; focused input
 boundary; failing-then-passing regression plus browser evidence; no dependencies;
 requirement/task/function/test traceability recorded here. No Vibe code or assets
 were accessed or changed. Pre/post extension-hook checks: extensions.yml absent.
+
+## Phase 4 — Fair current-round scoring, T015–T018 (2026-10-29)
+
+Requirements: FR-05–FR-09, SC-02, NFR-03. Branch `sdd-development`.
+Requirements checklist passed 16/16, unchanged. Existing `.gitignore` covers
+this private native ES-module project; no other ignore tooling applies.
+`.specify/extensions.yml` is absent at pre/post checks; no hooks to dispatch.
+No dependencies or persistence introduced; no Vibe code/assets accessed.
+
+- **T015** — `tests/simulation.test.js`: strict boundary tests cover equality
+  and ±0.001 px; one paired upper/lower hazard counts once across repeated
+  steps and retirement; simultaneous unscored pairs count separately, already
+  scored pairs stay inert, and offscreen passes score before retirement.
+  Pipe/ceiling/ground collision tests suppress all potential points with both
+  hazard orders and preserve an existing score through inert later steps.
+  `FR-06 SC-02: controlled legal trajectory clears exactly … pairs` covers
+  0/1/10 using normal physics/collision and generated openings with injected
+  legal sample 0.5, then natural loss, asserting integer/nonnegative scores.
+- **T016** — `tests/browser.test.js`: `FR-06 FR-07 FR-09 NFR-03: HUD and canvas
+  show … by next render and preserve final score` covers 0/1/10. Uses production
+  `mountGame`, loop, simulation and renderer with tiny event/scheduler/Canvas
+  command recorders. Checks score on the first rendered scoring tick, matching
+  HUD/canvas values, final status/overlay and unchanged state/RNG after drawing.
+  `pageFixture` accepts an optional draw observer; no production test hook added.
+- **T017** — `simulation.js:stepRound` now awards each unscored strictly passed
+  pair once, after collision's terminal early return and before retirement.
+  The round remains the only score owner. Inclusive contact and fractional
+  fatal movement are unchanged. Existing scored flags and score freeze on loss.
+- **T018** — Existing `game.js:mountGame/updateView` and `renderer.js:render`
+  already derive current/final score from the round; their production code
+  needed no changes. The new contract tests verify the integration.
+
+TDD evidence: after adding tests and before scoring, `npm test` reported
+**98 passed, 7 failed** (105 total). Failures exposed missing strict-pass,
+once-only/multiple-pair, nonzero trajectory and HUD scoring behavior. After
+implementation **105 passed, 0 failed**, no skipped/cancelled/todo. Node
+v22.15.0; no sleeps or DOM-emulation dependencies in unit tests.
+`git diff --check` passed.
+
+Browser evidence: [evidence/phase4/scoring-smoke.mjs](evidence/phase4/scoring-smoke.mjs),
+[results](evidence/phase4/scoring-results.txt), and
+[score-10 screenshot](evidence/phase4/scoring-final-10.png).
+Chrome 156.0.8078.48 headless on the local macOS workspace; 1100×1100 viewport,
+scale 1, isolated temporary profile. Served current modules via the existing
+localhost:8000 server; the attempted server launch reported the port occupied.
+Local socket/Chrome checks required approved sandbox escalation.
+
+The native-browser driver imported production modules and traversed legal fixed
+opening streams to 0/1/10, then allowed natural loss: terminal ticks 69/553/2455.
+Each resulting round was supplied as a controlled fixture to a separately
+mounted production view on native DOM/Canvas with injected frame scheduling.
+Observed HUD and final status 0/1/10, repeated-render state preservation, and
+collision precedence (score 2 retained with the potential new point unawarded).
+Screenshot visually confirms readable HUD, canvas score and final overlay 10.
+Zero captured runtime JavaScript exceptions. These are controlled browser
+fixtures, not human-played trajectories or real-time performance measurements;
+next-render integration is also asserted by the automated composition tests.
+Full supported-browser/device journeys and measurements remain later tasks.
+
+Constitution I–V reviewed: specified scoring semantics; focused change within
+existing module boundaries and shared geometry; failing-then-passing core tests
+plus native-browser evidence; zero dependencies; explicit task/function/test
+traceability above. T015–T018 marked complete; Phase 5 and later remain unchecked.
