@@ -40,6 +40,52 @@ function spawnPair(round, config, random) {
   round.nextSpawnTick += config.spawnTicks;
 }
 
+// Slab intervals share one normalized tick time, including contact at 0 and 1.
+// Infinity denotes no contact; stationary overlapping axes impose no limit.
+function sweptContactTime(a, b, da, db) {
+  let entry = 0;
+  let exit = 1;
+  for (const [axis, size] of [['x', 'width'], ['y', 'height']]) {
+    const displacement = da[axis] - db[axis];
+    if (displacement === 0) {
+      if (a[axis] + a[size] < b[axis] || a[axis] > b[axis] + b[size]) return Infinity;
+      continue;
+    }
+    const first = (b[axis] - a[axis] - a[size]) / displacement;
+    const last = (b[axis] + b[size] - a[axis]) / displacement;
+    entry = Math.max(entry, Math.min(first, last));
+    exit = Math.min(exit, Math.max(first, last));
+    if (entry > exit) return Infinity;
+  }
+  return entry;
+}
+
+export function sweptAabb(a, b, da, db) {
+  return sweptContactTime(a, b, da, db) !== Infinity;
+}
+
+function firstCollisionTime(round, config, birdMovement, pipeMovement) {
+  const bird = round.bird;
+  const bottomLimit = config.groundY - bird.height;
+  let contact = Infinity;
+  if (bird.y <= 0 || bird.y >= bottomLimit) contact = 0;
+  else if (birdMovement.y < 0) contact = -bird.y / birdMovement.y;
+  else if (birdMovement.y > 0) contact = (bottomLimit - bird.y) / birdMovement.y;
+  if (contact > 1) contact = Infinity;
+
+  for (const pair of round.pairs) {
+    const lowerY = pair.gapTop + pair.gapHeight;
+    for (const rectangle of [
+      { x: pair.x, y: 0, width: pair.width, height: pair.gapTop },
+      { x: pair.x, y: lowerY, width: pair.width, height: config.groundY - lowerY },
+    ]) {
+      contact = Math.min(contact,
+        sweptContactTime(bird, rectangle, birdMovement, pipeMovement));
+    }
+  }
+  return contact;
+}
+
 export function stepRound(round, config = CONFIG, inputsForTick = [],
   random = () => nextObstacleRandom(round)) {
   if (round.phase !== 'playing') return false;
@@ -50,11 +96,21 @@ export function stepRound(round, config = CONFIG, inputsForTick = [],
 
   // Semi-implicit Euler: inputs set velocity, then gravity precedes position.
   round.bird.velocityY += config.gravity * config.stepSeconds;
-  round.bird.y += round.bird.velocityY * config.stepSeconds;
+  const birdMovement = { x: 0, y: round.bird.velocityY * config.stepSeconds };
+  const pipeMovement = { x: -config.pipeSpeed * config.stepSeconds, y: 0 };
   round.activeTick++;
 
   if (round.activeTick === round.nextSpawnTick) spawnPair(round, config, random);
-  for (const pair of round.pairs) pair.x -= config.pipeSpeed * config.stepSeconds;
+  const contact = firstCollisionTime(round, config, birdMovement, pipeMovement);
+  const elapsed = Math.min(1, contact);
+  round.bird.y = Math.max(0, Math.min(config.groundY - round.bird.height,
+    round.bird.y + birdMovement.y * elapsed));
+  for (const pair of round.pairs) pair.x += pipeMovement.x * elapsed;
+  if (contact !== Infinity) {
+    round.phase = 'game-over';
+    // Collision precedes scoring/retirement. Later backlog calls are inert.
+    return true;
+  }
   round.pairs = round.pairs.filter(pair => pair.x + pair.width >= 0);
   return true;
 }
@@ -64,7 +120,7 @@ export function stepRound(round, config = CONFIG, inputsForTick = [],
 // ready has zero score/tick and empty pairs.
 // Bird: x remains fixed; top-left origin; full unrotated rectangle defines
 // contact; y >= 0; ceiling or ground contact causes loss.
-// Fatal-position policy for T009: test the full proposed swept path before
+// Fatal-position policy: test the full proposed swept path before
 // committing movement. At a boundary loss, store y clamped to
 // [0, groundY - bird.height], keep x fixed, and discard remaining step time.
 // Clamping must never replace collision detection or make contact nonfatal.

@@ -365,3 +365,44 @@ test('FR-05: swept axes must overlap at the same time rather than separately', (
     { x: 100, y: 50 }, { x: 0, y: 0 },
   ), false);
 });
+
+test('FR-05 FR-10: earliest contact discards remaining movement and preserves score', () => {
+  const round = playing();
+  round.score = 3;
+  round.bird.velocityY = -12.6;
+  // Later hazard is deliberately first in the collection.
+  round.pairs = [pair(200, 270, 1), pair(150, 270, 2), pair(0, 180, 3)];
+  step(round, [], createConfig({ pipeSpeed: 30000 }));
+  assert.equal(round.phase, 'game-over');
+  near(round.pairs[1].x, 124);
+  near(round.pairs[0].x, 174);
+  near(round.bird.y, 248);
+  assert.equal(round.score, 3);
+  assert.ok(round.pairs.every(p => !p.scored));
+  const terminal = structuredClone(round);
+  assert.equal(step(round), false);
+  assert.deepEqual(round, terminal);
+});
+
+test('FR-05 FR-10: ground contact stops bird and pipes at the same fractional time', () => {
+  const round = playing();
+  round.bird.y = 497;
+  round.bird.velocityY = 227.4;
+  round.pairs = [pair(300)];
+  step(round);
+  assert.equal(round.phase, 'game-over');
+  near(round.bird.y, 498);
+  near(round.pairs[0].x, 299.35);
+});
+
+test('FR-05: newly spawned lower pipe can sweep through bird before retirement', () => {
+  const round = playing();
+  round.activeTick = 209;
+  round.bird.y = 400;
+  round.bird.velocityY = -12.6;
+  step(round, [], createConfig({ pipeSpeed: 120000 }), () => 0.5);
+  assert.equal(round.phase, 'game-over');
+  assert.equal(round.activeTick, 210);
+  assert.equal(round.pairs.length, 1);
+  near(round.pairs[0].x, 124);
+});
