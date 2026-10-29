@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#14243b">
+    <title>Flappy Bird · Sky Arcade</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="game.js"></script>
+  </head>
+  <body>
+    <main class="arcade" aria-labelledby="game-title">
+      <header class="masthead">
+        <svg class="bird-icon" viewBox="0 0 48 40" aria-hidden="true" focusable="false">
+          <path fill="#14243b" d="M8 6h26v6h6v10h8v8H34v6H8v-6H2V14h6z"/>
+          <path fill="#ffd65a" d="M10 10h20v4h6v14H10v-4H6v-8h4z"/>
+          <path fill="#fff7d6" d="M24 10h8v12h-8z"/>
+          <path fill="#14243b" d="M28 14h4v6h-4z"/>
+          <path fill="#f47553" d="M32 24h12v4H32z"/>
+          <path fill="#dc9a32" d="M10 20h12v4H10z"/>
+        </svg>
+        <p class="eyebrow">Sky Arcade · One more flight</p>
+        <h1 id="game-title">Flappy Bird</h1>
+      </header>
+
+      <section class="game" aria-label="Flappy Bird game" aria-describedby="instructions">
+        <div class="hud">
+          <p class="score-label">Round score <output id="score" aria-label="Current round score">0</output></p>
+          <p id="status" role="status" aria-live="polite" aria-atomic="true">Ready to fly</p>
+        </div>
+        <div class="playfield" id="playfield">
+          <!-- Intrinsic dimensions define the world; CSS changes display size only. -->
+          <canvas id="game-canvas" width="400" height="600" aria-label="Flappy Bird playfield" aria-describedby="status instructions">
+            This game needs a browser with Canvas support. Use Space, ArrowUp,
+            or click or tap the game to flap. Your score and status appear above.
+          </canvas>
+          <!-- Revealed by lifecycle composition only when the round has ended. -->
+          <button id="retry-button" class="retry-button" type="button" hidden>Tap to try again</button>
+        </div>
+        <div class="controls">
+          <button id="game-button" class="game-button" type="button" aria-controls="game-canvas" aria-describedby="status">Start game</button>
+          <p id="instructions"><kbd>Space</kbd> / <kbd>↑</kbd> or click / tap the game to start and flap.</p>
+          <p class="hint">Fly through the gaps. Avoid pipes, ceiling and ground.</p>
+          <p class="hint">Away from the page? Your flight pauses. Return and resume to keep flying.</p>
+        </div>
+      </section>
+      <footer>Small wings. Big ambition.</footer>
+      <noscript><p class="script-notice">Enable JavaScript to play Flappy Bird.</p></noscript>
+    </main>
+  </body>
+</html>

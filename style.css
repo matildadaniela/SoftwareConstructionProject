@@ -1,0 +1,76 @@
+:root {
+  color-scheme: dark;
+  font-family: ui-monospace, "Courier New", monospace;
+  color: #fff7d6;
+  background: #14243b;
+  line-height: 1.5;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-width: 0;
+  background: radial-gradient(ellipse at top, #29445a, #14243b 70%);
+}
+
+.arcade {
+  width: min(100% - 2rem, 28rem);
+  margin: 0 auto;
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.masthead { margin-bottom: 1.25rem; }
+.bird-icon { width: 3rem; height: 2.5rem; image-rendering: pixelated; }
+.eyebrow { margin: 0.35rem 0; color: #81e6dc; font-size: 0.75rem; }
+h1 { margin: 0; font-size: clamp(1.75rem, 7vw, 2.5rem); letter-spacing: -0.06em; text-shadow: 3px 3px #071626; }
+
+.game {
+  padding: 1rem;
+  background: #0b192b;
+  border: 2px solid #50768b;
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 0 #07101e;
+}
+
+.hud { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.25rem 1rem; margin-bottom: 0.75rem; text-align: left; }
+.hud p { margin: 0; }
+.score-label { font-size: 0.8rem; }
+#score { display: inline-block; margin-left: 0.25rem; color: #ffd65a; font-size: 1.5rem; font-weight: bold; font-variant-numeric: tabular-nums; }
+#status { color: #81e6dc; font-size: 0.85rem; }
+
+.playfield { position: relative; width: 100%; outline: 2px solid #50768b; background: #62c9cf; }
+#game-canvas { display: block; width: 100%; height: auto; aspect-ratio: 2 / 3; image-rendering: pixelated; touch-action: manipulation; }
+
+button {
+  min-height: 3rem;
+  padding: 0.7rem 1rem;
+  border: 2px solid #fff7d6;
+  border-radius: 0.3rem;
+  font: inherit;
+  font-weight: bold;
+  color: #14243b;
+  background: #ffd65a;
+  box-shadow: 0 4px 0 #ac702a;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button:hover { background: #ffe99d; }
+button:active { box-shadow: 0 1px 0 #ac702a; }
+button:focus-visible { outline: 3px solid #81e6dc; outline-offset: 5px; }
+.controls { margin-top: 1.25rem; }
+.game-button { width: 100%; }
+.retry-button { position: absolute; top: 60%; left: 50%; transform: translateX(-50%); width: max-content; max-width: 90%; }
+[hidden] { display: none !important; }
+#instructions { margin: 1.25rem 0 0.5rem; font-size: 0.85rem; }
+kbd { font: inherit; color: #ffd65a; }
+.hint { margin: 0.5rem 0 0; color: #b9cbd7; font-size: 0.75rem; }
+footer { margin-top: 1.25rem; color: #b9cbd7; font-size: 0.75rem; }
+.script-notice { padding: 1rem; border: 2px solid #ffd65a; }
+
+@media (max-width: 360px) {
+  .arcade { width: calc(100% - 1rem); padding-top: 1rem; }
+  .game { padding: 0.65rem; }
+}

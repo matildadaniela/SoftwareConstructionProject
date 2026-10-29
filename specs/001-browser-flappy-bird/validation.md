@@ -381,3 +381,39 @@ function/test traceability above. Only T010 is newly marked complete. No page,
 renderer, score/restart integration, real-browser/touch, performance or complete
 US1 acceptance is claimed. `.specify/extensions.yml` is absent at pre- and
 post-execution checks; no hooks are registered.
+
+
+## T011 — Semantic page and responsive styles (2026-10-29)
+
+Requirements: FR-07–FR-09. Created new root `index.html` and `style.css`
+from the specification; no existing application paths were replaced and no Vibe
+source/assets were used. The inline SVG bird icon is independently drawn.
+
+- `index.html`: semantic main/header/section/footer, title and icon above the
+  playfield; current-round score output, polite atomic status, persistent control
+  and hazard instructions, native below-game `game-button` initially labelled
+  Start game, and native on-screen `retry-button` initially hidden. Stable IDs
+  support later state-specific Start/Resume/Restart labels, status and retry
+  visibility. Canvas fallback and noscript text explain browser requirements.
+- `style.css`: strong arcade colors, system fonts, responsive centered layout,
+  wrapping HUD, readable instructions, large native controls, hover/active styles
+  and explicit focus-visible outline. Canvas width scales with its container;
+  height auto and 2:3 aspect ratio preserve intrinsic 400×600 logical coordinates.
+  Retry positions relative to the playfield and remains removed from display
+  and keyboard navigation while hidden. No dependencies or external resources.
+
+Verification: dependency-free Python HTMLParser inspection passed unique IDs,
+all ARIA ID references, native button types, initially hidden retry, intrinsic
+400×600 canvas and existing local stylesheet/module paths. Static CSS review
+confirmed proportional canvas scaling and focus styles. `npm test`: 81 passed,
+0 failed. These existing tests cover gameplay/helpers, not rendered layout.
+`git diff --check` passed. No browser visual, zoom, native keyboard or touchscreen
+verification is claimed; US1 browser smoke checks remain T014. Renderer T012,
+DOM composition/state-specific updates T013 and retry behavior T021 remain
+pending, so this page alone is not yet a playable game.
+
+Constitution I–V: scoped specification-derived markup/styles, focused files,
+existing tests pass, no dependencies, and requirement/file/check references
+recorded above. Existing .gitignore covers required JavaScript/universal
+patterns; no additional ignore files are applicable. Only T011 newly completed.
+`.specify/extensions.yml` absent at pre/post checks; no hooks to dispatch.
