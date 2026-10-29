@@ -19,13 +19,13 @@ This application exposes a browser UI, not a remote API. Internal module seams b
 | Module | Interface | Contract |
 |---|---|---|
 | simulation.js | createRound(config, seed) | Returns a fresh ready round with independent collections and initial RNG state |
-| simulation.js | startOrFlap(round), pauseRound(round) | Implements only legal transitions; accepts already-normalized inputs; flap represented at the next step |
+| simulation.js | startOrFlap(round), pauseRound(round) | Implements only legal transitions; accepts already-normalized inputs; start/resume and active-play flaps represented at the next step; consume all inputs targeting that tick in FIFO order before integration, each setting flap velocity without accumulated impulse or carryover |
 | simulation.js | stepRound(round, config, inputsForTick) | Advances exactly one fixed tick only while playing; mutates owned state; returns phase/score change signals; no DOM/time/storage access |
 | simulation.js | collision and seeded generation helpers | Pure numeric operations, shared definitions for all gameplay; injectable known random stream for tests |
 | game.js | bindInput(targets, actions, availability) → dispose | Owns one set of listeners and Space/ArrowUp held state and pointer deduplication; invokes normalized actions; dispose removes listeners; availability checks both focus and visibility |
 | game.js | createLoop({step, render, clock, requestFrame, cancelFrame}) | Owns one fixed-step accumulator/animation chain; can clear timing and input queues without adding a chain; injected fake scheduler allowed |
 | renderer.js | render(context, round, config) | Draws without gameplay mutations or external randomness affecting round; uses the same geometric bounds as collisions |
-| game.js | initialization and restart action | Composes modules once; resets simulation, pending input and loop timing, updates HUD/status and starts a fresh playing round with one flap and renders the reset view synchronously |
+| game.js | initialization and restart action | Composes modules once; resets simulation, pending input and loop timing, updates HUD/status and starts a fresh playing round, immediately sets initiating flap velocity without advancing position or simulation time, and renders the reset view synchronously; never queues that initiating flap again |
 
 Input and timing functions live together in `game.js`; the table separates responsibilities, not additional modules or classes. Interfaces are design seams, not a separately published library. Implementation may choose equivalent signatures while preserving responsibilities, observable behavior and traceability.
 
