@@ -1,10 +1,10 @@
 # Quickstart and Validation Guide
 
-This is the intended validation procedure after implementation; the root-level application, `package.json` and tests are planned artifacts and do not exist merely because this guide describes them.
+The root-level game, `package.json`, automated tests and native browser harness are implemented. This guide describes how to run them and finish acceptance; consult [validation.md](validation.md) for executed results and incomplete checks.
 
 ## Prerequisites and setup
 
-Use Node.js 22 (workspace version 22.15.0), Python 3, keyboard, mouse, a touch-capable desktop device and desktop stable Chrome, Firefox, Edge and Safari. No package installation or build step is planned. D-01–D-03 are resolved in [scope-comparison.md](scope-comparison.md); use the 2026-10-29 amended requirements. Run from the repository root:
+Use Node.js 22 (workspace version 22.15.0), Python 3, keyboard, mouse, a touch-capable desktop device and desktop stable Chrome, Firefox, Edge and Safari. No package installation or build step is needed. D-01–D-03 are resolved in [scope-comparison.md](scope-comparison.md); use the 2026-10-29 amended requirements. Run from the repository root:
 
 ```sh
 node --version
@@ -13,7 +13,7 @@ npm test
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-The proposed `npm test` script runs `node --test tests/*.test.js`. Expect no failed tests and names containing requirement IDs. Open `http://127.0.0.1:8000/` for the SDD game and `http://127.0.0.1:8000/tests/browser/` for browser validation. Serve modules over HTTP rather than opening file URLs.
+The `npm test` script runs `node --test tests/*.test.js`. Expect no failed tests and names containing requirement IDs. Open `http://127.0.0.1:8000/` for the SDD game and `http://127.0.0.1:8000/tests/browser/` for browser validation. Serve modules over HTTP rather than opening file URLs.
 
 ## Automated functionality checks
 
@@ -47,7 +47,7 @@ In each browser run a 60-second collision-free trajectory in the harness using t
 
 ## Evidence and acceptance
 
-Create `validation.md` during implementation with date, commit, hardware/OS/display/viewport, exact browser versions, unit command/results, per-browser journey results, FPS duration/count/average and stutter investigation, 100-cycle outcome comparisons, all 100 reset measurements and their visible-frame evidence/resolution, defects and rerun references. Include requirement-to-test names and implementation-file/function references, with task IDs once tasks exist. Missing browsers or measurement tools mean incomplete validation, never an assumed pass. No results have been executed as part of this planning workflow.
+Create `validation.md` during implementation with date, commit, hardware/OS/display/viewport, exact browser versions, unit command/results, per-browser journey results, FPS duration/count/average and stutter investigation, 100-cycle outcome comparisons, all 100 reset measurements and their visible-frame evidence/resolution, defects and rerun references. Include requirement-to-test names and implementation-file/function references, with task IDs once tasks exist. Missing browsers or measurement tools mean incomplete validation, never an assumed pass. Recorded executions are linked in validation.md; follow this procedure to obtain the missing acceptance evidence.
 
 ## Independent development and scope review
 

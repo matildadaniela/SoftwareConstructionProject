@@ -1,0 +1,752 @@
+
+> test
+> node --test tests/*.test.js
+
+TAP version 13
+# Subtest: FR-01 FR-02 FR-07 FR-08 FR-11: Space starts with one flap
+ok 1 - FR-01 FR-02 FR-07 FR-08 FR-11: Space starts with one flap
+  ---
+  duration_ms: 1.7195
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-08 FR-11: ArrowUp starts with one flap
+ok 2 - FR-01 FR-02 FR-07 FR-08 FR-11: ArrowUp starts with one flap
+  ---
+  duration_ms: 0.557
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-08 FR-11: mouse starts with one flap
+ok 3 - FR-01 FR-02 FR-07 FR-08 FR-11: mouse starts with one flap
+  ---
+  duration_ms: 0.229333
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-08 FR-11: touch starts with one flap
+ok 4 - FR-01 FR-02 FR-07 FR-08 FR-11: touch starts with one flap
+  ---
+  duration_ms: 0.171875
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-08 FR-11: button starts with one flap
+ok 5 - FR-01 FR-02 FR-07 FR-08 FR-11: button starts with one flap
+  ---
+  duration_ms: 0.188625
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-08 FR-11: Space resumes with one flap
+ok 6 - FR-01 FR-02 FR-07 FR-08 FR-11: Space resumes with one flap
+  ---
+  duration_ms: 0.207
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-08 FR-11: ArrowUp resumes with one flap
+ok 7 - FR-01 FR-02 FR-07 FR-08 FR-11: ArrowUp resumes with one flap
+  ---
+  duration_ms: 0.143875
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-08 FR-11: mouse resumes with one flap
+ok 8 - FR-01 FR-02 FR-07 FR-08 FR-11: mouse resumes with one flap
+  ---
+  duration_ms: 0.15075
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-08 FR-11: touch resumes with one flap
+ok 9 - FR-01 FR-02 FR-07 FR-08 FR-11: touch resumes with one flap
+  ---
+  duration_ms: 0.458292
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-08 FR-11: button resumes with one flap
+ok 10 - FR-01 FR-02 FR-07 FR-08 FR-11: button resumes with one flap
+  ---
+  duration_ms: 0.40275
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-08: held keys suppressed independently, repeats ignored, release allows next press
+ok 11 - FR-01 FR-02 FR-08: held keys suppressed independently, repeats ignored, release allows next press
+  ---
+  duration_ms: 0.1665
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-08: gameplay keys prevent defaults including repeats; Tab/Enter retain native activation
+ok 12 - FR-01 FR-08: gameplay keys prevent defaults including repeats; Tab/Enter retain native activation
+  ---
+  duration_ms: 0.098041
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-08: mouse compatibility events and button bubbling produce one action per gesture
+ok 13 - FR-01 FR-08: mouse compatibility events and button bubbling produce one action per gesture
+  ---
+  duration_ms: 0.569958
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-08: touch compatibility events and button bubbling produce one action per gesture
+ok 14 - FR-01 FR-08: touch compatibility events and button bubbling produce one action per gesture
+  ---
+  duration_ms: 0.073458
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-08: native clicks activate even when isPrimary is false
+ok 15 - FR-01 FR-08: native clicks activate even when isPrimary is false
+  ---
+  duration_ms: 0.065709
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-08: secondary mouse buttons ignored and pointer cancellation permits next tap
+ok 16 - FR-01 FR-08: secondary mouse buttons ignored and pointer cancellation permits next tap
+  ---
+  duration_ms: 0.073584
+  type: 'test'
+  ...
+# Subtest: FR-11: focus-first restoration remains paused; input requires both guards
+ok 17 - FR-11: focus-first restoration remains paused; input requires both guards
+  ---
+  duration_ms: 0.100959
+  type: 'test'
+  ...
+# Subtest: FR-11: visibility-first restoration remains paused; input requires both guards
+ok 18 - FR-11: visibility-first restoration remains paused; input requires both guards
+  ---
+  duration_ms: 0.037416
+  type: 'test'
+  ...
+# Subtest: FR-11: blur clears held keys and pointer state and requests backlog/input clearing
+ok 19 - FR-11: blur clears held keys and pointer state and requests backlog/input clearing
+  ---
+  duration_ms: 0.063792
+  type: 'test'
+  ...
+# Subtest: FR-11: hidden clears held keys and pointer state and requests backlog/input clearing
+ok 20 - FR-11: hidden clears held keys and pointer state and requests backlog/input clearing
+  ---
+  duration_ms: 0.033791
+  type: 'test'
+  ...
+# Subtest: FR-02 NFR-03: two distinct inputs target one tick, preserve FIFO, drain once and do not accumulate impulse
+ok 21 - FR-02 NFR-03: two distinct inputs target one tick, preserve FIFO, drain once and do not accumulate impulse
+  ---
+  duration_ms: 0.2775
+  type: 'test'
+  ...
+# Subtest: FR-02 NFR-03: future tick input is neither consumed early nor carried past its tick
+ok 22 - FR-02 NFR-03: future tick input is neither consumed early nor carried past its tick
+  ---
+  duration_ms: 0.056667
+  type: 'test'
+  ...
+# Subtest: NFR-03: 30-step callback cap retains visible backlog and renders after each batch
+ok 23 - NFR-03: 30-step callback cap retains visible backlog and renders after each batch
+  ---
+  duration_ms: 0.155166
+  type: 'test'
+  ...
+# Subtest: FR-07 FR-11 NFR-03: pause clears backlog/queue and resume uses fresh clock origin
+ok 24 - FR-07 FR-11 NFR-03: pause clears backlog/queue and resume uses fresh clock origin
+  ---
+  duration_ms: 0.065542
+  type: 'test'
+  ...
+# Subtest: FR-07 NFR-03: inactive ready does not accumulate simulation time
+ok 25 - FR-07 NFR-03: inactive ready does not accumulate simulation time
+  ---
+  duration_ms: 0.043125
+  type: 'test'
+  ...
+# Subtest: FR-07 NFR-03: inactive paused does not accumulate simulation time
+ok 26 - FR-07 NFR-03: inactive paused does not accumulate simulation time
+  ---
+  duration_ms: 0.030125
+  type: 'test'
+  ...
+# Subtest: FR-07 NFR-03: inactive game-over does not accumulate simulation time
+ok 27 - FR-07 NFR-03: inactive game-over does not accumulate simulation time
+  ---
+  duration_ms: 0.028709
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-07: terminal step stops later backlog steps within the same callback
+ok 28 - FR-05 FR-07: terminal step stops later backlog steps within the same callback
+  ---
+  duration_ms: 0.044833
+  type: 'test'
+  ...
+# Subtest: NFR-03: repeated start/reset retains one animation chain; disposal cancels it
+ok 29 - NFR-03: repeated start/reset retains one animation chain; disposal cancels it
+  ---
+  duration_ms: 0.11525
+  type: 'test'
+  ...
+# Subtest: FR-08 NFR-03: input disposal removes every listener and leaves no actions
+ok 30 - FR-08 NFR-03: input disposal removes every listener and leaves no actions
+  ---
+  duration_ms: 0.1405
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 NFR-03: two distinct key presses before a frame enter the same tick FIFO
+ok 31 - FR-01 FR-02 NFR-03: two distinct key presses before a frame enter the same tick FIFO
+  ---
+  duration_ms: 0.147333
+  type: 'test'
+  ...
+# Subtest: FR-11 NFR-03: input focus loss actually clears loop backlog and pending flap
+ok 32 - FR-11 NFR-03: input focus loss actually clears loop backlog and pending flap
+  ---
+  duration_ms: 0.117375
+  type: 'test'
+  ...
+# Subtest: NFR-03: clock regression cannot replay elapsed time; stale tick inputs are rejected
+ok 33 - NFR-03: clock regression cannot replay elapsed time; stale tick inputs are rejected
+  ---
+  duration_ms: 0.268209
+  type: 'test'
+  ...
+# Subtest: FR-02 FR-11 NFR-03: explicit input reset clears held keys and rebases fresh-round tick queue
+ok 34 - FR-02 FR-11 NFR-03: explicit input reset clears held keys and rebases fresh-round tick queue
+  ---
+  duration_ms: 0.071875
+  type: 'test'
+  ...
+# Subtest: NFR-03: browser initialization is DOM-safe and waits for page readiness
+ok 35 - NFR-03: browser initialization is DOM-safe and waits for page readiness
+  ---
+  duration_ms: 0.078
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-11: composed Space start and resume render and apply one flap
+ok 36 - FR-01 FR-02 FR-07 FR-11: composed Space start and resume render and apply one flap
+  ---
+  duration_ms: 0.455125
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-11: composed ArrowUp start and resume render and apply one flap
+ok 37 - FR-01 FR-02 FR-07 FR-11: composed ArrowUp start and resume render and apply one flap
+  ---
+  duration_ms: 0.275958
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-11: composed mouse start and resume render and apply one flap
+ok 38 - FR-01 FR-02 FR-07 FR-11: composed mouse start and resume render and apply one flap
+  ---
+  duration_ms: 0.265291
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-11: composed touch start and resume render and apply one flap
+ok 39 - FR-01 FR-02 FR-07 FR-11: composed touch start and resume render and apply one flap
+  ---
+  duration_ms: 0.130709
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07 FR-11: composed button start and resume render and apply one flap
+ok 40 - FR-01 FR-02 FR-07 FR-11: composed button start and resume render and apply one flap
+  ---
+  duration_ms: 0.150209
+  type: 'test'
+  ...
+# Subtest: FR-03 FR-05 FR-07 FR-10 FR-11: composed hidden pause and loss freeze the rendered round
+ok 41 - FR-03 FR-05 FR-07 FR-10 FR-11: composed hidden pause and loss freeze the rendered round
+  ---
+  duration_ms: 0.349791
+  type: 'test'
+  ...
+# Subtest: FR-06 FR-07 FR-09 NFR-03: HUD and canvas show 0 by next render and preserve final score
+ok 42 - FR-06 FR-07 FR-09 NFR-03: HUD and canvas show 0 by next render and preserve final score
+  ---
+  duration_ms: 0.546625
+  type: 'test'
+  ...
+# Subtest: FR-06 FR-07 FR-09 NFR-03: HUD and canvas show 1 by next render and preserve final score
+ok 43 - FR-06 FR-07 FR-09 NFR-03: HUD and canvas show 1 by next render and preserve final score
+  ---
+  duration_ms: 0.418292
+  type: 'test'
+  ...
+# Subtest: FR-06 FR-07 FR-09 NFR-03: HUD and canvas show 10 by next render and preserve final score
+ok 44 - FR-06 FR-07 FR-09 NFR-03: HUD and canvas show 10 by next render and preserve final score
+  ---
+  duration_ms: 0.484667
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-08 NFR-02 NFR-03: game-button mouse resets synchronously with one chain
+ok 45 - FR-04 FR-08 NFR-02 NFR-03: game-button mouse resets synchronously with one chain
+  ---
+  duration_ms: 0.665375
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-08 NFR-02 NFR-03: game-button touch resets synchronously with one chain
+ok 46 - FR-04 FR-08 NFR-02 NFR-03: game-button touch resets synchronously with one chain
+  ---
+  duration_ms: 0.233667
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-08 NFR-02 NFR-03: game-button native resets synchronously with one chain
+ok 47 - FR-04 FR-08 NFR-02 NFR-03: game-button native resets synchronously with one chain
+  ---
+  duration_ms: 0.191167
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-08 NFR-02 NFR-03: retry-button mouse resets synchronously with one chain
+ok 48 - FR-04 FR-08 NFR-02 NFR-03: retry-button mouse resets synchronously with one chain
+  ---
+  duration_ms: 0.378917
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-08 NFR-02 NFR-03: retry-button touch resets synchronously with one chain
+ok 49 - FR-04 FR-08 NFR-02 NFR-03: retry-button touch resets synchronously with one chain
+  ---
+  duration_ms: 0.237125
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-08 NFR-02 NFR-03: retry-button native resets synchronously with one chain
+ok 50 - FR-04 FR-08 NFR-02 NFR-03: retry-button native resets synchronously with one chain
+  ---
+  duration_ms: 0.193875
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-11: shared restart action replaces ready without resuming old progress
+ok 51 - FR-04 FR-11: shared restart action replaces ready without resuming old progress
+  ---
+  duration_ms: 0.077292
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-11: shared restart action replaces playing without resuming old progress
+ok 52 - FR-04 FR-11: shared restart action replaces playing without resuming old progress
+  ---
+  duration_ms: 0.047125
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-11: shared restart action replaces paused without resuming old progress
+ok 53 - FR-04 FR-11: shared restart action replaces paused without resuming old progress
+  ---
+  duration_ms: 0.043875
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-11: shared restart action replaces game-over without resuming old progress
+ok 54 - FR-04 FR-11: shared restart action replaces game-over without resuming old progress
+  ---
+  duration_ms: 0.045416
+  type: 'test'
+  ...
+# Subtest: NFR-03 NFR-05: equal-tick seeded replay at 30/60/120/144 Hz, jitter, delay and pause exclusion
+ok 55 - NFR-03 NFR-05: equal-tick seeded replay at 30/60/120/144 Hz, jitter, delay and pause exclusion
+  ---
+  duration_ms: 61.022333
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-06 NFR-03 NFR-05: 100 complete mounted scoring/loss/retry cycles retain one listener set and chain
+ok 56 - FR-04 FR-06 NFR-03 NFR-05: 100 complete mounted scoring/loss/retry cycles retain one listener set and chain
+  ---
+  duration_ms: 864.6645
+  type: 'test'
+  ...
+# Subtest: FR-07–FR-09: each render derives overlay and score from the current round
+ok 57 - FR-07–FR-09: each render derives overlay and score from the current round
+  ---
+  duration_ms: 1.268625
+  type: 'test'
+  ...
+# Subtest: FR-05/FR-10: bird and pipe artwork uses full shared collision rectangles
+ok 58 - FR-05/FR-10: bird and pipe artwork uses full shared collision rectangles
+  ---
+  duration_ms: 0.287417
+  type: 'test'
+  ...
+# Subtest: FR-08/NFR-03: cosmetic time changes drawing without mutating frozen round or consuming RNG
+ok 59 - FR-08/NFR-03: cosmetic time changes drawing without mutating frozen round or consuming RNG
+  ---
+  duration_ms: 2.148958
+  type: 'test'
+  ...
+# Subtest: FR-02 FR-03 NFR-04: named configuration matches planned tuning and is immutable
+ok 60 - FR-02 FR-03 NFR-04: named configuration matches planned tuning and is immutable
+  ---
+  duration_ms: 3.512708
+  type: 'test'
+  ...
+# Subtest: FR-02 FR-03 FR-10: construction rejects invalid numeric, bird and opening bounds
+ok 61 - FR-02 FR-03 FR-10: construction rejects invalid numeric, bird and opening bounds
+  ---
+  duration_ms: 2.824625
+  type: 'test'
+  ...
+# Subtest: FR-07 FR-02 NFR-03: fresh round has ready state, bird, schedule and owned RNG
+ok 62 - FR-07 FR-02 NFR-03: fresh round has ready state, bird, schedule and owned RNG
+  ---
+  duration_ms: 0.181958
+  type: 'test'
+  ...
+# Subtest: NFR-03 FR-07: fresh rounds do not share bird, pairs or random state
+ok 63 - NFR-03 FR-07: fresh rounds do not share bird, pairs or random state
+  ---
+  duration_ms: 0.118875
+  type: 'test'
+  ...
+# Subtest: FR-03 NFR-03: constructor uses configured seed and clamps bird-centered opening
+ok 64 - FR-03 NFR-03: constructor uses configured seed and clamps bird-centered opening
+  ---
+  duration_ms: 0.119791
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 FR-07: start supplies one flap before gravity and position integration
+ok 65 - FR-01 FR-02 FR-07: start supplies one flap before gravity and position integration
+  ---
+  duration_ms: 0.224666
+  type: 'test'
+  ...
+# Subtest: FR-01 FR-02 NFR-03: tick inputs are consumed FIFO without accumulated impulse or carryover
+ok 66 - FR-01 FR-02 NFR-03: tick inputs are consumed FIFO without accumulated impulse or carryover
+  ---
+  duration_ms: 0.218709
+  type: 'test'
+  ...
+# Subtest: FR-02: flap rises, reaches an apex, then descends under gravity
+ok 67 - FR-02: flap rises, reaches an apex, then descends under gravity
+  ---
+  duration_ms: 0.319084
+  type: 'test'
+  ...
+# Subtest: FR-02 FR-07: ready freezes every round field even with step inputs
+ok 68 - FR-02 FR-07: ready freezes every round field even with step inputs
+  ---
+  duration_ms: 0.335167
+  type: 'test'
+  ...
+# Subtest: FR-02 FR-07: paused freezes every round field even with step inputs
+ok 69 - FR-02 FR-07: paused freezes every round field even with step inputs
+  ---
+  duration_ms: 0.341208
+  type: 'test'
+  ...
+# Subtest: FR-02 FR-07: game-over freezes every round field even with step inputs
+ok 70 - FR-02 FR-07: game-over freezes every round field even with step inputs
+  ---
+  duration_ms: 0.177458
+  type: 'test'
+  ...
+# Subtest: FR-07 FR-11: pause/resume preserves world, tick, score and RNG; illegal transitions are inert
+ok 71 - FR-07 FR-11: pause/resume preserves world, tick, score and RNG; illegal transitions are inert
+  ---
+  duration_ms: 0.438292
+  type: 'test'
+  ...
+# Subtest: FR-03: first spawn at tick 210, recurring tick 420, fixed movement and 273px spacing
+ok 72 - FR-03: first spawn at tick 210, recurring tick 420, fixed movement and 273px spacing
+  ---
+  duration_ms: 1.39025
+  type: 'test'
+  ...
+# Subtest: FR-03 NFR-03: equal seeds yield equal openings and advance only round-owned RNG
+ok 73 - FR-03 NFR-03: equal seeds yield equal openings and advance only round-owned RNG
+  ---
+  duration_ms: 0.502042
+  type: 'test'
+  ...
+# Subtest: FR-03: known extreme samples obey global and previous-gap reachability bounds
+ok 74 - FR-03: known extreme samples obey global and previous-gap reachability bounds
+  ---
+  duration_ms: 0.261834
+  type: 'test'
+  ...
+# Subtest: FR-03: retire only when pair right edge is strictly negative
+ok 75 - FR-03: retire only when pair right edge is strictly negative
+  ---
+  duration_ms: 0.076625
+  type: 'test'
+  ...
+# Subtest: FR-03 NFR-03: obstacle samples are drawn only on active spawn ticks and injection preserves RNG
+ok 76 - FR-03 NFR-03: obstacle samples are drawn only on active spawn ticks and injection preserves RNG
+  ---
+  duration_ms: 0.074708
+  type: 'test'
+  ...
+# Subtest: FR-05: pipe upper exact contact
+ok 77 - FR-05: pipe upper exact contact
+  ---
+  duration_ms: 0.059541
+  type: 'test'
+  ...
+# Subtest: FR-05: pipe upper overlap
+ok 78 - FR-05: pipe upper overlap
+  ---
+  duration_ms: 0.034417
+  type: 'test'
+  ...
+# Subtest: FR-05: pipe upper clear
+ok 79 - FR-05: pipe upper clear
+  ---
+  duration_ms: 0.032458
+  type: 'test'
+  ...
+# Subtest: FR-05: pipe lower exact contact
+ok 80 - FR-05: pipe lower exact contact
+  ---
+  duration_ms: 0.05725
+  type: 'test'
+  ...
+# Subtest: FR-05: pipe lower overlap
+ok 81 - FR-05: pipe lower overlap
+  ---
+  duration_ms: 0.045042
+  type: 'test'
+  ...
+# Subtest: FR-05: pipe lower clear
+ok 82 - FR-05: pipe lower clear
+  ---
+  duration_ms: 0.036667
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-10: ceiling exact is handled with valid stored position
+ok 83 - FR-05 FR-10: ceiling exact is handled with valid stored position
+  ---
+  duration_ms: 0.049167
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-10: ceiling crossing is handled with valid stored position
+ok 84 - FR-05 FR-10: ceiling crossing is handled with valid stored position
+  ---
+  duration_ms: 0.030833
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-10: ceiling initial overlap is handled with valid stored position
+ok 85 - FR-05 FR-10: ceiling initial overlap is handled with valid stored position
+  ---
+  duration_ms: 0.031875
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-10: ceiling clear is handled with valid stored position
+ok 86 - FR-05 FR-10: ceiling clear is handled with valid stored position
+  ---
+  duration_ms: 0.031084
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-10: ground exact is handled with valid stored position
+ok 87 - FR-05 FR-10: ground exact is handled with valid stored position
+  ---
+  duration_ms: 0.029208
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-10: ground crossing is handled with valid stored position
+ok 88 - FR-05 FR-10: ground crossing is handled with valid stored position
+  ---
+  duration_ms: 0.027208
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-10: ground initial overlap is handled with valid stored position
+ok 89 - FR-05 FR-10: ground initial overlap is handled with valid stored position
+  ---
+  duration_ms: 0.031042
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-10: ground clear is handled with valid stored position
+ok 90 - FR-05 FR-10: ground clear is handled with valid stored position
+  ---
+  duration_ms: 0.030625
+  type: 'test'
+  ...
+# Subtest: FR-05: swept moving pipe crosses bird although both endpoints are disjoint
+ok 91 - FR-05: swept moving pipe crosses bird although both endpoints are disjoint
+  ---
+  duration_ms: 0.0565
+  type: 'test'
+  ...
+# Subtest: FR-05: swept upward bird hits pipe without touching the ceiling
+ok 92 - FR-05: swept upward bird hits pipe without touching the ceiling
+  ---
+  duration_ms: 0.047667
+  type: 'test'
+  ...
+# Subtest: FR-05: swept AABB initial overlap moving apart
+ok 93 - FR-05: swept AABB initial overlap moving apart
+  ---
+  duration_ms: 0.046792
+  type: 'test'
+  ...
+# Subtest: FR-05: swept AABB zero relative velocity touching
+ok 94 - FR-05: swept AABB zero relative velocity touching
+  ---
+  duration_ms: 0.027166
+  type: 'test'
+  ...
+# Subtest: FR-05: swept AABB zero relative velocity separated
+ok 95 - FR-05: swept AABB zero relative velocity separated
+  ---
+  duration_ms: 0.02675
+  type: 'test'
+  ...
+# Subtest: FR-05: swept AABB crossing with separated perpendicular axis
+ok 96 - FR-05: swept AABB crossing with separated perpendicular axis
+  ---
+  duration_ms: 0.025167
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-07 FR-10: one terminal transition freezes all subsequent steps and inputs
+ok 97 - FR-05 FR-07 FR-10: one terminal transition freezes all subsequent steps and inputs
+  ---
+  duration_ms: 0.079292
+  type: 'test'
+  ...
+# Subtest: FR-05: pipe horizontal exact leading edge
+ok 98 - FR-05: pipe horizontal exact leading edge
+  ---
+  duration_ms: 0.044042
+  type: 'test'
+  ...
+# Subtest: FR-05: pipe horizontal just outside leading edge
+ok 99 - FR-05: pipe horizontal just outside leading edge
+  ---
+  duration_ms: 0.036375
+  type: 'test'
+  ...
+# Subtest: FR-05: pipe horizontal initial trailing edge
+ok 100 - FR-05: pipe horizontal initial trailing edge
+  ---
+  duration_ms: 0.030792
+  type: 'test'
+  ...
+# Subtest: FR-05: pipe horizontal just past trailing edge
+ok 101 - FR-05: pipe horizontal just past trailing edge
+  ---
+  duration_ms: 0.028458
+  type: 'test'
+  ...
+# Subtest: FR-05: swept relative motion catches crossing with disjoint endpoints
+ok 102 - FR-05: swept relative motion catches crossing with disjoint endpoints
+  ---
+  duration_ms: 0.037792
+  type: 'test'
+  ...
+# Subtest: FR-05: swept axes must overlap at the same time rather than separately
+ok 103 - FR-05: swept axes must overlap at the same time rather than separately
+  ---
+  duration_ms: 0.034042
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-10: earliest contact discards remaining movement and preserves score
+ok 104 - FR-05 FR-10: earliest contact discards remaining movement and preserves score
+  ---
+  duration_ms: 0.09375
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-10: ground contact stops bird and pipes at the same fractional time
+ok 105 - FR-05 FR-10: ground contact stops bird and pipes at the same fractional time
+  ---
+  duration_ms: 0.044084
+  type: 'test'
+  ...
+# Subtest: FR-05: newly spawned lower pipe can sweep through bird before retirement
+ok 106 - FR-05: newly spawned lower pipe can sweep through bird before retirement
+  ---
+  duration_ms: 0.054917
+  type: 'test'
+  ...
+# Subtest: FR-06: strict pass boundary before awards 0
+ok 107 - FR-06: strict pass boundary before awards 0
+  ---
+  duration_ms: 0.049291
+  type: 'test'
+  ...
+# Subtest: FR-06: strict pass boundary equal awards 0
+ok 108 - FR-06: strict pass boundary equal awards 0
+  ---
+  duration_ms: 0.030584
+  type: 'test'
+  ...
+# Subtest: FR-06: strict pass boundary after awards 1
+ok 109 - FR-06: strict pass boundary after awards 1
+  ---
+  duration_ms: 0.231
+  type: 'test'
+  ...
+# Subtest: FR-06: upper and lower pipes count as one pair across repeated steps and retirement
+ok 110 - FR-06: upper and lower pipes count as one pair across repeated steps and retirement
+  ---
+  duration_ms: 0.225625
+  type: 'test'
+  ...
+# Subtest: FR-06: simultaneous passes score each unscored pair before retirement
+ok 111 - FR-06: simultaneous passes score each unscored pair before retirement
+  ---
+  duration_ms: 0.076666
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-06: pipe collision suppresses every potential point
+ok 112 - FR-05 FR-06: pipe collision suppresses every potential point
+  ---
+  duration_ms: 0.12
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-06: ceiling collision suppresses every potential point
+ok 113 - FR-05 FR-06: ceiling collision suppresses every potential point
+  ---
+  duration_ms: 0.061209
+  type: 'test'
+  ...
+# Subtest: FR-05 FR-06: ground collision suppresses every potential point
+ok 114 - FR-05 FR-06: ground collision suppresses every potential point
+  ---
+  duration_ms: 0.062
+  type: 'test'
+  ...
+# Subtest: FR-06 SC-02: controlled legal trajectory clears exactly 0 pairs
+ok 115 - FR-06 SC-02: controlled legal trajectory clears exactly 0 pairs
+  ---
+  duration_ms: 0.083084
+  type: 'test'
+  ...
+# Subtest: FR-06 SC-02: controlled legal trajectory clears exactly 1 pairs
+ok 116 - FR-06 SC-02: controlled legal trajectory clears exactly 1 pairs
+  ---
+  duration_ms: 1.136459
+  type: 'test'
+  ...
+# Subtest: FR-06 SC-02: controlled legal trajectory clears exactly 10 pairs
+ok 117 - FR-06 SC-02: controlled legal trajectory clears exactly 10 pairs
+  ---
+  duration_ms: 9.526
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-07 NFR-03: restart from ready restores all round state with immediate flap
+ok 118 - FR-04 FR-07 NFR-03: restart from ready restores all round state with immediate flap
+  ---
+  duration_ms: 0.266375
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-07 NFR-03: restart from playing restores all round state with immediate flap
+ok 119 - FR-04 FR-07 NFR-03: restart from playing restores all round state with immediate flap
+  ---
+  duration_ms: 0.086708
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-07 NFR-03: restart from paused restores all round state with immediate flap
+ok 120 - FR-04 FR-07 NFR-03: restart from paused restores all round state with immediate flap
+  ---
+  duration_ms: 0.147209
+  type: 'test'
+  ...
+# Subtest: FR-04 FR-07 NFR-03: restart from game-over restores all round state with immediate flap
+ok 121 - FR-04 FR-07 NFR-03: restart from game-over restores all round state with immediate flap
+  ---
+  duration_ms: 0.080084
+  type: 'test'
+  ...
+# Subtest: FR-03 A-03 NFR-03: legal flaps traverse extreme allowed gap transitions for 60 seconds
+ok 122 - FR-03 A-03 NFR-03: legal flaps traverse extreme allowed gap transitions for 60 seconds
+  ---
+  duration_ms: 23.542209
+  type: 'test'
+  ...
+# Subtest: NFR-01 NFR-03: seeded performance trajectory survives 7200 normal ticks
+ok 123 - NFR-01 NFR-03: seeded performance trajectory survives 7200 normal ticks
+  ---
+  duration_ms: 29.271833
+  type: 'test'
+  ...
+1..123
+# tests 123
+# suites 0
+# pass 123
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 991.969417

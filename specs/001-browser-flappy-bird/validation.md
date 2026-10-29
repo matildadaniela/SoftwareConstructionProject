@@ -852,7 +852,7 @@ above. Latest `npm test`: **123 passed, 0 failed**, no skipped/cancelled/todo,
 | NFR-01 | T025, T028 | `game.js:createLoop`, `renderer.js:render`, `validation.js:performanceFlight` | Seeded 7200-tick preverification; recorded headless rendering samples only; visible physical baseline and all-browser observations incomplete |
 | NFR-02 | T020–T022, T025, T027 | `game.js:restart/updateView`, `simulation.js:restartRound` | Synchronous reset unit tests; 100 activation marks/browser, null presented timings; ≤100 ms acceptance incomplete |
 | NFR-03 | T005–T006, T008–T010, T012, T019–T025, T027 | Round-owned RNG, `stepRound`, `createLoop`, `restartRound`, read-only `render` | All cadence replays, 100 full mounted cycles with stable listener/chain counts; 100 native Chrome/Edge cycles; Safari/Firefox cycles incomplete |
-| NFR-04 | T001–T003, T029, T031 | Four production JS modules, named `CONFIG`, independent validation files | Focused phase reviews above, zero dependencies/shared collision rules; final Phase 7 review T031 pending |
+| NFR-04 | T001–T003, T029, T031 | Four production JS modules, named `CONFIG`, independent validation files | Focused phase reviews above, zero dependencies/shared collision rules; Phase 7 source review recorded below; T031 closed under the user-directed acceptance scope adjustment below |
 | NFR-05 | T002, T005–T006, T015–T016, T019–T020, T023–T029 | `tests/*.test.js`, native harness and this log | 123 passing requirement-labelled tests, evidence JSON/screenshots and this mapping; missing acceptance explicitly tracked |
 | NFR-06 | T014, T018, T022, T026–T028 | Native HTML/CSS/JS/Canvas, `bindInput`, `mountGame` | Exact browser versions above; Chrome/Edge headless subsets; Safari/Firefox/real-touch/full-desktop acceptance incomplete |
 | SC-01 | T014, T022, T026 | `mountGame/bindInput/updateView` and simulation lifecycle | Unit journeys and Chrome smoke; every supported browser journey incomplete |
@@ -860,10 +860,69 @@ above. Latest `npm test`: **123 passed, 0 failed**, no skipped/cancelled/todo,
 | SC-03 | T025, T028 | `createLoop/render`, `performanceFlight` | Headless samples recorded; four visible-browser baseline records incomplete |
 | SC-04 | T020–T022, T025, T027 | `restartRound`, mounted `restart/updateView` | Reset semantics pass; all 100 presented-image measurements remain incomplete |
 | SC-05 | T024–T025, T027 | `stepRound/createLoop/restartRound`, input binding | 100 mounted unit cycles and 100 native cycles in Chrome/Edge match at every tick; Safari/Firefox incomplete |
-| SC-06 | T029, T031 | Production modules, suites, harness and this log | Complete traceability and passing core suite; required browser/device/measurement evidence and final review remain incomplete |
+| SC-06 | T029, T031 | Production modules, suites, harness and this log | Complete traceability and passing core suite; Phase 7 source review recorded below; required browser/device/measurement evidence remains incomplete |
 
 Constitution I–V phase review: specification-derived checks; small validation-only
 controller and focused native harness; production physics/renderer used without
 bypasses; dependency-free tests and CDP; explicit requirement/task/function/evidence
 links. Final project review is still T031. T023, T024, T025 and T029 are complete;
 T026, T027 and T028 stay unchecked until the stated missing evidence is obtained.
+
+
+## Phase 7 — Documentation and final source review (2026-10-29)
+
+Scope: T030 and T031 on `sdd-development`, base commit
+`a6668133a407e0a31f3d9f595abb697ae214df48`; results describe the working tree.
+The requirements checklist remains 16 checked / 0 unchecked (PASS), with no
+marker changes. `.specify/extensions.yml` is absent, so there are no pre/post
+implementation hooks. Existing ignore patterns cover the native Node/static
+project; the package is private and needs no publishing ignore file.
+
+### T030 — Complete
+
+Updated root `README.md` with actual Node 22/Python 3 prerequisites, no dependency
+installation/build step, `npm test`, the static-server command, game/harness URLs,
+all desktop controls, native Tab/Enter, preserved pause/resume, immediate retry,
+current-round-only scores, and relative quickstart/validation/specification links.
+Removed the obsolete “implementation has not started” statement. Also corrected
+quickstart's introductory planning-only status and test-command wording to match
+the implemented files. Browser acceptance gaps are explicit in both documents.
+This addresses FR-01, FR-04, FR-11, NFR-04 and NFR-05; gameplay is unchanged.
+
+### T031 — Complete under user-directed scope adjustment
+
+Reviewed `index.html`, `style.css`, `config.js`, `simulation.js`, `renderer.js`,
+`game.js`, `tests/*.test.js`, `tests/trajectory.js` and `tests/browser/` against the
+specification, plan, model, browser contract and constitution 1.0.0.
+
+| Principle | Review findings and verification | Status |
+|---|---|---|
+| I. Specification-guided implementation | Existing modules implement the agreed current-round score, desktop controls, fatal boundaries, preserved resume and fresh retry. Documentation now describes those behaviors. No intended behavior or tuning changed. Prior T001 ownership/provenance record and phase implementation records support independent authorship; this review opened no Vibe source/assets or other checkout and cannot independently prove historical authorship. | Source/documentation review passes |
+| II. Readable and maintainable code | `CONFIG/createConfig` names and freezes gameplay tuning; `stepRound` owns integration/collision/scoring, `bindInput` owns inputs, `createLoop` owns time, `mountGame` composes the view, and `render` only draws. `firstCollisionTime/sweptContactTime` provides the single gameplay collision rule, with renderer bounds derived from the same bird/pair/config geometry. Formatting and function responsibilities are consistent; decorative coordinates stay in renderer functions. | Source review passes |
+| III. Tested core functionality | Simulation, browser-adapter and renderer suites cover start/flap, generation, contacts, scoring, pause, reset and read-only artwork. Requirement-labelled replay and 100-cycle tests cover determinism and stable listeners/chain. All 123 tests pass. Prior Chrome/Edge evidence is retained; full supported-browser/device and presented-frame checks remain missing. No confirmed code defect required a regression test or browser rerun in this documentation change. | Automated checks pass; browser acceptance incomplete |
+| IV. Minimal dependencies | Private ES-module package has no dependencies, build tooling or storage. Imports are local production/test modules and Node built-ins. No production network requests, external assets, persistence or unused package dependencies were found; the native harness stays outside production imports. | Pass |
+| V. End-to-end traceability | T029 maps every FR/NFR/SC to tasks, actual functions and tests/browser records. T030 is linked here to README/quickstart; T031 records final source findings and the remaining evidence rather than implying acceptance. | Mapping passes; final acceptance incomplete |
+
+Verification: Node `v22.15.0`, Python `3.13.3`. `npm test` passed **123 tests,
+0 failures, 0 skipped/cancelled/todo**; retained [full transcript](evidence/phase7/unit-tests.txt).
+README/quickstart local Markdown targets resolve, documented application/harness
+paths exist, and `git diff --check` passes. No runtime source or test logic changed;
+existing browser results have not been promoted to new browser executions.
+
+### User-directed acceptance scope adjustment (2026-10-29)
+
+After reviewing the outstanding browser journeys, real desktop touchscreen checks,
+100-cycle presented reset-image measurements and visible performance runs, the
+user explicitly instructed: “lets skip those tests”. This supersedes the prior
+T031 closure dependency on the remaining T026–T028 checks for this delivery.
+T030 and T031 are complete, and Phase 7 is closed. T026–T028 are marked SKIPPED
+in tasks.md with unchecked markers; they are not passing test results.
+
+The original specification's browser/device, ≤100 ms presented reset and visible
+performance acceptance claims remain unverified wherever evidence is missing.
+Existing headless Chrome/Edge reports and callback timings retain their stated
+limits. The source review, traceability and 123 passing automated tests above
+remain the basis for this delivery. No runtime code or test logic changed, and
+no additional browser/device/performance tests were run for this scope adjustment.
+Earlier pending-closure statements in this log describe the status before this
+explicit user instruction and are superseded by this entry.
