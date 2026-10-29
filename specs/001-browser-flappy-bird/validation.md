@@ -58,14 +58,14 @@ Each row links requirements to planned implementation and verification; no funct
 
 ## Pending task register
 
-T003–T004 are complete as recorded below; T005–T031 remain pending. The descriptions below retain planned files and requirement references; no implementation functions or executed evidence yet exist for these tasks.
+T003–T006 are complete as recorded below. T005/T006 deliver red tests only; gameplay implementation and T007–T031 remain pending. The descriptions below retain planned files and requirement references.
 
 | Task | Planned work / requirement references | Evidence |
 |------|--------------------------------------|----------|
 | T003 | Add named constants and construction validation in `config.js`: 400×600 world, ground 526, step 1/120 s, bird (90,248,34,28), gravity 1512, flap -450, pipe width 64, gap 164, speed 156, spawn 210 ticks, gap range 75..287, max change 60 and seed 0x1A2B3C4D. Preserve data-model constraints verbatim: "Immutable named values; positive sizes/speed, gap larger than bird height, valid opening within ground; shared by simulation/rendering/tests" (FR-02, FR-03, NFR-04). | Complete: `config.js` (`CONFIG`, `createConfig`); Phase 2 configuration tests below. |
 | T004 | Add constructor/configuration assertions in `tests/simulation.test.js`, then implement plain fresh-round creation in `simulation.js`, including independent collections and round-owned RNG. Preserve constraints: "phase is ready/playing/paused/game-over; tick and score nonnegative integers; owns one bird and zero or more pairs; only playing advances tick; ready has zero score/tick and empty pairs"; bird "x remains fixed; top-left origin; full unrotated rectangle defines contact; y >= 0; ceiling or ground contact causes loss". Define how fatal proposed positions resolve without leaving an invalid stored bird position (FR-02, FR-07, FR-10, NFR-03). | Complete: `simulation.js:createRound`, `tests/simulation.test.js`; Phase 2 construction tests below. |
-| T005 | [P] [US1] Add requirement-labelled tests in `tests/simulation.test.js` for start with one flap, gravity/apex/descent, frozen inactive states, seeded bounded/reachable openings, first and recurring spawn ticks, constant movement/spacing, retirement, exact contact/overlap/swept crossings of pipes/ceiling/ground, initial overlap and zero relative velocity, one terminal transition and legal pause/resume preservation (FR-01–FR-03, FR-05, FR-07, FR-10, FR-11). | Pending |
-| T006 | [P] [US1] Add contract/input/loop tests in `tests/browser.test.js` using small event-target and injected-clock/scheduler fakes: all starts and resumes yield one flap; per-key hold/repeat suppression; FIFO tick queue, including two distinct inputs before one tick with both consumed in FIFO order, no accumulated impulse and no delayed flap; pointer compatibility/button deduplication; gameplay defaults prevented while Tab/Enter work; focus-and-visibility guards; both restoration orders; pause clears backlog/input; 30-step callback cap retains visible backlog; one animation chain; disposal removes listeners (FR-01, FR-02, FR-07, FR-08, FR-11, NFR-03; contracts/browser-game.md). | Pending |
+| T005 | [P] [US1] Add requirement-labelled tests in `tests/simulation.test.js` for start with one flap, gravity/apex/descent, frozen inactive states, seeded bounded/reachable openings, first and recurring spawn ticks, constant movement/spacing, retirement, exact contact/overlap/swept crossings of pipes/ceiling/ground, initial overlap and zero relative velocity, one terminal transition and legal pause/resume preservation (FR-01–FR-03, FR-05, FR-07, FR-10, FR-11). | Complete (tests only): `tests/simulation.test.js`; Phase 3 red-test evidence below. |
+| T006 | [P] [US1] Add contract/input/loop tests in `tests/browser.test.js` using small event-target and injected-clock/scheduler fakes: all starts and resumes yield one flap; per-key hold/repeat suppression; FIFO tick queue, including two distinct inputs before one tick with both consumed in FIFO order, no accumulated impulse and no delayed flap; pointer compatibility/button deduplication; gameplay defaults prevented while Tab/Enter work; focus-and-visibility guards; both restoration orders; pause clears backlog/input; 30-step callback cap retains visible backlog; one animation chain; disposal removes listeners (FR-01, FR-02, FR-07, FR-08, FR-11, NFR-03; contracts/browser-game.md). | Complete (tests only): `tests/browser.test.js`; Phase 3 red-test evidence below. |
 | T007 | [US1] Implement start/flap, fixed-step movement and legal pause/resume transitions in `simulation.js`; consume all queued inputs for the tick in FIFO order before semi-implicit Euler movement, setting flap velocity for each without accumulating impulse or carrying inputs into later ticks, advance active ticks only during play, preserve world/RNG on pause, and ignore gameplay keys after game over (FR-01, FR-02, FR-07, FR-11). | Pending |
 | T008 | [US1] Implement round-seeded obstacle generation/movement/retirement in `simulation.js`: unsigned xorshift32 shifts 13/17/5 divided by 2^32, injectable known streams, first spawn tick 210 at x=400, recurring interval 210, gap intersection with previous ±60 initialized from clamped bird-centered opening. Preserve pair constraints: "Unique within round; top rectangle spans y=0..gapTop, bottom spans gapTop+gapHeight..526; inclusive edges; scored may change false→true once; remove after right edge <0". Keep cosmetic randomness separate (FR-03, NFR-03). | Pending |
 | T009 | [US1] Implement inclusive swept relative-displacement AABB checks in `simulation.js` for both moving pipe rectangles, ceiling and ground, including initial overlap and zero velocity; integrate proposed movement/spawn/movement before collision, terminate once before any scoring, discard remaining collision-step time and stop subsequent backlog steps after loss (FR-05, FR-10). | Pending |
@@ -146,3 +146,84 @@ coverage passes; zero added dependencies; task/function/test references recorded
 above. Full requirements acceptance remains pending. No gameplay, browser,
 performance or restart measurements were performed. `.specify/extensions.yml`
 is absent at both pre- and post-execution checks, so no hooks were registered.
+
+## Phase 3 — T005–T006, tests only (2026-10-29)
+
+Authorized scope: T005 and T006 only. Both are marked complete for authoring
+requirement-labelled tests and confirming missing behavior fails. T007–T031
+remain unchecked; no production modules or dependencies were added or changed.
+This is the deliberate red stage, not a passing US1 checkpoint or implementation
+acceptance. Existing `.gitignore` covers this private native ES-module project;
+no additional ignore tooling is applicable. Branch remains `sdd-development`.
+The requirements checklist has 16 checked and zero unchecked criteria.
+
+T005: `tests/simulation.test.js` retains five passing construction tests and adds
+36 gameplay tests. Helpers `api`, `step`, `playing`, `pair`, `near` and `cruise`
+create fixtures, invoke production functions and assert observable state; they
+implement no substitute physics, random generation or collision detection.
+Requirement-labelled names map to:
+
+| Requirements | Actual test names / parameterized families |
+|---|---|
+| FR-01/02/07 | `start supplies one flap before gravity and position integration`; `flap rises, reaches an apex, then descends under gravity`; `ready/paused/game-over freezes every round field even with step inputs` |
+| FR-07/11 | `pause/resume preserves world, tick, score and RNG; illegal transitions are inert` |
+| FR-03, NFR-03 | `first spawn at tick 210, recurring tick 420, fixed movement and 273px spacing`; `equal seeds yield equal openings and advance only round-owned RNG`; `known extreme samples obey global and previous-gap reachability bounds`; `retire only when pair right edge is strictly negative` |
+| FR-05/10 | `pipe upper/lower exact contact/overlap/clear`; ceiling/ground exact/crossing/initial-overlap/clear fixtures; horizontal leading/trailing edge equality and either side; moving-pipe and upward-bird sweep fixtures; `swept AABB` initial-overlap/zero-relative-velocity/perpendicular-separation cases; relative crossing and nonconcurrent-axis cases |
+| FR-05/07/10 | `one terminal transition freezes all subsequent steps and inputs` |
+
+The tests document proposed production seams: `startOrFlap(round)` selects
+playing from ready/paused; the caller supplies one `{ type: 'flap' }` for the
+next tick. `pauseRound(round)` is legal only during play.
+`stepRound(round, config, inputsForTick, random?)` consumes the supplied inputs
+before integrating, with optional known obstacle random samples.
+`sweptAabb(a, b, displacementA, displacementB)` returns inclusive swept contact.
+These signatures make the contract executable; equivalent future signatures
+may update test call sites while preserving assertions. The first spawned pair
+is checked at 398.7 after the spawn-then-move tick (spawn origin 400), following
+the plan's per-step ordering. Seed fixture 3388403996 is the first unsigned
+xorshift32 state from 0x1A2B3C4D. Extreme samples verify the specified bounded
+60px transition rule; full legal trajectory reachability remains T023.
+
+T006: `tests/browser.test.js` adds 32 tests with small local `target`,
+`inputFixture`, `gesture`, `scheduler` and `loopFixture` helpers. No DOM emulator,
+real sleeps, third-party tooling or fake production implementation is used.
+The event fake supports listeners, cancellation and bubbling; the scheduler
+uses explicit timestamps and tracks outstanding callbacks.
+
+| Requirements | Actual test names / parameterized families |
+|---|---|
+| FR-01/02/07/08/11 | Space/ArrowUp/mouse/touch/button starts and resumes (10 cases); preservation of paused progress and one flap applied through the bound gameplay action |
+| FR-01/02/08 | `held keys suppressed independently, repeats ignored, release allows next press`; gameplay defaults with native Tab/Enter; pointer compatibility/button bubbling; secondary-button/cancelled-pointer handling |
+| FR-11 | focus-first/visibility-first guards and explicit restoration; blur/hidden clearing of held/pointer state and pause/clear callbacks |
+| FR-01/02, NFR-03 | `two distinct inputs target one tick, preserve FIFO, drain once and do not accumulate impulse`; `future tick input is neither consumed early nor carried past its tick`; two actual distinct key events before one frame entering FIFO |
+| FR-07/11, NFR-03 | pause backlog/input clearing and fresh origin; inactive ready/paused/game-over excludes elapsed time; input-focus-loss wiring actually clears loop backlog and pending input |
+| FR-05/07, NFR-03 | 30-step cap retains 120 visible steps across callbacks; terminal step stops the same callback; one animation chain through repeated start/reset; loop and listener disposal |
+
+Proposed browser seams are documented at the top of the test file:
+`bindInput(targets, { gameplay, pause, clear }, { isFocused, isVisible })`
+returns a disposer; `createLoop` accepts injected step/render/clock/scheduler
+and `isPlaying`, and exposes start/dispose/resetTiming/enqueue/clearInput.
+Queue targets are one-based simulation ticks; step receives FIFO items and may
+return false on loss. These tests import production modules. Missing `game.js`
+is caught narrowly to allow individual assertions naming absent exports;
+syntax errors and other missing imports are not suppressed. Future composition
+of state-specific controls/DOM remains T013; native rendering, native button
+activation and real touchscreen behavior require later browser evidence.
+
+Executed with Node v22.15.0: `npm test` reports 73 tests, 5 pass, 68 fail,
+zero skipped/cancelled/todo. All 68 failures explicitly identify missing
+production exports: simulation `stepRound` (29), `sweptAabb` (6),
+`startOrFlap` (1), `pauseRound` (1); game `bindInput` (20), `createLoop` (11).
+This confirms red assertions for absent T007–T010 behavior; downstream assertions
+cannot yet execute and will require validation during implementation. No tests
+were skipped or weakened to turn the suite green. `node --check` passes for
+both test files; `git diff --check` passes.
+
+Issues/limitations: the full suite intentionally exits nonzero until gameplay
+and browser helpers are implemented. Bounded opening tests are not full traversal
+proof; no real-browser, touch-device, rendering, scoring, restart, determinism
+acceptance, latency or performance results are claimed. Constitution I–V:
+specification-derived test scope, focused dependency-free fakes, explicit red
+coverage pending implementation, no added dependencies and requirement/task/test
+traceability recorded here. `.specify/extensions.yml` is absent at pre- and
+post-execution checks, so no hooks are registered.
