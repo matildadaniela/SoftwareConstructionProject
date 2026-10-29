@@ -1,12 +1,35 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Browser Flappy Bird — validation scaffold</title>
-  </head>
-  <body>
-    <h1>Browser validation</h1>
-    <p>Phase 1 scaffold only. The native validation harness is pending T025; no browser checks have run.</p>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flappy Bird validation</title>
+  <link rel="stylesheet" href="../../style.css">
+  <script type="module" src="validation.js"></script>
+</head>
+<body>
+<main class="arcade">
+  <h1>Browser validation</h1>
+  <p><a href="../../index.html">Open game for manual input, focus and touch journeys</a></p>
+  <p>Production physics and renderer. Controlled fixtures are confined to this page.
+    Restart marks and callback timing are diagnostics; presented reset images require external capture.</p>
+  <div class="controls">
+    <button id="checks" type="button">Run fixtures and 100 cycles</button>
+    <button id="performance" type="button">Run visible 60-second flight</button>
+    <button id="download" type="button">Download report</button>
+  </div>
+  <p id="progress" role="status">Ready</p>
+  <section id="surface" class="game" aria-label="Controlled game"></section>
+  <pre id="results" style="white-space:pre-wrap;text-align:left"></pre>
+</main>
+<template id="game-template">
+  <div class="hud"><p>Round score <output id="score">0</output></p><p id="status" role="status"></p></div>
+  <div class="playfield" id="playfield">
+    <canvas id="game-canvas" width="400" height="600" aria-label="Validation playfield"></canvas>
+    <button id="retry-button" class="retry-button" type="button" hidden>Tap to try again</button>
+  </div>
+  <div class="controls"><button id="game-button" class="game-button" type="button">Start game</button>
+    <p id="instructions"></p></div>
+</template>
+</body>
 </html>

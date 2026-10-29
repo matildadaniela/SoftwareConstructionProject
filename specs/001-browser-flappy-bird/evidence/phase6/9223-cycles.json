@@ -1,0 +1,2037 @@
+{
+  "date": "2026-10-29T10:20:25.075Z",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+  "viewport": [
+    1100,
+    1100
+  ],
+  "devicePixelRatio": 1,
+  "screen": [
+    800,
+    600
+  ],
+  "assertions": [
+    "FR-06 strict-clear fixture 0",
+    "FR-06 strict-clear fixture 1",
+    "FR-06 strict-clear fixture 10",
+    "FR-05 FR-10 boundary 0 suppresses score",
+    "FR-05 FR-10 boundary 498 suppresses score",
+    "FR-05 swept crossing",
+    "FR-04 FR-06 NFR-03: every cycle compared at every tick",
+    "one scheduled chain throughout 100 cycles",
+    "100 real scoring/loss/retry outcomes",
+    "disposed animation chain"
+  ],
+  "errors": [],
+  "cycles": [
+    {
+      "cycle": 1,
+      "activation": 308.70000000298023,
+      "callbackProxyMs": 5.4000000059604645,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 2,
+      "activation": 451.70000000298023,
+      "callbackProxyMs": 29.299999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 3,
+      "activation": 612.5,
+      "callbackProxyMs": 17.799999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 4,
+      "activation": 762.7000000029802,
+      "callbackProxyMs": 18,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 5,
+      "activation": 915.6000000089407,
+      "callbackProxyMs": 15.199999988079071,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 6,
+      "activation": 1061,
+      "callbackProxyMs": 19.900000005960464,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 7,
+      "activation": 1215.9000000059605,
+      "callbackProxyMs": 31.700000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 8,
+      "activation": 1402.7000000029802,
+      "callbackProxyMs": 28.099999994039536,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 9,
+      "activation": 1558.6000000089407,
+      "callbackProxyMs": 22.299999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 10,
+      "activation": 1708.2999999970198,
+      "callbackProxyMs": 22.700000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 11,
+      "activation": 1860.6000000089407,
+      "callbackProxyMs": 20.299999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 12,
+      "activation": 2009.9000000059605,
+      "callbackProxyMs": 21,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 13,
+      "activation": 2159.2000000029802,
+      "callbackProxyMs": 21.599999994039536,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 14,
+      "activation": 2322.9000000059605,
+      "callbackProxyMs": 23.799999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 15,
+      "activation": 2475.9000000059605,
+      "callbackProxyMs": 21.599999994039536,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 16,
+      "activation": 2624.5,
+      "callbackProxyMs": 22.400000005960464,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 17,
+      "activation": 2774.9000000059605,
+      "callbackProxyMs": 22.399999991059303,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 18,
+      "activation": 2924.2999999970198,
+      "callbackProxyMs": 23.200000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 19,
+      "activation": 3074.5,
+      "callbackProxyMs": 22.5,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 20,
+      "activation": 3223.6000000089407,
+      "callbackProxyMs": 23.19999998807907,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 21,
+      "activation": 3375.4000000059605,
+      "callbackProxyMs": 22.200000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 22,
+      "activation": 3526.2000000029802,
+      "callbackProxyMs": 21.400000005960464,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 23,
+      "activation": 3674.5,
+      "callbackProxyMs": 23,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 24,
+      "activation": 3824.2999999970198,
+      "callbackProxyMs": 22.5,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 25,
+      "activation": 3973.4000000059605,
+      "callbackProxyMs": 24.099999994039536,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 26,
+      "activation": 4124.79999999702,
+      "callbackProxyMs": 22.700000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 27,
+      "activation": 4275.5,
+      "callbackProxyMs": 22,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 28,
+      "activation": 4422.5,
+      "callbackProxyMs": 25,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 29,
+      "activation": 4573.9000000059605,
+      "callbackProxyMs": 23.599999994039536,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 30,
+      "activation": 4724.100000008941,
+      "callbackProxyMs": 22.69999998807907,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 31,
+      "activation": 4872.79999999702,
+      "callbackProxyMs": 24.700000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 32,
+      "activation": 5024.4000000059605,
+      "callbackProxyMs": 23.200000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 33,
+      "activation": 5172.70000000298,
+      "callbackProxyMs": 24.700000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 34,
+      "activation": 5324.100000008941,
+      "callbackProxyMs": 23.399999991059303,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 35,
+      "activation": 5473.9000000059605,
+      "callbackProxyMs": 23.599999994039536,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 36,
+      "activation": 5624.20000000298,
+      "callbackProxyMs": 23.299999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 37,
+      "activation": 5774.4000000059605,
+      "callbackProxyMs": 23,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 38,
+      "activation": 5924.29999999702,
+      "callbackProxyMs": 23.200000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 39,
+      "activation": 6074.600000008941,
+      "callbackProxyMs": 22.799999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 40,
+      "activation": 6225.79999999702,
+      "callbackProxyMs": 21,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 41,
+      "activation": 6372.79999999702,
+      "callbackProxyMs": 24.600000008940697,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 42,
+      "activation": 6523.4000000059605,
+      "callbackProxyMs": 24,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 43,
+      "activation": 6674.20000000298,
+      "callbackProxyMs": 23.299999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 44,
+      "activation": 6824.79999999702,
+      "callbackProxyMs": 22.600000008940697,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 45,
+      "activation": 6973.29999999702,
+      "callbackProxyMs": 24.100000008940697,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 46,
+      "activation": 7124.600000008941,
+      "callbackProxyMs": 21.69999998807907,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 47,
+      "activation": 7272.79999999702,
+      "callbackProxyMs": 24,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 48,
+      "activation": 7424.100000008941,
+      "callbackProxyMs": 23.299999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 49,
+      "activation": 7575.5,
+      "callbackProxyMs": 21.900000005960464,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 50,
+      "activation": 7726.70000000298,
+      "callbackProxyMs": 20.099999994039536,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 51,
+      "activation": 7874.20000000298,
+      "callbackProxyMs": 23.200000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 52,
+      "activation": 8028.100000008941,
+      "callbackProxyMs": 19.19999998807907,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 53,
+      "activation": 8185.20000000298,
+      "callbackProxyMs": 28.799999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 54,
+      "activation": 8346.10000000894,
+      "callbackProxyMs": 17.399999991059303,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 55,
+      "activation": 8495.10000000894,
+      "callbackProxyMs": 19,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 56,
+      "activation": 8640.90000000596,
+      "callbackProxyMs": 22.5,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 57,
+      "activation": 8790.29999999702,
+      "callbackProxyMs": 23.700000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 58,
+      "activation": 8943,
+      "callbackProxyMs": 20.900000005960464,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 59,
+      "activation": 9098.40000000596,
+      "callbackProxyMs": 32.20000000298023,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 60,
+      "activation": 9263.5,
+      "callbackProxyMs": 17.200000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 61,
+      "activation": 9407.60000000894,
+      "callbackProxyMs": 22.299999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 62,
+      "activation": 9558.20000000298,
+      "callbackProxyMs": 22.5,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 63,
+      "activation": 9708.60000000894,
+      "callbackProxyMs": 21.599999994039536,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 64,
+      "activation": 9859.79999999702,
+      "callbackProxyMs": 20.900000005960464,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 65,
+      "activation": 10008.20000000298,
+      "callbackProxyMs": 22.5,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 66,
+      "activation": 10159.20000000298,
+      "callbackProxyMs": 21.400000005960464,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 67,
+      "activation": 10307.29999999702,
+      "callbackProxyMs": 23.30000001192093,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 68,
+      "activation": 10461.60000000894,
+      "callbackProxyMs": 19,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 69,
+      "activation": 10608.29999999702,
+      "callbackProxyMs": 22.200000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 70,
+      "activation": 10766.29999999702,
+      "callbackProxyMs": 14.200000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 71,
+      "activation": 10919.40000000596,
+      "callbackProxyMs": 27.5,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 72,
+      "activation": 11079.40000000596,
+      "callbackProxyMs": 17.599999994039536,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 73,
+      "activation": 11233.20000000298,
+      "callbackProxyMs": 30.700000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 74,
+      "activation": 11394.40000000596,
+      "callbackProxyMs": 19.5,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 75,
+      "activation": 11540.70000000298,
+      "callbackProxyMs": 23.200000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 76,
+      "activation": 11692.20000000298,
+      "callbackProxyMs": 21.599999994039536,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 77,
+      "activation": 11844.5,
+      "callbackProxyMs": 19.400000005960464,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 78,
+      "activation": 11993.10000000894,
+      "callbackProxyMs": 20.799999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 79,
+      "activation": 12143.40000000596,
+      "callbackProxyMs": 20.099999994039536,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 80,
+      "activation": 12294.10000000894,
+      "callbackProxyMs": 19.799999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 81,
+      "activation": 12444,
+      "callbackProxyMs": 20,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 82,
+      "activation": 12590.60000000894,
+      "callbackProxyMs": 23.19999998807907,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 83,
+      "activation": 12745.29999999702,
+      "callbackProxyMs": 18.200000002980232,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 84,
+      "activation": 12916.60000000894,
+      "callbackProxyMs": 30.5,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 85,
+      "activation": 13082.10000000894,
+      "callbackProxyMs": 30.899999991059303,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 86,
+      "activation": 13244.5,
+      "callbackProxyMs": 18.400000005960464,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 87,
+      "activation": 13394.60000000894,
+      "callbackProxyMs": 19.099999994039536,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 88,
+      "activation": 13621.29999999702,
+      "callbackProxyMs": 33.5,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 89,
+      "activation": 13802.29999999702,
+      "callbackProxyMs": 28.100000008940697,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 90,
+      "activation": 13963.60000000894,
+      "callbackProxyMs": 16.399999991059303,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 91,
+      "activation": 14115.10000000894,
+      "callbackProxyMs": 32,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 92,
+      "activation": 14282.29999999702,
+      "callbackProxyMs": 31.5,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 93,
+      "activation": 14464.40000000596,
+      "callbackProxyMs": 32.8999999910593,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 94,
+      "activation": 14645,
+      "callbackProxyMs": 17.799999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 95,
+      "activation": 14793.10000000894,
+      "callbackProxyMs": 20.599999994039536,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 96,
+      "activation": 14941.70000000298,
+      "callbackProxyMs": 22,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 97,
+      "activation": 15090.40000000596,
+      "callbackProxyMs": 23.399999991059303,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 98,
+      "activation": 15247.79999999702,
+      "callbackProxyMs": 15.100000008940697,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 99,
+      "activation": 15396.10000000894,
+      "callbackProxyMs": 17.5,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    },
+    {
+      "cycle": 100,
+      "activation": 15542.40000000596,
+      "callbackProxyMs": 21.299999997019768,
+      "presentedResetMs": null,
+      "terminalTick": 1664,
+      "score": 6,
+      "rngState": 1187970029,
+      "pairs": [
+        {
+          "id": 7,
+          "x": 147.62110888443408,
+          "width": 64,
+          "gapTop": 207.13552255495506,
+          "gapHeight": 164,
+          "scored": false
+        }
+      ],
+      "phase": "game-over"
+    }
+  ],
+  "restartPresentation": "INCOMPLETE: correlate restart-N performance marks with external presented-image evidence",
+  "cdpVersion": {
+    "protocolVersion": "1.3",
+    "product": "Edg/156.0.4314.50",
+    "revision": "@af2ba23ae0ecf7084d900446fc59d5119dd5fd5e",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+    "jsVersion": "15.6.12.7"
+  },
+  "runtimeExceptions": []
+}

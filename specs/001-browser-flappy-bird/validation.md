@@ -36,9 +36,9 @@ No Docker, ESLint, Prettier, Terraform, Helm or npm-publishing configuration is 
 
 Executed `npm test` with the runtimes above: exit 0, 2 file-level passes, 0 failures. These are empty-file discovery results, not gameplay assertions or behavioral coverage. `git diff --check` passed. T002 setup is complete (NFR-04, NFR-05); core test coverage remains pending.
 
-## Pending requirement and evidence mapping
+## Phase 1 historical requirement and evidence mapping
 
-Each row links requirements to planned implementation and verification; no functional requirement is accepted by Phase 1. Actual functions, assertion names and browser evidence must be added when the corresponding tasks are executed. Detailed task descriptions in tasks.md remain authoritative.
+Historical setup snapshot; the Phase 6 traceability table below supersedes these pending statuses. Each row links requirements to planned implementation and verification; no functional requirement is accepted by Phase 1. Actual functions, assertion names and browser evidence must be added when the corresponding tasks are executed. Detailed task descriptions in tasks.md remain authoritative.
 
 | Requirements | Planned implementation | Pending evidence |
 |--------------|------------------------|------------------|
@@ -56,7 +56,7 @@ Each row links requirements to planned implementation and verification; no funct
 | NFR-05 | tests/*.test.js, browser harness, this log | Requirement-labelled assertion names, full task/function/test traceability and browser evidence |
 | NFR-06 | game.js, renderer.js, browser harness | Exact stable Chrome/Firefox/Edge/Safari versions and full journeys including actual desktop touch |
 
-## Pending task register
+## Phase 1 historical task register
 
 T003–T006 are complete as recorded below. T005/T006 deliver red tests only; gameplay implementation and T007–T031 remain pending. The descriptions below retain planned files and requirement references.
 
@@ -694,3 +694,176 @@ Constitution I–V reviewed: specified immediate retry semantics, focused helper
 within existing modules, failing-then-passing core tests plus browser evidence,
 zero dependencies, and explicit task/function/test traceability. No Vibe code
 or assets accessed or changed. T019–T022 complete; phase 6 remains unchecked.
+
+## Phase 6 — Predictable behavior and native validation (2026-10-29)
+
+Scope: T023–T029 on `sdd-development`, working-tree changes; Phase 7 excluded.
+Requirements checklist: 16 checked, 0 unchecked, unchanged. Existing ignore rules
+remain sufficient. No `.specify/extensions.yml` at pre/post checks; no hooks.
+No packages, storage, production replay machinery or collision exemptions added.
+No Vibe source/assets accessed. The historical Phase 1 tables above are setup
+snapshots; this section is the current traceability and acceptance status.
+
+### Completed implementation: T023–T025
+
+**T023** — `tests/trajectory.js:traversalInput` supplies ordinary discrete flaps
+based on the next opening. `scriptedFlight` records legal tick-indexed presses
+and full states using production `restartRound`/`stepRound` and seeded obstacles,
+then stops flapping and reaches a real loss. Production never imports it.
+`tests/simulation.test.js` adds `FR-03 A-03 NFR-03: legal flaps traverse extreme
+allowed gap transitions for 60 seconds`: 7200 ticks, 32 scored pairs, both global
+gap endpoints 75 and 287 and both full ±60 transitions. The known random stream
+selects allowed opening endpoints; it changes neither collisions nor physics.
+`NFR-01 NFR-03: seeded performance trajectory survives 7200 normal ticks` also
+preverifies the default seeded performance workload (32 points at tick 7200).
+No tuning failure or config/plan/research change was necessary.
+
+**T024** — `tests/browser.test.js` adds `NFR-03 NFR-05: equal-tick seeded replay
+at 30/60/120/144 Hz, jitter, delay and pause exclusion`: every processed round
+state is compared, including all bird fields, obstacle geometry/flags/IDs, RNG,
+score and terminal tick. Jitter uses 4/29/7/13/22 ms intervals; delayed visible
+callbacks use 16/800/1/1/16 ms, exercising the 30-step cap with retained backlog.
+An inactive callback across ten minutes away, reset origin and explicit resume
+exclude away time; future scripted presses are reinstated after inactive input
+clearing. Existing blur/visibility tests cover input guards/restoration orders.
+`FR-04 FR-06 NFR-03 NFR-05: 100 complete mounted scoring/loss/retry cycles retain
+one listener set and chain` uses production mount, controls, loop and simulation
+with tiny event/clock fakes. It compares each tick, alternates both retry controls,
+checks full fresh reset, HUD, stable listener count and one pending callback,
+then checks complete disposal. Each flight scores 6 and loses at tick 1664.
+These verify existing gameplay; no missing gameplay behavior or contrived red
+failure was found. Initial additions passed 122 tests; the additional seeded
+performance preverification and stronger inactive-callback check pass 123.
+
+**T025** — `tests/browser/index.html` and `validation.js` provide native DOM/HUD/
+Canvas using production `mountGame`, `createLoop`, `render`, `stepRound` and
+normal seeded gameplay. Run the buttons at `/tests/browser/` over HTTP.
+The fixtures/100-cycle mode compares every tick, checks scoring/boundaries/
+swept crossing, records all terminal obstacles, scores, RNG and activation marks,
+and tests one scheduled chain through disposal. Synthetic distinct keyboard
+presses and native `.click()` are controlled browser fixtures, not proof of
+human input or hardware touch. Two callbacks leave each complete reset stable
+for external capture; `callbackProxyMs` is explicitly diagnostic and every
+`presentedResetMs` remains null. Download report exports JSON.
+The 60-second mode runs legal controls and the production renderer, records
+all frame intervals and elapsed time, updates equivalent HUD/status, and fails
+if focus/visibility is lost or a collision occurs. It stops its chain on exit.
+`game.js` auto-initialization now checks for a game canvas so importing its
+helpers on a harness page with template-contained markup creates no extra game.
+The normal production page still mounts automatically. No harness imports occur
+in production modules and no global production cheats were introduced.
+
+### Browser environment and evidence: T026–T028 remain incomplete
+
+Verified actual hardware: MacBook Air `MacBookAir10,1`, Apple M1 (8 CPU cores,
+7 GPU cores), 8 GB memory; macOS 26.3.1 build 25D2128. `system_profiler` did not
+report display resolution/refresh rate. `pmset -g batt` reported AC Power but
+battery discharging, so sustained mains operation is unverified. No physical
+desktop touchscreen is available to this session. No physical-display 60 Hz
+baseline is asserted. Browser viewport 1100×1100 CSS px, scale 1; harness game
+extends below that viewport. These headless smoke runs differ from the proposed
+full-interface visible desktop baseline. Other user workload is not controlled.
+Chrome and Edge runs used focus emulation and native Canvas; headless callback
+cadence does not establish physical display presentation or human stutter review.
+
+Reproducible CDP runner: [harness-smoke.mjs](evidence/phase6/harness-smoke.mjs).
+It uses Node's native WebSocket/fetch and requires the existing local HTTP :8000
+server and isolated browser debug endpoint. Run with port and `cycles`, `performance` or `journeys` (reuses the Phase 3 native-input driver). It saves JSON and a screenshot, captures runtime exceptions and
+fails on harness errors. Local sockets and browser launch needed sandbox approval.
+
+| Browser | Actual version / availability | This phase evidence | Acceptance gaps |
+|---|---|---|---|
+| Chrome | 156.0.8078.48, headless | [100 cycles](evidence/phase6/9222-cycles.json), [screenshot](evidence/phase6/9222-cycles.png); [60-second report](evidence/phase6/9222-performance.json), [screenshot](evidence/phase6/9222-performance.png) | Full physical desktop journeys, display baseline, real touch, presented reset latency |
+| Edge | 156.0.4314.50, headless | [100 cycles](evidence/phase6/9223-cycles.json), [screenshot](evidence/phase6/9223-cycles.png); [60-second report](evidence/phase6/9223-performance.json), [screenshot](evidence/phase6/9223-performance.png) | Full physical desktop journeys, display baseline, real touch, presented reset latency |
+| Safari | 26.3.1 (21623.2.7.11.7) installed | `safaridriver` starts; session creation fails: “You must enable 'Allow remote automation' in the Developer section of Safari Settings to control Safari via WebDriver.” | No Safari journeys, cycles or performance run; user browser settings were not changed |
+| Firefox | Not installed in `/Applications`; no available driver/session | No execution | All Firefox checks incomplete |
+
+Both Chrome and Edge: 100/100 matching flights, score 6, terminal tick 1664,
+terminal RNG state 1187970029; every intermediate state compared to the same
+script. Reports retain per-cycle terminal obstacles/flags and activation times.
+Both reports show zero harness errors and zero captured runtime exceptions.
+Scoring fixtures 0/1/10, fatal ceiling/ground with collision priority and a swept
+crossing pass. Native listener-count isolation is established by the unit test;
+the browser harness independently checks its scheduled chain and outcomes.
+The existing Phase 3–5 Chrome journeys remain incremental evidence, not full
+four-browser acceptance. No result here establishes both physical restoration
+orders, real desktop touch or complete manual art/input acceptance in Edge.
+
+**T027 latency remains incomplete**: all 100 diagnostic callback delays are
+stored per browser but no activation-correlated first-presented reset image was
+measured. Final screenshots do not supply 100 presentation timestamps. No
+≤100 ms latency claim follows from these results. Obtain trace/screen-capture
+presentation evidence at known resolution for each activation in every browser;
+refine any uncertainty crossing 100 ms. Safari/Firefox cycles also remain missing.
+
+Chrome preliminary rendering sample: 60,014.1 ms, 3,602 callbacks (3,601
+intervals), average **60.0026 FPS**, maximum interval **21.9 ms**, 7,201 normal
+simulation ticks, 32 points, still playing, zero runtime errors. All intervals
+are in the JSON report. Screenshot visually inspected: production bird, pipes,
+score 32 and Flying status render correctly. Edge startup occurred during this
+sample; it is a diagnostic sample, not a controlled baseline acceptance run.
+Display-link diagnostics from headless browsers further prevent a physical
+smoothness conclusion. Follow-up: repeat on an observed physical display with
+known refresh rate and idle workload; record human stutter observation and
+investigate long intervals. No numerical pass threshold has been invented.
+
+Edge rendering sample: 60,014.2 ms, 3,602 callbacks (3,601 intervals), average
+**60.0025 FPS**, maximum interval **20.2 ms**, 7,201 normal ticks, 32 points,
+still playing, zero runtime errors. This ran after Chrome measurement finished;
+no concurrent browser measurements. The full interval list is retained in the
+Edge JSON. Both headless samples approach the 60 FPS target without establishing
+physical-display smoothness or visible four-browser acceptance.
+
+Edge native-input rerun: [journey results](evidence/phase6/9223-journeys.txt)
+using `node evidence/phase6/harness-smoke.mjs 9223 journeys` from this feature
+directory. Passed Space, ArrowUp, native mouse, emulated touch, Start button and
+native Tab/Enter starts/resumes; dispatched blur pauses, return stays paused,
+explicit resume does not catch up; repeated keys prevent scrolling and do not
+flap; native focus outline; natural ground loss/retry visibility; post-loss keys
+ignored; decorative pixels animate. Narrow 360×900 layout has no horizontal
+overflow and preserves 2:3 canvas scaling. [Ready](evidence/phase6/9223-ready.png),
+[loss](evidence/phase6/9223-loss.png), [narrow](evidence/phase6/9223-narrow.png)
+screenshots retained; narrow image visually inspected. Zero runtime exceptions.
+This expands Edge smoke evidence but uses emulated touch and dispatched lifecycle
+events; it does not close physical device, physical focus restoration or full
+four-browser acceptance. No application fix was required by these runs.
+
+### T029 — Current requirement/function/evidence mapping
+
+Every requirement is mapped below; a mapping does not turn missing browser
+acceptance into a pass. Test references are requirement-labelled names in the
+listed suite; detailed names and prior browser evidence appear in task sections
+above. Latest `npm test`: **123 passed, 0 failed**, no skipped/cancelled/todo,
+[unit transcript](evidence/phase6/unit-tests.txt), Node v22.15.0. Unit tests have no sleeps or DOM-emulation dependencies.
+
+| Requirement | Tasks | Actual implementation | Verification and remaining evidence |
+|---|---|---|---|
+| FR-01 | T005–T007, T010, T013–T014, T019–T024 | `game.js:bindInput/mountGame`, `simulation.js:startOrFlap/restartRound/stepRound` | Browser suite start/resume method, repeat/FIFO and retry tests; Phase 3/5 Chrome input smoke; T026 full browser/touch incomplete |
+| FR-02 | T003–T007, T010, T013, T024 | `config.js:CONFIG/createConfig`, `simulation.js:stepRound`, `game.js:createLoop` | Simulation gravity/apex/frozen-state tests; browser cadence replay; T026 browser matrix incomplete |
+| FR-03 | T003, T005, T008, T023–T025 | `simulation.js:spawnPair/nextObstacleRandom/stepRound`, `config.js:CONFIG` | Simulation seed/spawn/retirement tests and extreme/seeded traversal; both browser 100-cycle reports |
+| FR-04 | T019–T022, T024–T027 | `simulation.js:restartRound`, `game.js:mountGame/restart` | Four-state reset and both-control unit tests, 100 mounted cycles, Phase 5 Chrome and both harness reports; presentation limit incomplete |
+| FR-05 | T005, T009, T012, T015, T025–T026 | `simulation.js:firstCollisionTime/sweptContactTime/stepRound`, `renderer.js:drawBird/drawPipe` | Simulation inclusive/overlap/zero-velocity/swept tests; renderer bounds tests; harness boundary/crossing fixtures; full browser journeys incomplete |
+| FR-06 | T015–T018, T024–T025 | `simulation.js:stepRound`, `game.js:updateView`, `renderer.js:render` | Strict/equality/once-only/retirement/collision-priority simulation tests; 0/1/10 legal trajectories and HUD tests; Phase 4 Chrome and both harness fixtures |
+| FR-07 | T004–T007, T011–T013, T016, T019–T022 | `simulation.js:createRound/startOrFlap/pauseRound/restartRound/stepRound`, `game.js:updateView`, `renderer.js:drawOverlay` | Lifecycle/frozen final score/composition/reset suites; Phase 3/5 Chrome; full four-browser acceptance incomplete |
+| FR-08 | T006, T010–T014, T020–T022, T026 | `index.html`, `style.css`, `game.js:bindInput/updateView`, `renderer.js:render` | Input, renderer and composition suites; Phase 3 screenshots/native Tab/Enter; real touch/four-browser visual journeys incomplete |
+| FR-09 | T011–T013, T016, T018, T025–T026 | `renderer.js:render/drawOverlay`, `game.js:updateView`, `index.html` | Renderer read-only/overlay/score tests; next-render HUD tests; Phase 3–6 screenshots; four-browser review incomplete |
+| FR-10 | T004–T005, T009, T012, T025–T026 | `simulation.js:firstCollisionTime/stepRound`, `renderer.js:drawBird/drawPipe/drawGround` | Ceiling/contact/sweep/collision-priority simulation and artwork bounds tests; harness fatal-boundary fixtures |
+| FR-11 | T005–T007, T010, T013–T014, T020–T024, T026 | `simulation.js:pauseRound/startOrFlap`, `game.js:bindInput/createLoop/mountGame` | Both restoration-order, guards/backlog/resume unit tests, ten-minute pause replay, Phase 3 Chrome dispatched focus smoke; physical browser restoration checks incomplete |
+| NFR-01 | T025, T028 | `game.js:createLoop`, `renderer.js:render`, `validation.js:performanceFlight` | Seeded 7200-tick preverification; recorded headless rendering samples only; visible physical baseline and all-browser observations incomplete |
+| NFR-02 | T020–T022, T025, T027 | `game.js:restart/updateView`, `simulation.js:restartRound` | Synchronous reset unit tests; 100 activation marks/browser, null presented timings; ≤100 ms acceptance incomplete |
+| NFR-03 | T005–T006, T008–T010, T012, T019–T025, T027 | Round-owned RNG, `stepRound`, `createLoop`, `restartRound`, read-only `render` | All cadence replays, 100 full mounted cycles with stable listener/chain counts; 100 native Chrome/Edge cycles; Safari/Firefox cycles incomplete |
+| NFR-04 | T001–T003, T029, T031 | Four production JS modules, named `CONFIG`, independent validation files | Focused phase reviews above, zero dependencies/shared collision rules; final Phase 7 review T031 pending |
+| NFR-05 | T002, T005–T006, T015–T016, T019–T020, T023–T029 | `tests/*.test.js`, native harness and this log | 123 passing requirement-labelled tests, evidence JSON/screenshots and this mapping; missing acceptance explicitly tracked |
+| NFR-06 | T014, T018, T022, T026–T028 | Native HTML/CSS/JS/Canvas, `bindInput`, `mountGame` | Exact browser versions above; Chrome/Edge headless subsets; Safari/Firefox/real-touch/full-desktop acceptance incomplete |
+| SC-01 | T014, T022, T026 | `mountGame/bindInput/updateView` and simulation lifecycle | Unit journeys and Chrome smoke; every supported browser journey incomplete |
+| SC-02 | T015–T018, T025–T026 | `stepRound` scoring and HUD/renderer | 0/1/10 legal simulation and HUD tests; Phase 4 Chrome native fixtures; Phase 6 Chrome/Edge fixtures; other browsers missing |
+| SC-03 | T025, T028 | `createLoop/render`, `performanceFlight` | Headless samples recorded; four visible-browser baseline records incomplete |
+| SC-04 | T020–T022, T025, T027 | `restartRound`, mounted `restart/updateView` | Reset semantics pass; all 100 presented-image measurements remain incomplete |
+| SC-05 | T024–T025, T027 | `stepRound/createLoop/restartRound`, input binding | 100 mounted unit cycles and 100 native cycles in Chrome/Edge match at every tick; Safari/Firefox incomplete |
+| SC-06 | T029, T031 | Production modules, suites, harness and this log | Complete traceability and passing core suite; required browser/device/measurement evidence and final review remain incomplete |
+
+Constitution I–V phase review: specification-derived checks; small validation-only
+controller and focused native harness; production physics/renderer used without
+bypasses; dependency-free tests and CDP; explicit requirement/task/function/evidence
+links. Final project review is still T031. T023, T024, T025 and T029 are complete;
+T026, T027 and T028 stay unchecked until the stated missing evidence is obtained.

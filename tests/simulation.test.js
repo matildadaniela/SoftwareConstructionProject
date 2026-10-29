@@ -491,3 +491,36 @@ for (const phase of ['ready', 'playing', 'paused', 'game-over']) {
     assert.equal(fresh.bird.velocityY, CONFIG.flapVelocity + CONFIG.gravity * CONFIG.stepSeconds);
   });
 }
+
+// T023: independently controlled traversal, including sustained global extremes.
+test('FR-03 A-03 NFR-03: legal flaps traverse extreme allowed gap transitions for 60 seconds', async () => {
+  const { traversalInput } = await import('./trajectory.js');
+  const round = gameplay.restartRound();
+  const openings = [];
+  for (let tick = 1; tick <= 7200; tick++) {
+    stepRoundForTraversal();
+    assert.equal(round.phase, 'playing', `collision at tick ${tick}`);
+  }
+  function stepRoundForTraversal() {
+    const priorId = round.nextPairId;
+    gameplay.stepRound(round, CONFIG, traversalInput(round),
+      () => Math.floor(round.activeTick / 1050) % 2);
+    if (round.nextPairId !== priorId) openings.push(round.previousGapTop);
+  }
+  assert.equal(round.score, 32);
+  assert.ok(openings.includes(CONFIG.gapMin));
+  assert.ok(openings.includes(CONFIG.gapMax));
+  const changes = openings.slice(1).map((gap, i) => gap - openings[i]);
+  assert.ok(changes.includes(60));
+  assert.ok(changes.includes(-60));
+  assert.ok(changes.every(change => Math.abs(change) <= CONFIG.maxGapChange));
+});
+
+test('NFR-01 NFR-03: seeded performance trajectory survives 7200 normal ticks', async () => {
+  const { scriptedFlight } = await import('./trajectory.js');
+  const script = scriptedFlight(7200);
+  assert.equal(script.states[7199].phase, 'playing');
+  assert.equal(script.states[7199].score, 32);
+  assert.equal(script.terminal.phase, 'game-over');
+  assert.ok(script.terminal.activeTick > 7200);
+});

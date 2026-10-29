@@ -246,4 +246,6 @@ export function mountGame(page, options = {}) {
   return dispose;
 }
 
-initializeBrowser(page => mountGame(page));
+initializeBrowser(page => {
+  if (page.getElementById('game-canvas')) mountGame(page);
+});

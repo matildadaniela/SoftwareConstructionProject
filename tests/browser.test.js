@@ -678,3 +678,84 @@ for (const phase of ['ready', 'playing', 'paused', 'game-over']) {
     f.dispose();
   });
 }
+
+// T024 compares every processed tick, not states observed at arbitrary paints.
+test('NFR-03 NFR-05: equal-tick seeded replay at 30/60/120/144 Hz, jitter, delay and pause exclusion', async () => {
+  const { scriptedFlight } = await import('./trajectory.js');
+  const script = scriptedFlight();
+  assert.ok(script.terminal.score >= 5);
+  for (const intervals of [[1000 / 30], [1000 / 60], [1000 / 120], [1000 / 144],
+    [4, 29, 7, 13, 22], [16, 800, 1, 1, 16]]) {
+    const timing = scheduler();
+    const round = simulation.restartRound();
+    let checked = 0;
+    const loop = game.createLoop({
+      ...timing, isPlaying: () => round.phase === 'playing',
+      step(inputs) {
+        simulation.stepRound(round, CONFIG, inputs);
+        assert.deepEqual(round, script.states[checked++], `cadence ${intervals}, tick ${checked}`);
+      }, render() {},
+    });
+    for (const tick of script.presses) loop.enqueue({ type: 'flap' }, tick);
+    loop.start();
+    let now = 0;
+    timing.frame(now);
+    // Pause preserves the round; queue clearing is tested separately by bindInput.
+    simulation.pauseRound(round);
+    loop.resetTiming();
+    const paused = structuredClone(round);
+    now += 600000;
+    timing.frame(now);
+    assert.deepEqual(round, paused);
+    // Inactive callbacks discard queued controls; replay reinstates only future presses.
+    for (const tick of script.presses) loop.enqueue({ type: 'flap' }, tick);
+    simulation.startOrFlap(round);
+    timing.frame(now); // fresh origin excludes ten minutes away
+    assert.equal(round.activeTick, 0);
+    for (let frame = 0; round.phase === 'playing' && frame < 20000; frame++) {
+      now += intervals[frame % intervals.length];
+      timing.frame(now);
+      assert.equal(timing.pending(), 1);
+    }
+    assert.equal(checked, script.states.length);
+    assert.deepEqual(round, script.terminal);
+    loop.dispose();
+    assert.equal(timing.pending(), 0);
+  }
+});
+
+test('FR-04 FR-06 NFR-03 NFR-05: 100 complete mounted scoring/loss/retry cycles retain one listener set and chain', async () => {
+  const { scriptedFlight } = await import('./trajectory.js');
+  const script = scriptedFlight();
+  const presses = new Set(script.presses);
+  const f = pageFixture();
+  const listenerCount = () => [f.page, f.page.defaultView, ...Object.values(f.elements)]
+    .reduce((sum, item) => sum + item.listenerCount(), 0);
+  const listeners = listenerCount();
+  let now = 0;
+  for (let cycle = 0; cycle < 100; cycle++) {
+    if (cycle === 0) f.dispose.restart();
+    else f.elements[cycle % 2 ? 'game-button' : 'retry-button'].dispatch('click');
+    const reset = f.frames.at(-1);
+    assert.deepEqual(reset, simulation.restartRound());
+    f.timing.frame(now);
+    for (let tick = 1; tick <= script.states.length; tick++) {
+      if (presses.has(tick)) {
+        f.page.dispatch('keydown', { code: 'Space' });
+        f.page.dispatch('keyup', { code: 'Space' });
+      }
+      now += 1000 / 120;
+      f.timing.frame(now);
+      assert.deepEqual(f.frames.at(-1), script.states[tick - 1]);
+      // Keep the recorder bounded during the long stability test.
+      f.frames.splice(0, f.frames.length - 1);
+    }
+    assert.deepEqual(f.frames.at(-1), script.terminal);
+    assert.equal(f.elements.score.textContent, String(script.terminal.score));
+    assert.equal(listenerCount(), listeners);
+    assert.equal(f.timing.pending(), 1);
+  }
+  f.dispose();
+  assert.equal(listenerCount(), 0);
+  assert.equal(f.timing.pending(), 0);
+});

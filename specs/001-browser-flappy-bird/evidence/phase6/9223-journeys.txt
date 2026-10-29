@@ -1,0 +1,59 @@
+{
+  protocolVersion: '1.3',
+  product: 'Edg/156.0.4314.50',
+  revision: '@af2ba23ae0ecf7084d900446fc59d5119dd5fd5e',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0',
+  jsVersion: '15.6.12.7'
+}
+PASS Space ready
+PASS Space starts Flying undefined
+PASS Space pauses
+PASS Space restoration stays paused
+PASS Space resumes Flying
+PASS ArrowUp ready
+PASS ArrowUp starts Flying undefined
+PASS ArrowUp pauses
+PASS ArrowUp restoration stays paused
+PASS ArrowUp resumes Flying
+PASS mouse ready
+click { x: 550, y: 550.1875 } { focus: true, hidden: false, target: 'game-canvas' }
+PASS mouse starts Flying [{"id":"game-canvas","button":0,"primary":false,"focus":true}]
+PASS mouse pauses
+PASS mouse restoration stays paused
+click { x: 550, y: 550.1875 } { focus: true, hidden: false, target: 'game-canvas' }
+PASS mouse resumes Flying
+PASS touch ready
+click { x: 550, y: 550.1875 } { focus: true, hidden: false, target: 'game-canvas' }
+PASS touch starts Flying [{"id":"game-canvas","button":0,"primary":false,"focus":true}]
+PASS touch pauses
+PASS touch restoration stays paused
+click { x: 550, y: 550.1875 } { focus: true, hidden: false, target: 'game-canvas' }
+PASS touch resumes Flying
+PASS button ready
+click { x: 550, y: 864.375 } { focus: true, hidden: false, target: 'game-button' }
+PASS button starts Flying []
+PASS button pauses
+PASS button restoration stays paused
+click { x: 550, y: 864.375 } { focus: true, hidden: false, target: 'game-button' }
+PASS button resumes Flying
+PASS Enter ready
+PASS native Tab focuses Start
+PASS visible focus
+PASS Enter starts Flying undefined
+PASS Enter pauses
+PASS Enter restoration stays paused
+PASS Enter resumes Flying
+PASS ready decoration animates
+PASS natural ground collision overlay
+PASS retry visible
+PASS post-loss gameplay ignored
+PASS narrow layout no horizontal overflow
+PASS logical aspect preserved
+PASS Space held repeats do not flap
+PASS Space defaults prevented
+PASS Space no scrolling
+PASS ArrowUp held repeats do not flap
+PASS ArrowUp defaults prevented
+PASS ArrowUp no scrolling
+Runtime errors []
+PASS no JavaScript exceptions
