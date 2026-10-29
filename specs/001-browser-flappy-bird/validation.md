@@ -417,3 +417,45 @@ existing tests pass, no dependencies, and requirement/file/check references
 recorded above. Existing .gitignore covers required JavaScript/universal
 patterns; no additional ignore files are applicable. Only T011 newly completed.
 `.specify/extensions.yml` absent at pre/post checks; no hooks to dispatch.
+
+
+## T012 — Read-only arcade renderer (2026-10-29)
+
+Requirements: FR-05, FR-07–FR-10, NFR-03. Added independently authored
+`renderer.js`; no Vibe code or artwork used and no dependencies added.
+
+- `render(context, round, config = CONFIG, timestamp = 0)` draws a complete
+  logical frame synchronously. Optional milliseconds drive decoration only;
+  the renderer reads no clock, randomness, DOM or storage and retains no state.
+  The caller can pass RAF time. Score and lifecycle messages come directly from
+  the supplied round on every call. A replacement playing round draws without
+  a prior overlay; actual restart and HUD composition remain later tasks.
+- `drawBird` fills and clips to the full unrotated bird contact rectangle, with
+  an animated inset wing and no positional bobbing. `drawPipe` fills and clips
+  each shared upper/lower collision rectangle; highlights and caps stay inside.
+  `drawGround` begins at configured groundY. `drawSky` adds moving pixel clouds,
+  a sun and a skyline; inset ground lights animate independently of gameplay.
+- `drawOverlay` supplies distinct ready/start, paused/resume and game-over/final
+  score/retry messages. The existing native retry button remains owned by later
+  page composition; no canvas-only interactive control is introduced.
+
+Verification: wrote `tests/renderer.test.js` first; initial execution failed with
+ERR_MODULE_NOT_FOUND for the absent renderer. After implementation, `npm test`
+passed **84 tests, 0 failed**, including these three new tests:
+
+- FR-07–FR-09: each render derives overlay and score from the current round.
+- FR-05/FR-10: bird and pipe artwork uses full shared collision rectangles.
+- FR-08/NFR-03: cosmetic time changes drawing without mutating frozen round or
+  consuming RNG (deep-frozen round and before/after state, including rngState).
+
+The recording-context tests inspect drawing commands, not rasterized appearance.
+Browser visual/layout/animation evidence remains T014 after T013 composition;
+no browser compatibility, presented-frame latency or completed US1 acceptance
+is claimed. `git diff --check` passed. Existing .gitignore covers the required
+JavaScript/universal patterns; no other ignore tooling applies to this private,
+dependency-free static project.
+
+Constitution I–V: scoped specification-derived renderer, focused drawing helpers
+and shared configuration, requirement-labelled tests, zero dependencies, and
+function/test traceability above. Only T012 newly marked complete.
+`.specify/extensions.yml` absent at pre/post checks; no hooks to dispatch.
