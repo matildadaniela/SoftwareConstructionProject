@@ -1,7 +1,7 @@
 # Tasks: Browser Flappy Bird
 
 **Input**: `specs/001-browser-flappy-bird/` — spec.md, plan.md, research.md, data-model.md, contracts/browser-game.md and quickstart.md; constitution v1.0.0.
-**Tests**: Automated testing and browser verification explicitly requested. All tasks are pending; this document claims no implementation or executed tests.
+**Tests**: Automated testing and browser verification explicitly requested. Phase 1 setup (T001–T002) is complete; see [validation.md](validation.md) for setup evidence. All later tasks and behavioral/browser verification remain pending.
 **Organization**: Four user-story increments, ordered P1, P2, P2, P3. Paths are relative to the repository root.
 
 ## Format and scope
@@ -16,8 +16,8 @@ Write each story's automated tests before its implementation, confirm relevant a
 
 **Purpose**: Establish the minimal development and verification environment.
 
-- [ ] T001 Check ownership of proposed root paths against `specs/001-browser-flappy-bird/plan.md`, verify Node 22 and Python 3 availability, and initialize `specs/001-browser-flappy-bird/validation.md` with pending requirement/task/evidence mappings, actual environment details and source-provenance review notes (NFR-04–NFR-06).
-- [ ] T002 Create private ES-module `package.json` with no dependencies and test script `node --test tests/*.test.js`; establish `tests/simulation.test.js`, `tests/browser.test.js` and `tests/browser/index.html` paths without adding a build step (NFR-04, NFR-05).
+- [X] T001 Check ownership of proposed root paths against `specs/001-browser-flappy-bird/plan.md`, verify Node 22 and Python 3 availability, and initialize `specs/001-browser-flappy-bird/validation.md` with pending requirement/task/evidence mappings, actual environment details and source-provenance review notes (NFR-04–NFR-06).
+- [X] T002 Create private ES-module `package.json` with no dependencies and test script `node --test tests/*.test.js`; establish `tests/simulation.test.js`, `tests/browser.test.js` and `tests/browser/index.html` paths without adding a build step (NFR-04, NFR-05).
 
 ## Phase 2: Foundational (blocking prerequisites)
 
