@@ -103,6 +103,26 @@ test('FR-01 FR-02 FR-07: start supplies one flap before gravity and position int
   near(round.bird.velocityY, -424.8);
 });
 
+test('FR-01 FR-02 NFR-03: tick inputs are consumed FIFO without accumulated impulse or carryover', () => {
+  const round = playing();
+  const seen = [];
+  const inputs = ['first', 'second'].map(label => ({
+    get type() {
+      seen.push(label);
+      return 'flap';
+    },
+  }));
+  step(round, inputs);
+  assert.deepEqual(seen, ['first', 'second']);
+  near(round.bird.velocityY, -437.4);
+  near(round.bird.y, 244.355);
+  step(round);
+  assert.deepEqual(seen, ['first', 'second']);
+  near(round.bird.velocityY, -424.8);
+  near(round.bird.y, 240.815);
+  assert.equal(round.activeTick, 2);
+});
+
 test('FR-02: flap rises, reaches an apex, then descends under gravity', () => {
   const round = playing();
   step(round, [{ type: 'flap' }]);
@@ -208,6 +228,29 @@ test('FR-03: retire only when pair right edge is strictly negative', () => {
   near(round.pairs[0].x + 64, 0);
   step(round);
   assert.deepEqual(round.pairs, []);
+});
+
+test('FR-03 NFR-03: obstacle samples are drawn only on active spawn ticks and injection preserves RNG', () => {
+  const round = playing();
+  round.activeTick = 208;
+  let calls = 0;
+  const random = () => { calls++; return 0.5; };
+  step(round, [], CONFIG, random);
+  assert.equal(calls, 0);
+  api('pauseRound')(round);
+  step(round, [], CONFIG, random);
+  assert.equal(calls, 0);
+  api('startOrFlap')(round);
+  step(round, [], CONFIG, random);
+  assert.equal(calls, 1);
+  assert.equal(round.rngState, CONFIG.initialSeed);
+  assert.deepEqual(round.pairs, [{
+    id: 1, x: 398.7, width: 64, gapTop: 180, gapHeight: 164, scored: false,
+  }]);
+  step(round, [], CONFIG, random);
+  assert.equal(calls, 1);
+  assert.equal(round.nextPairId, 2);
+  assert.equal(round.nextSpawnTick, 420);
 });
 
 // Bird velocity cancels this tick's gravity, making pipe-edge fixtures exact.
