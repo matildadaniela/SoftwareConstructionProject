@@ -631,3 +631,66 @@ Constitution I–V reviewed: specified scoring semantics; focused change within
 existing module boundaries and shared geometry; failing-then-passing core tests
 plus native-browser evidence; zero dependencies; explicit task/function/test
 traceability above. T015–T018 marked complete; Phase 5 and later remain unchecked.
+
+## Phase 5 — Immediate clean retry, T019–T022 (2026-10-29)
+
+Requirements: FR-01, FR-04, FR-07, FR-08, FR-11, NFR-02, NFR-03.
+Branch `sdd-development`. Requirements checklist passed 16/16; no checklist
+markers changed. Existing ignore rules suffice for this private ES-module
+project. `.specify/extensions.yml` absent at pre/post checks: no hooks.
+
+- **T019** — `tests/simulation.test.js`, `FR-04 FR-07 NFR-03: restart from …
+  restores all round state with immediate flap` (four lifecycle states): fresh
+  bird/collections, score, tick, IDs, spawn schedule, prior gap and seed match
+  construction defaults; flap velocity is applied at tick zero; previous round
+  stays unchanged; following ticks fall normally and accept fresh flap input.
+- **T020** — `tests/browser.test.js`, `FR-04 FR-08 NFR-02 NFR-03: … resets
+  synchronously with one chain` (both controls × mouse/touch/native click):
+  nonzero terminal fixture, stale held key/queued flap and retained timing
+  backlog, complete synchronous reset draw, fresh subsequent input, no duplicate
+  initiating flap, twelve rapid activations, stable listeners/one scheduled
+  animation, full disposal. `FR-04 FR-11: shared restart action replaces …`
+  covers all four lifecycle states through the mounted restart action.
+- **T021** — `simulation.js:restartRound` creates an independent playing round
+  with one immediate flap and zero elapsed time. `game.js:mountGame/restart`
+  replaces the round, clears input/held/pointer state, resets tick queue to 1
+  and timing, and draws synchronously. Both native controls share this action;
+  retry stops propagation to the game area. The below-game button restarts
+  playing/ended rounds, while Start/Resume retain their separate behavior.
+  The mount disposal handle exposes `.restart()` for an explicit reset from
+  any lifecycle state; listeners/animation are retained rather than recreated.
+- **T022** — Native browser evidence is recorded below; all relevant tests pass.
+
+TDD: **105 passed, 14 failed** after adding tests and before implementation;
+then **119 passed, 0 failed**, no skipped/cancelled/todo. Node v22.15.0,
+`npm test`. No unit sleeps, packages or DOM emulation introduced.
+`git diff --check` passes.
+
+Browser: Chrome 156.0.8078.48 headless on this macOS workspace, 1100×1100,
+scale 1, existing local HTTP :8000 and debugging :9222; local socket access
+required sandbox approval. Reproducible driver:
+[evidence/phase5/restart-smoke.mjs](evidence/phase5/restart-smoke.mjs);
+[results](evidence/phase5/restart-results.txt);
+[reset screenshot](evidence/phase5/restart-reset.png).
+The controlled native DOM/Canvas composition uses production mount/simulation/
+renderer and injected frame scheduling. It checks shared restart from every
+state, both controls from nonzero game-over fixtures, rapid activation, browser
+mouse clicks on both controls, and native Shift+Tab/Enter activation of the
+on-screen retry. Reset assertions include starting position, flap velocity,
+zero ticks, fresh seed, empty obstacles, zero HUD, Flying status and hidden
+retry overlay. Zero captured runtime exceptions. Screenshot inspected:
+complete fresh playing frame with zero score, initial bird and no obstacles.
+An initial automation attempt omitted Enter's carriage-return text; supplying
+it exercised the browser default activation successfully. No production fix
+was needed for that driver issue.
+
+This is preliminary reset-frame evidence, not a measurement of activation-to-
+presentation latency. Native touch hardware, full supported-browser journeys,
+100-cycle stability and all 100 latency bounds remain phase 6 acceptance work.
+Subsequent controls and duplicate-listener/chain isolation are covered by the
+injected-clock automated tests; headless fixtures do not certify real touch.
+
+Constitution I–V reviewed: specified immediate retry semantics, focused helpers
+within existing modules, failing-then-passing core tests plus browser evidence,
+zero dependencies, and explicit task/function/test traceability. No Vibe code
+or assets accessed or changed. T019–T022 complete; phase 6 remains unchecked.

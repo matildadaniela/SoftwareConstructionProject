@@ -619,3 +619,62 @@ for (const count of [0, 1, 10]) {
     f.dispose();
   });
 }
+
+for (const control of ['game-button', 'retry-button']) {
+  for (const method of ['mouse', 'touch', 'native']) {
+    test(`FR-04 FR-08 NFR-02 NFR-03: ${control} ${method} resets synchronously with one chain`, () => {
+      let live;
+      const f = pageFixture((ctx, round) => { live = round; });
+      f.elements['retry-button'].parent = f.elements.playfield;
+      const targets = [f.page, f.page.defaultView, ...Object.values(f.elements)];
+      const listeners = targets.map(t => t.listenerCount());
+      f.page.dispatch('keydown', { code: 'Space' }); // held key and queued flap
+      f.timing.frame(0); f.timing.frame(1000); // retained backlog
+      Object.assign(live, { phase: 'game-over', score: 7, rngState: 123 });
+      live.pairs.push({ id: 9, x: 300 });
+      const old = live;
+      const activate = () => method === 'native'
+        ? f.elements[control].dispatch('click', { detail: 0 })
+        : gesture(f.elements[control], method);
+      activate();
+      assert.notEqual(live, old);
+      assert.deepEqual(live, { ...simulation.createRound(), phase: 'playing',
+        bird: { ...simulation.createRound().bird, velocityY: CONFIG.flapVelocity } });
+      assert.equal(f.elements.score.textContent, '0');
+      assert.equal(f.elements.status.textContent, 'Flying');
+      assert.equal(f.elements['retry-button'].hidden, true);
+      assert.equal(f.elements['game-button'].disabled, false);
+      f.timing.frame(60000); // restart clears old origin/backlog
+      assert.equal(live.activeTick, 0);
+      f.timing.frame(60009);
+      const velocity = live.bird.velocityY;
+      f.timing.frame(60018);
+      assert.ok(live.bird.velocityY > velocity); // no duplicate initiating flap
+      f.page.dispatch('keydown', { code: 'Space' }); // old held flag cleared
+      f.timing.frame(60027);
+      assert.equal(live.bird.velocityY, CONFIG.flapVelocity + CONFIG.gravity * CONFIG.stepSeconds);
+      for (let i = 0; i < 12; i++) {
+        live.phase = 'game-over'; activate();
+        assert.equal(live.activeTick, 0);
+        assert.equal(f.timing.pending(), 1);
+      }
+      assert.deepEqual(targets.map(t => t.listenerCount()), listeners);
+      f.dispose();
+      assert.ok(targets.every(t => t.listenerCount() === 0));
+      assert.equal(f.timing.pending(), 0);
+    });
+  }
+}
+
+for (const phase of ['ready', 'playing', 'paused', 'game-over']) {
+  test(`FR-04 FR-11: shared restart action replaces ${phase} without resuming old progress`, () => {
+    let live;
+    const f = pageFixture((ctx, round) => { live = round; });
+    live.phase = phase; live.score = 9; live.activeTick = 20;
+    f.dispose.restart();
+    assert.equal(live.phase, 'playing'); assert.equal(live.activeTick, 0);
+    assert.equal(live.score, 0); assert.equal(live.bird.y, CONFIG.birdY);
+    assert.equal(live.bird.velocityY, CONFIG.flapVelocity);
+    f.dispose();
+  });
+}

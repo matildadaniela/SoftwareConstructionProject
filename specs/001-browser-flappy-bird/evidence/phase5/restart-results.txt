@@ -1,0 +1,31 @@
+{"protocolVersion":"1.3","product":"Chrome/156.0.8078.48","revision":"@d0c02bfad08ec92a6ffcf989e53cd995e6381a4c","userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36","jsVersion":"15.6.75.19"}
+[
+  {
+    "phase": "ready",
+    "sharedRestart": true
+  },
+  {
+    "phase": "playing",
+    "sharedRestart": true
+  },
+  {
+    "phase": "paused",
+    "sharedRestart": true
+  },
+  {
+    "phase": "game-over",
+    "sharedRestart": true
+  },
+  {
+    "id": "game-button",
+    "nativeClick": true
+  },
+  {
+    "id": "retry-button",
+    "nativeClick": true
+  }
+]
+PASS: browser mouse activation game-button
+PASS: browser mouse activation retry-button
+PASS: native Shift+Tab/Enter retry and screenshot of complete reset. Screenshot is preliminary presented-frame evidence, not a latency measurement.
+PASS: all-state restart, both controls, rapid activation, zero runtime exceptions.

@@ -471,3 +471,23 @@ for (const count of [0, 1, 10]) {
     assert.equal(round.score, count);
   });
 }
+
+for (const phase of ['ready', 'playing', 'paused', 'game-over']) {
+  test(`FR-04 FR-07 NFR-03: restart from ${phase} restores all round state with immediate flap`, async () => {
+    const { restartRound, stepRound } = await import('../simulation.js');
+    const old = createRound();
+    Object.assign(old, { phase, score: 8, activeTick: 500, rngState: 123,
+      nextPairId: 9, nextSpawnTick: 630, previousGapTop: 90 });
+    old.pairs.push({ id: 8 }); old.bird.y = 400;
+    const before = structuredClone(old);
+    const fresh = restartRound();
+    assert.deepEqual(fresh, { ...createRound(), phase: 'playing',
+      bird: { ...createRound().bird, velocityY: CONFIG.flapVelocity } });
+    assert.deepEqual(old, before);
+    stepRound(fresh);
+    assert.equal(fresh.activeTick, 1);
+    assert.equal(fresh.bird.velocityY, CONFIG.flapVelocity + CONFIG.gravity * CONFIG.stepSeconds);
+    stepRound(fresh, CONFIG, [{ type: 'flap' }]);
+    assert.equal(fresh.bird.velocityY, CONFIG.flapVelocity + CONFIG.gravity * CONFIG.stepSeconds);
+  });
+}

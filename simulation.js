@@ -154,3 +154,12 @@ export function createRound(config = CONFIG) {
     rngState: settings.initialSeed,
   };
 }
+
+// Retry creates independent round-owned state; the initiating flap is applied
+// now, without advancing time or adding an input to the next tick.
+export function restartRound(config = CONFIG) {
+  const round = createRound(config);
+  round.phase = 'playing';
+  round.bird.velocityY = config.flapVelocity;
+  return round;
+}

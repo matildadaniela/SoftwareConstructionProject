@@ -1,7 +1,7 @@
 # Tasks: Browser Flappy Bird
 
 **Input**: `specs/001-browser-flappy-bird/` — spec.md, plan.md, research.md, data-model.md, contracts/browser-game.md and quickstart.md; constitution v1.0.0.
-**Tests**: Automated testing and browser verification explicitly requested. Phase 1 setup (T001–T002) is complete; see [validation.md](validation.md) for setup evidence. Phase 2 (T003–T004) is also complete with construction tests; Phase 3 (T005–T014) is complete with automated tests and Chrome headless smoke evidence; Phase 4 (T015–T018) is complete with scoring tests and controlled Chrome browser evidence; later phases and full browser/device acceptance remain pending.
+**Tests**: Automated testing and browser verification explicitly requested. Phase 1 setup (T001–T002) is complete; see [validation.md](validation.md) for setup evidence. Phase 2 (T003–T004) is also complete with construction tests; Phase 3 (T005–T014) is complete with automated tests and Chrome headless smoke evidence; Phase 4 (T015–T018) is complete with scoring tests and controlled Chrome browser evidence; Phase 5 (T019–T022) is complete with restart isolation tests and Chrome smoke evidence; later phases and full browser/device acceptance remain pending.
 **Organization**: Four user-story increments, ordered P1, P2, P2, P3. Paths are relative to the repository root.
 
 ## Format and scope
@@ -75,13 +75,13 @@ Write each story's automated tests before its implementation, confirm relevant a
 
 ### Automated tests
 
-- [ ] T019 [P] [US3] Extend `tests/simulation.test.js` for fresh-round restart from ready/playing/paused/game-over, restoring initial seed, IDs, spawn schedule, prior gap and initial bird motion, clearing score/obstacles/ticks, then immediate initiating flap velocity at the starting position with zero elapsed ticks, no queued duplicate initiating flap and normal subsequent controls (FR-01, FR-04, FR-07, NFR-03).
-- [ ] T020 [P] [US3] Extend `tests/browser.test.js` for each retry action including pointer and native button activation, rapid restart, stale held/pointer/queued-input/backlog clearing, synchronous complete reset render in activation handler with starting position, applied flap velocity, zero elapsed ticks and no queued duplicate initiating flap, and constant listener/animation-chain counts (FR-01, FR-04, FR-08, NFR-02, NFR-03; contracts/browser-game.md). Treat these as logic checks, not proof of visible paint latency.
+- [X] T019 [P] [US3] Extend `tests/simulation.test.js` for fresh-round restart from ready/playing/paused/game-over, restoring initial seed, IDs, spawn schedule, prior gap and initial bird motion, clearing score/obstacles/ticks, then immediate initiating flap velocity at the starting position with zero elapsed ticks, no queued duplicate initiating flap and normal subsequent controls (FR-01, FR-04, FR-07, NFR-03).
+- [X] T020 [P] [US3] Extend `tests/browser.test.js` for each retry action including pointer and native button activation, rapid restart, stale held/pointer/queued-input/backlog clearing, synchronous complete reset render in activation handler with starting position, applied flap velocity, zero elapsed ticks and no queued duplicate initiating flap, and constant listener/animation-chain counts (FR-01, FR-04, FR-08, NFR-02, NFR-03; contracts/browser-game.md). Treat these as logic checks, not proof of visible paint latency.
 
 ### Implementation and verification
 
-- [ ] T021 [US3] Implement one fresh-round restart action in `game.js` using `simulation.js`, shared by below-game restart and accessible on-screen retry; replace round/RNG, clear input/timing, enter playing and immediately apply initiating flap velocity without advancing position or simulation time or queuing it again, synchronously draw all reset content and retain one listener set/animation chain. Keep pause resume separate and preserve its progress (FR-01, FR-04, FR-07, FR-08, FR-11, NFR-02).
-- [ ] T022 [US3] Pass T019/T020 and record browser smoke checks for both retry controls, restart from every state, rapid activation, subsequent controls and native Tab/Enter in `specs/001-browser-flappy-bird/validation.md`; capture preliminary reset-visible-frame evidence without claiming the final 100-cycle latency acceptance (FR-04, FR-08, NFR-02, NFR-03).
+- [X] T021 [US3] Implement one fresh-round restart action in `game.js` using `simulation.js`, shared by below-game restart and accessible on-screen retry; replace round/RNG, clear input/timing, enter playing and immediately apply initiating flap velocity without advancing position or simulation time or queuing it again, synchronously draw all reset content and retain one listener set/animation chain. Keep pause resume separate and preserve its progress (FR-01, FR-04, FR-07, FR-08, FR-11, NFR-02).
+- [X] T022 [US3] Pass T019/T020 and record browser smoke checks for both retry controls, restart from every state, rapid activation, subsequent controls and native Tab/Enter in `specs/001-browser-flappy-bird/validation.md`; capture preliminary reset-visible-frame evidence without claiming the final 100-cycle latency acceptance (FR-04, FR-08, NFR-02, NFR-03).
 
 **Checkpoint**: Immediate retry works and reset isolation is covered by automated tests.
 

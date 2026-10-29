@@ -1,5 +1,5 @@
 import { CONFIG } from './config.js';
-import { createRound, startOrFlap, pauseRound, stepRound } from './simulation.js';
+import { createRound, restartRound, startOrFlap, pauseRound, stepRound } from './simulation.js';
 import { render } from './renderer.js';
 
 const MAX_STEPS_PER_FRAME = 30;
@@ -18,7 +18,7 @@ export function initializeBrowser(initialize, page = globalThis.document) {
 }
 
 export function bindInput(targets, actions, availability = {}) {
-  const { keyboard, window, document, gameArea, button } = targets;
+  const { keyboard, window, document, gameArea, button, retry } = targets;
   const isFocused = availability.isFocused ?? (() => document.hasFocus());
   const isVisible = availability.isVisible ?? (() => !document.hidden);
   const available = () => isFocused() && isVisible();
@@ -67,10 +67,12 @@ export function bindInput(targets, actions, availability = {}) {
     actions.gameplay();
   }
   listen(gameArea, 'click', activate);
-  listen(button, 'click', event => {
+  function control(event, action) {
     event.stopPropagation();
-    activate(event);
-  });
+    if (available() && (event.button === undefined || event.button === 0)) action();
+  }
+  listen(button, 'click', event => control(event, actions.primary ?? actions.gameplay));
+  if (retry) listen(retry, 'click', event => control(event, actions.restart));
   listen(window, 'blur', suspend);
   listen(document, 'visibilitychange', () => { if (!isVisible()) suspend(); });
   const dispose = () => {
@@ -168,7 +170,7 @@ export function mountGame(page, options = {}) {
   const score = element('score');
   const status = element('status');
   const instructions = element('instructions');
-  const round = createRound();
+  let round = createRound();
   const clock = options.clock ?? (() => window.performance.now());
   const draw = options.draw ?? render;
   const views = {
@@ -187,10 +189,8 @@ export function mountGame(page, options = {}) {
     button.textContent = label;
     instructions.textContent = instruction;
     retry.hidden = round.phase !== 'game-over';
-    // Retry implementation belongs to T021; expose its state-specific layout
-    // without offering an activation that cannot yet reset the round.
-    button.disabled = round.phase === 'playing' || round.phase === 'game-over';
-    retry.disabled = true;
+    button.disabled = false;
+    retry.disabled = false;
     draw(context, round, CONFIG, clock());
   }
   const loop = createLoop({
@@ -203,17 +203,14 @@ export function mountGame(page, options = {}) {
   });
   const disposeInput = bindInput({
     keyboard: page, window, document: page,
-    gameArea: element('playfield'), button,
+    gameArea: element('playfield'), button, retry,
   }, {
-    gameplay() {
-      if (round.phase === 'game-over') return;
-      if (round.phase !== 'playing') {
-        startOrFlap(round);
-        loop.resetTiming();
-      }
-      loop.enqueue({ type: 'flap' });
-      updateView();
+    restart,
+    primary() {
+      if (round.phase === 'playing' || round.phase === 'game-over') restart();
+      else gameplay();
     },
+    gameplay,
     pause() {
       pauseRound(round);
       updateView();
@@ -223,12 +220,30 @@ export function mountGame(page, options = {}) {
       loop.resetTiming();
     },
   });
+  function gameplay() {
+    if (round.phase === 'game-over') return;
+    if (round.phase !== 'playing') {
+      startOrFlap(round);
+      loop.resetTiming();
+    }
+    loop.enqueue({ type: 'flap' });
+    updateView();
+  }
+  function restart() {
+    round = restartRound();
+    disposeInput.clear();
+    loop.clearInput(1);
+    loop.resetTiming();
+    updateView();
+  }
   updateView();
   loop.start();
-  return () => {
+  const dispose = () => {
     disposeInput();
     loop.dispose();
   };
+  dispose.restart = restart;
+  return dispose;
 }
 
 initializeBrowser(page => mountGame(page));
