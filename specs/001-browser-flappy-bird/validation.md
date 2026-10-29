@@ -328,3 +328,56 @@ Verification: before implementation, `node --test tests/simulation.test.js` repo
 - `FR-05: newly spawned lower pipe can sweep through bird before retirement` — spawn-before-collision and detection before a fast hazard can retire.
 
 `npm test`: 78 tests, 47 passed, 31 failed; all failures are browser tests requiring absent `game.js` (pending T010 and later integration). No browser implementation or acceptance claimed. `git diff --check` passes. T009 alone marked complete; other task markers unchanged. Constitution I–V review: specified behavior, focused numeric helpers/shared bounds, requirement-labelled automated collision coverage, no added dependencies and task/function/test evidence above.
+
+
+## T010 — exported input, fixed-step loop and browser initialization gate
+
+Scope: T010 only, 2026-10-29, on `sdd-development`, Node v22.15.0.
+`game.js` was absent and independently authored from the feature artifacts;
+no Vibe source/assets accessed. Requirements checklist: 16 checked, zero
+unchecked, unchanged. Existing `.gitignore` covers the private native ES-module
+project; no additional ignore tooling or dependencies apply.
+
+Implementation in `game.js`:
+
+- `bindInput` owns per-key held state, focus/visibility guards, pointer state,
+  default prevention and listener disposal. Click is the single pointer/button
+  activation path; compatibility mouse events have no activation listeners and
+  button clicks stop bubbling. Tab/Enter retain native behavior. Blur/hidden
+  clear held/pointer state and call pause/clear actions; restoration does not
+  activate gameplay. The returned disposer exposes `clear()` for later restart
+  composition without rebinding listeners.
+- `createLoop` uses the shared 1/120-second configuration and injected monotonic
+  clock/scheduler. Tick-indexed queues drain FIFO once before each step. Past or
+  noninteger tick targets are rejected. Each callback processes at most 30 steps,
+  retains visible backlog and renders afterward. Inactive states and terminal
+  steps clear timing/input; explicit reset establishes a null clock origin.
+  Repeated start maintains one chain; dispose cancels it. `clearInput(1)` allows
+  later fresh-round composition to rebase tick targets while preserving the
+  existing chain. Clock regression cannot replay elapsed time.
+- `initializeBrowser` guards absent documents and waits for DOMContentLoaded
+  when necessary, with a cancellable listener. Node import has no DOM access or
+  scheduling side effects. Actual page/renderer/HUD composition remains T013;
+  this task supplies its initialization gate only.
+
+Verification: before implementation, `node --test tests/browser.test.js` failed
+all 31 existing browser-helper tests for missing exports. After implementation,
+all existing tests passed. Added requirement-labelled regressions in
+`tests/browser.test.js`: `browser initialization is DOM-safe and waits for page
+readiness`; `clock regression cannot replay elapsed time; stale tick inputs are
+rejected`; `explicit input reset clears held keys and rebases fresh-round tick
+queue`. The first added test initially ran before the test file's awaited module
+import; moved its registration after that import and reran successfully.
+Final `npm test`: **81 passed, 0 failed**, zero skipped/cancelled/todo, including
+34 input/loop/initialization tests and 47 simulation tests. Existing T006 tests
+verify all start/resume inputs, repeat/default prevention, FIFO and nonaccumulated
+flaps, pointer/button deduplication, both restoration orders, pause/backlog
+clearing, inactive time, 30-step cap, terminal-step stopping and disposal.
+`git diff --check` passes.
+
+Constitution I–V: specified T010 scope, focused native helpers/shared timing
+constant, requirement-labelled passing tests, zero dependencies and explicit
+function/test traceability above. Only T010 is newly marked complete. No page,
+renderer, score/restart integration, real-browser/touch, performance or complete
+US1 acceptance is claimed. `.specify/extensions.yml` is absent at pre- and
+post-execution checks; no hooks are registered.

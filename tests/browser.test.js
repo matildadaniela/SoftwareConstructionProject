@@ -438,3 +438,58 @@ test('FR-11 NFR-03: input focus loss actually clears loop backlog and pending fl
   dispose();
   f.loop.dispose();
 });
+
+test('NFR-03: clock regression cannot replay elapsed time; stale tick inputs are rejected', () => {
+  const f = loopFixture();
+  f.timing.frame(100);
+  f.timing.frame(109);
+  assert.equal(f.seen.length, 1);
+  f.timing.frame(50);
+  f.timing.frame(109);
+  assert.equal(f.seen.length, 1);
+  assert.throws(() => f.loop.enqueue({ type: 'flap' }, 1), RangeError);
+  f.timing.frame(118);
+  assert.equal(f.seen.length, 2);
+  f.loop.dispose();
+});
+
+test('FR-02 FR-11 NFR-03: explicit input reset clears held keys and rebases fresh-round tick queue', () => {
+  const input = inputFixture();
+  input.keyboard.dispatch('keydown', { code: 'Space' });
+  input.dispose.clear();
+  input.keyboard.dispatch('keydown', { code: 'Space' });
+  assert.equal(input.count(), 2);
+  input.dispose();
+  const f = loopFixture();
+  f.timing.frame(0);
+  f.timing.frame(9);
+  f.loop.enqueue({ type: 'flap', source: 'stale' });
+  f.loop.clearInput(1);
+  f.loop.resetTiming();
+  const fresh = { type: 'flap', source: 'fresh' };
+  f.loop.enqueue(fresh, 1);
+  f.timing.frame(1000);
+  f.timing.frame(1009);
+  assert.deepEqual(f.seen, [[], [fresh]]);
+  f.loop.dispose();
+});
+
+test('NFR-03: browser initialization is DOM-safe and waits for page readiness', () => {
+  let initialized = 0;
+  game.initializeBrowser(() => initialized++, null)();
+  assert.equal(initialized, 0);
+  const page = target();
+  page.readyState = 'loading';
+  const cancel = game.initializeBrowser(actual => {
+    assert.equal(actual, page);
+    initialized++;
+  }, page);
+  assert.equal(initialized, 0);
+  page.dispatch('DOMContentLoaded');
+  assert.equal(initialized, 1);
+  cancel();
+  assert.equal(page.listenerCount(), 0);
+  page.readyState = 'complete';
+  game.initializeBrowser(() => initialized++, page);
+  assert.equal(initialized, 2);
+});
