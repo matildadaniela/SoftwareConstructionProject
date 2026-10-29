@@ -202,6 +202,14 @@ for (const pointerType of ['mouse', 'touch']) {
   });
 }
 
+test('FR-01 FR-08: native clicks activate even when isPrimary is false', () => {
+  const f = inputFixture();
+  f.gameArea.dispatch('click', { button: 0, isPrimary: false });
+  f.button.dispatch('click', { button: 0, isPrimary: false, detail: 0 });
+  assert.equal(f.count(), 2);
+  f.dispose();
+});
+
 test('FR-01 FR-08: secondary mouse buttons ignored and pointer cancellation permits next tap', () => {
   const f = inputFixture();
   for (const type of ['pointerdown', 'pointerup', 'click']) {

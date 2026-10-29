@@ -1,7 +1,7 @@
 # Tasks: Browser Flappy Bird
 
 **Input**: `specs/001-browser-flappy-bird/` — spec.md, plan.md, research.md, data-model.md, contracts/browser-game.md and quickstart.md; constitution v1.0.0.
-**Tests**: Automated testing and browser verification explicitly requested. Phase 1 setup (T001–T002) is complete; see [validation.md](validation.md) for setup evidence. Phase 2 (T003–T004) is also complete with construction tests; later tasks and gameplay/browser verification remain pending.
+**Tests**: Automated testing and browser verification explicitly requested. Phase 1 setup (T001–T002) is complete; see [validation.md](validation.md) for setup evidence. Phase 2 (T003–T004) is also complete with construction tests; Phase 3 (T005–T014) is complete with automated tests and Chrome headless smoke evidence; later phases and full browser/device acceptance remain pending.
 **Organization**: Four user-story increments, ordered P1, P2, P2, P3. Paths are relative to the repository root.
 
 ## Format and scope
@@ -47,7 +47,7 @@ Write each story's automated tests before its implementation, confirm relevant a
 - [X] T011 [P] [US1] Create semantic `index.html` and responsive `style.css` with title and independently drawn icon above the 400×600 logical canvas, readable score/status/instructions, below-game native Start/Resume/Restart button, accessible on-screen retry control and visible keyboard focus; preserve logical coordinates under CSS scaling (FR-07–FR-09).
 - [X] T012 [P] [US1] Implement read-only `renderer.js` with independent vintage arcade bird, pipes, ground, strong colors, decorative animation and distinct ready/paused/game-over overlays; keep all hazard/artwork bounds aligned and no gameplay mutation or obstacle-PRNG use. Preserve View constraints: "Derived from round only, no independent gameplay truth; score and state update no later than next render; restart enters playing with one flap and draws immediately"; complete restart integration in US3 (FR-05, FR-07–FR-10, NFR-03).
 - [X] T013 [US1] Compose production simulation, input, loop, renderer, HUD/status and state-specific controls in `game.js`; make start/resume visible with one initiating flap, pause visibly on blur/hidden, leave restoration paused, freeze gameplay after loss and retain final score; pass T005/T006 before marking complete (FR-01–FR-03, FR-05, FR-07–FR-11).
-- [ ] T014 [US1] Serve via `python3 -m http.server 8000 --bind 127.0.0.1`, perform US1 browser smoke checks for each start/resume method, repeat/scroll prevention, native Tab/Enter, layout/art/animation, collision overlays and no catch-up, and record actual browser/device, outcomes and console errors in `specs/001-browser-flappy-bird/validation.md`; full four-browser and real-touch acceptance follows in US4 (FR-01–FR-03, FR-05, FR-07–FR-11).
+- [X] T014 [US1] Serve via `python3 -m http.server 8000 --bind 127.0.0.1`, perform US1 browser smoke checks for each start/resume method, repeat/scroll prevention, native Tab/Enter, layout/art/animation, collision overlays and no catch-up, and record actual browser/device, outcomes and console errors in `specs/001-browser-flappy-bird/validation.md`; full four-browser and real-touch acceptance follows in US4 (FR-01–FR-03, FR-05, FR-07–FR-11).
 
 **Checkpoint**: Core playable MVP and its automated tests pass; browser smoke evidence is recorded.
 

@@ -498,3 +498,73 @@ Constitution I–V: scoped specification-derived renderer, focused drawing helpe
 and shared configuration, requirement-labelled tests, zero dependencies, and
 function/test traceability above. Only T012 newly marked complete.
 `.specify/extensions.yml` absent at pre/post checks; no hooks to dispatch.
+
+## T014 — Phase 3 browser smoke and native-click correction (2026-10-29)
+
+Scope: remaining Phase 3 work only, on `sdd-development`. Requirements checklist
+passes 16/16, unchanged. No extension hooks are configured. No packages added.
+
+Environment: macOS 26.3.1 / Apple M1 (previous environment verification), Node
+22.15.0, installed Chrome **156.0.8078.48**, headless, via Chrome DevTools Protocol.
+Viewports 1100×1100 and 360×900, scale factor 1. An isolated temporary Chrome
+profile and focus emulation were used. `python3 -m http.server 8000 --bind
+127.0.0.1` initially hit sandbox restrictions; the approved retry found port 8000
+already occupied. The existing server served the current root page and modules
+successfully. Browser navigation used `http://127.0.0.1:8000/`.
+
+Evidence in [evidence/phase3/](evidence/phase3/):
+`flappy-smoke.mjs` is the dependency-free Node/CDP smoke driver (requires Chrome
+on debugging port 9222 and the local server); `flappy-smoke-results.txt` records
+the successful run. `flappy-ready.png`, `flappy-loss.png`, and
+`flappy-narrow.png` were captured in Chrome and visually inspected.
+The driver saves screenshots under `/private/tmp`; the committed copies preserve
+this run. Real waits are confined to this external browser smoke driver, not
+unit tests. This is an incremental smoke check, not final browser acceptance.
+
+Observed browser outcomes:
+
+- Ready status and zero score; title/icon, strong arcade colors, native controls,
+  instructions and readable ready/game-over overlays visible. Ready screenshots
+  at different times have different canvas pixels, verifying cosmetic animation.
+- Space, ArrowUp, mouse click, emulated touch tap, native Start button and native
+  Tab/Enter independently start and resume. Native Tab focuses Start and its
+  computed focus outline is visible. Each method's rendered status changes to
+  Flying. Exact one-flap/FIFO semantics are covered by production unit tests.
+- A dispatched window blur pauses immediately. A 1.4-second wait followed by
+  dispatched focus leaves the page paused; explicit activation resumes and the
+  page remains Flying after the next callbacks, without away-time catch-up.
+  These lifecycle events were dispatched in the real browser; physical tab
+  switching and OS focus changes were not exercised in this headless session.
+  Visibility handling and both restoration orders pass the existing unit tests.
+- Native repeated Space and ArrowUp events do not prolong flight: both reach
+  natural ground loss. Every gameplay keydown is default-prevented and scrollY
+  remains unchanged. Tab and Enter keep their native behavior.
+- Natural ground collision shows Game over, final score 0, on-screen retry and
+  Restart game. Space after loss leaves game-over unchanged. Exact pipe/ceiling
+  and swept hazard cases remain covered by the simulation tests rather than
+  claimed as manual browser journeys in this run.
+- The narrow layout has no horizontal overflow and preserves the 2:3 canvas
+  aspect ratio. Both screenshots show readable artwork and controls.
+- **Zero runtime JavaScript exceptions** captured through Runtime.exceptionThrown.
+  Chrome's process emitted macOS CVDisplayLink and allocator diagnostics in
+  headless mode; these are not game-console exceptions. No FPS claim is made.
+
+The first native mouse check exposed an actual defect: Chrome's completed click
+had `button: 0` and `isPrimary: false`, so `bindInput.activate` rejected it.
+Added `FR-01 FR-08: native clicks activate even when isPrimary is false` in
+`tests/browser.test.js`; it failed before the fix (0 actions vs 2 expected).
+`game.js:bindInput` now filters completed clicks by mouse button and availability,
+without requiring pointer-primary metadata. The regression covers both playfield
+and native-button activation, including bubbling deduplication. Pointerdown's
+primary-pointer check remains. The complete Chrome run then passed.
+
+Final verification: `npm test`: **91 passed, 0 failed**, no skipped/cancelled/todo;
+`git diff --check` passed. T005–T014 are complete for this MVP increment. Scoring,
+restart implementation, performance/100-cycle validation, four-browser journeys,
+physical desktop touch and OS/tab lifecycle acceptance remain in later phases.
+No physical touchscreen, presented-frame timing or cross-browser pass is claimed.
+
+Constitution I–V reviewed: scoped specification-derived fix; focused input
+boundary; failing-then-passing regression plus browser evidence; no dependencies;
+requirement/task/function/test traceability recorded here. No Vibe code or assets
+were accessed or changed. Pre/post extension-hook checks: extensions.yml absent.

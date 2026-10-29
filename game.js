@@ -61,7 +61,9 @@ export function bindInput(targets, actions, availability = {}) {
   }
   function activate(event) {
     if (event.button !== undefined && event.button !== 0) return;
-    if (event.isPrimary === false || !available()) return;
+    // Click is a completed activation; browsers may leave isPrimary false,
+    // including for native keyboard activation of a button.
+    if (!available()) return;
     actions.gameplay();
   }
   listen(gameArea, 'click', activate);
