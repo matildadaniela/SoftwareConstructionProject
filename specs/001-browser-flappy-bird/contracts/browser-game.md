@@ -4,13 +4,15 @@ This application exposes a browser UI, not a remote API. Internal module seams b
 
 ## Page and controls (FR-01, FR-04, FR-07–FR-11)
 
-- `sdd/index.html` loads its independently written `game.js` as a native ES module over HTTP. No build, network service or stored data is needed once static assets load.
-- Heading includes visible game title and icon above the 400×600 logical Canvas; responsive CSS scales the full view uniformly. The score is readable in the HUD and exposed as text.
-- Ready displays a stationary bird, zero score, no obstacles and “Press Space to start.” Playing removes that instruction. Paused shows “Paused — press Space to resume.” Game-over shows final score, “Game over” and an instruction to use Restart.
-- A labeled native Restart button appears below the play area with visible keyboard focus. Pointer click and Tab/Enter activate restart from every state.
-- Space keydown while visible/focused is owned by gameplay, including when Restart is focused: prevent scrolling/default button activation, ignore repeats/held key, and enqueue one flap from ready, playing or paused. keyup releases the held flag. Space in game-over does nothing to the round. The current specification requires no ArrowUp or canvas pointer gameplay; their inclusion/exclusion awaits D-02 in [scope-comparison.md](../scope-comparison.md). This contract does not authorize a feature removal from Vibe.
-- Blur or hidden visibility pauses an active round and clears held/pending input. Returning preserves paused state until a new Space press. Focus alone never resumes.
-- Accessible DOM status mirrors lifecycle overlays; Canvas has a meaningful label. Keep ordinary Tab and Enter behavior; do not steal focus on every frame.
+- Root `index.html` loads independently written `game.js` as a native ES module over HTTP. No build, backend or storage is required.
+- Title/icon above a responsive 400×600 logical Canvas; readable current-round score and accessible status text. Use independent vintage arcade artwork, strong colors and decorative animations without changing collision bounds or gameplay state.
+- Ready: stationary bird, score zero, start instruction and “Start game” below. Space/ArrowUp, game-area mouse click/touch tap or the button starts with one flap.
+- Playing: each distinct gameplay input flaps once; “Restart game” below immediately starts fresh. Ignore keyboard repeats; prevent Space/ArrowUp scrolling and accidental focused-button activation.
+- Paused: preserve the round and display resume instructions plus “Resume game” below. Fresh gameplay input or this button resumes with one flap, without simulating time away. Focus/visibility restoration alone never resumes.
+- Game over: freeze gameplay, retain final score, show “Tap to try again” on the game and “Restart game” below. Either retry action immediately starts a fresh playing round with one flap. Space/ArrowUp alone is ignored after loss.
+- Native buttons support pointer and Tab/Enter with visible focus. One mouse/touch gesture must produce exactly one action; suppress compatibility mouse duplication and event bubbling from buttons. Accessible retry activation also uses the same action.
+- Blur/hidden pauses active play and clears held keys, pointer state and pending input. Desktop touchscreens are included; mobile platforms are outside scope.
+- Ceiling, pipe and ground contact are fatal. Decorative animation may continue outside play without moving gameplay entities or changing score.
 
 ## Internal responsibilities (proposed functions, not framework interfaces)
 
@@ -20,10 +22,10 @@ This application exposes a browser UI, not a remote API. Internal module seams b
 | simulation.js | startOrFlap(round), pauseRound(round) | Implements only legal transitions; accepts already-normalized inputs; flap represented at the next step |
 | simulation.js | stepRound(round, config, inputsForTick) | Advances exactly one fixed tick only while playing; mutates owned state; returns phase/score change signals; no DOM/time/storage access |
 | simulation.js | collision and seeded generation helpers | Pure numeric operations, shared definitions for all gameplay; injectable known random stream for tests |
-| game.js | bindInput(targets, actions, availability) → dispose | Owns one set of listeners and Space held state; invokes normalized actions; dispose removes listeners; availability checks both focus and visibility |
+| game.js | bindInput(targets, actions, availability) → dispose | Owns one set of listeners and Space/ArrowUp held state and pointer deduplication; invokes normalized actions; dispose removes listeners; availability checks both focus and visibility |
 | game.js | createLoop({step, render, clock, requestFrame, cancelFrame}) | Owns one fixed-step accumulator/animation chain; can clear timing and input queues without adding a chain; injected fake scheduler allowed |
 | renderer.js | render(context, round, config) | Draws without gameplay mutations or external randomness affecting round; uses the same geometric bounds as collisions |
-| game.js | initialization and restart action | Composes modules once; resets simulation, pending input and loop timing, updates HUD/status and renders complete ready view synchronously |
+| game.js | initialization and restart action | Composes modules once; resets simulation, pending input and loop timing, updates HUD/status and starts a fresh playing round with one flap and renders the reset view synchronously |
 
 Input and timing functions live together in `game.js`; the table separates responsibilities, not additional modules or classes. Interfaces are design seams, not a separately published library. Implementation may choose equivalent signatures while preserving responsibilities, observable behavior and traceability.
 

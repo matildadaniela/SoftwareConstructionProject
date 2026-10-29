@@ -1,8 +1,12 @@
 # Vibe Coding and SDD scope comparison
 
-Date: 2026-10-27. Evidence: root `game.js` and `index.html` inspected as the existing Vibe version; `spec.md` is the current SDD requirements baseline. This comparison describes source behavior, not executed browser results. No specification requirements or Vibe source have been changed.
+Original comparison: 2026-10-27; structure update: 2026-10-29. Evidence: an earlier inspection of Vibe `game.js` and `index.html`; these application files are absent from the current checkout. The behavior comparison is historical source evidence, not a fresh source review or executed browser result. `spec.md` is the SDD requirements baseline. No gameplay requirements or Vibe source have been changed.
 
-## Observed differences
+## Confirmed implementation structure
+
+The user confirmed on 2026-10-29 that SDD must be implemented independently of Vibe, deriving behavior from the specification, with application files at the repository root. Documentation stays in `specs/001-browser-flappy-bird/`; no separate `sdd/` directory is planned. Root `/` will serve SDD. This does not authorize copying, refactoring, moving or overwriting Vibe code. Structure and independence are settled; D-01–D-03 are now resolved below.
+
+## Historical observed differences (before 2026-10-29 scope confirmation)
 
 | Area | Existing Vibe behavior | Current SDD specification | Planning consequence |
 |---|---|---|---|
@@ -19,10 +23,12 @@ Date: 2026-10-27. Evidence: root `game.js` and `index.html` inspected as the exi
 | Presentation | Pixel art, clouds, sun, mountains, trails/confetti, score pop, scanlines, title and decorative star eyebrow | FR-08 title/icon, play area, score, instructions, restart; responsive interface; no mandated Vibe artwork/effects | D-03: confirm whether any visual effects are expected features; fresh simple drawing proposed |
 | Verification | No automated suites or recorded browser checks present in inspected root files | NFR-01–06 automated core checks, four desktop browsers, 60-second FPS records, 100 cycles and mandatory 100 ms reset bound | Plan new tests/evidence independently; no claim Vibe was browser-tested here |
 
-## Decisions requiring clarification
+## Confirmed decisions — 2026-10-29
 
-- **D-01 — High scores**: Should SDD remain current-round-only as A-01 states, or include Vibe's browser-persisted best score? If included, explicitly specify best-score display/update timing, persistence lifetime, restart retention, invalid/unavailable storage handling and whether existing Vibe data should carry over. The constitution requires persistence/fallback tests when specified. No migration or deletion is authorized.
-- **D-02 — Controls**: Should SDD require only Space gameplay, or also ArrowUp and canvas mouse/touch/pen input? Distinguish desktop mouse from mobile/touch: NFR-06 currently excludes the latter. If added, specify supported devices/browsers and start/resume/game-over semantics for each control, including repeat/duplicate-event handling. Preserve the confirmed restart-before-new-round rule unless explicitly amended.
-- **D-03 — Remaining provisional defaults and presentation**: Confirm nonfatal ceiling (a provisional default that differs from Vibe), desktop-only scope, and whether any Vibe visual effects/pixel-art appearance are required. The proposed simple presentation is independently drawn; no Vibe asset reuse is authorized. Pair-based scoring agrees with Vibe and needs no parity change. Exact geometry/tuning remains a planning choice under A-03, with independent playability verification.
+This section supersedes the open planning consequences in the historical comparison above. The table records the earlier specification, not the revised requirements.
 
-Status: **Open**. These questions do not revoke confirmed restart, focus/resume or performance decisions. They do supersede the old plan's claim that scope reconciliation was complete. Do not mark affected tasks implementation-ready or acceptance complete until decisions are recorded. If a decision changes intended behavior, amend the specification and acceptance scenarios first, then synchronize plan, model, contract, tasks and validation. This planning revision deliberately leaves `spec.md` unchanged.
+- **D-01 — Resolved**: Current-round scores only. No saved best score, storage or Vibe data migration.
+- **D-02 — Resolved**: Space, ArrowUp, mouse click and touch tap on the game. Ready also has a start button below. Each initiating action starts with one flap; repeats and touch/mouse compatibility events must not duplicate input. After game over, both “Restart game” below and “Tap to try again” on screen immediately start fresh. Keyboard gameplay alone after loss remains ignored. After focus/visibility pause, gameplay input or “Resume game” resumes the preserved round with one flap, without simulating time away.
+- **D-03 — Resolved**: Ceiling contact is fatal. Desktop browsers only, including desktop touchscreens; mobile platforms are excluded. Independently drawn vintage arcade presentation with strong colors and animations is required.
+
+Status: **Resolved**. The user explicitly confirmed immediate retry and preserved-round pause resume in a follow-up. The specification and design now supersede earlier reset-to-ready, nonfatal ceiling and Space-only requirements. No additional product decision is awaiting confirmation. Exact tuning and hardware/browser measurements remain implementation and validation work. No application implementation or runtime validation is claimed.

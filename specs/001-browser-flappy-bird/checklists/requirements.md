@@ -37,3 +37,7 @@
 - A-02–A-05 identify ambiguities and provisional defaults. Exact gameplay tuning and a recorded representative performance environment remain planning work, not blocking specification questions.
 - Acceptance mapping: FR-01/02/03/05/07/08/09 → Story 1; FR-06 → Story 2; FR-04 → Story 3; FR-10/11 → explicit edge cases. Non-functional requirements map to measurable outcomes, Story 4, and defined review/browser checks.
 - Constitution 1.0.0 reviewed: specification first, maintainability, core tests, minimal dependencies, and traceability are retained. No application code or tests changed.
+
+- Structure review 2026-10-29: root-level independent SDD implementation is confirmed. Specification-quality checkmarks above do not resolve the then-open D-01–D-03 scope decisions in [scope-comparison.md](../scope-comparison.md); the 2026-10-29 scope confirmation below supersedes the earlier open status.
+
+- Scope confirmation 2026-10-29: D-01–D-03 are resolved; specification, plan, research, model, contract and quickstart now cover current-round scoring, expanded desktop input, immediate retry, preserved-round resume, fatal ceiling and animated vintage arcade presentation. Earlier notes about nonfatal boundary defaults and open scope are historical. No implementation or runtime checks are claimed.
